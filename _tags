@@ -1,0 +1,3 @@
+true: package(ctypes,ctypes.stubs)
+
+<generated/xbmlstubs.ml>: warn(-11)
