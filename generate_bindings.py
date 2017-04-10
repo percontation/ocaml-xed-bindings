@@ -178,24 +178,6 @@ BUINT16  = intern('uint16_t')
 BUINT32  = intern('uint32_t')
 BUINT64  = intern('uint64_t')
 
-# def lookup_type(t, context = ""):
-#   if t == "xed_operand_values_t *":
-#     if context in ("EncoderRequest'.operands", "DecodedInst'.operands"):
-#       return "OperandValues'.t"
-#   if t == "char *":
-#     fname = context.rsplit('.', 1)[-1]
-#     if fname in ('print', 'print_short', 'dump', 'dump_xed_format'):
-#       return "bytes"
-#   ret = ctypemap[t].oname
-#   if "." in ret:
-#     x = ret.split(".")
-#     y = context.split(".")
-#     while len(x) > 1 and len(y) > 0 and x[0] == y[0]:
-#       del x[0]
-#       del y[0]
-#     ret = ".".join(x)
-#   return ret
-
 prim_types = [
   BPrim('void', 'unit', BVOID),
   BPrim('xed_bool_t', 'bool', BBOOL),
@@ -212,6 +194,12 @@ prim_types = [
   BPrim('xed_uint_t', 'int', BUINT),
   #BPrim('xed_attributes_t', 'attribute list', ???),
 ]
+
+def ctype_for_prim(prim):
+  if prim.kind == BUINT:
+    return 'int'
+  else:
+    return prim.kind
 
 cname_prim_types = {i.cname:i for i in prim_types}
 
@@ -295,7 +283,10 @@ class ProcessType(object):
 
   def process_opaque(self, decl):
     name = name_without_qualifiers(decl.type)
-    return BOpaque(cname=name, oname=name, size=decl.type.get_size())
+    oname = name
+    if oname.startswith("struct "):
+      oname = oname[len("struct "):]
+    return BOpaque(cname=name, oname=oname, size=decl.type.get_size())
 
   def process_enum(self, decl):
     assert decl.kind == cindex.CursorKind.ENUM_DECL
@@ -504,6 +495,49 @@ enum_types = {i for i in types if isinstance(i, BEnum)}
 opaque_ptrs = {i for i in types if isinstance(i, BPtr) and isinstance(i.type, BOpaque)}
 
 
+def outfile(name):
+  return os.path.join(os.path.dirname(__file__), "generated", name)
+
+
+with open(outfile("functions.ml"), 'w') as f:
+  print >> f, "open Ctypes\n"
+  
+  print >> f, "module Bindings (F : Cstubs.FOREIGN) = struct"
+  print >> f, "  open F\n"
+  
+  for x in sorted(opaque_ptrs, key=lambda x: (x.type.oname, not x.const)):
+    oname = x.type.oname
+    cname = x.type.cname
+    if x.const:
+      cname = "const " + cname
+    else:
+      oname = oname + "'"
+    print >> f, "  let %s = ptr (typedef void \"%s\")" % (oname, cname)
+  print >> f, ""
+
+  def map_type(type, context = ""):
+    if isinstance(type, BPtr) and isinstance(type.type, BOpaque):
+      return type.type.oname if type.const else type.type.oname + "'"
+    elif isinstance(type, BBufArg):
+      if type.ptr.type == BPrim('char', 'char', BBYTE):
+        return 'ocaml_string' if type.ptr.const else 'ocaml_bytes'
+      assert False
+    elif isinstance(type, BPrim):
+      return ctype_for_prim(type)
+    elif isinstance(type, BEnum):
+      return ctype_for_prim(type.ctype)
+    else:
+      return type.oname
+
+  for func in sorted(functions, key=lambda x: x.oname):
+    xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
+    if not xargs:
+      xargs = "void"
+    xres = map_type(func.types[-1])
+    print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
+
+  print >> f, "end"
+
 
 
 def func_class_name_fixes(prefix, cname):
@@ -515,6 +549,7 @@ def func_class_name_fixes(prefix, cname):
     return "visibility"
   return cname[len(prefix):]
 
+# Produced cnames are actually the oname used in functions.ml
 func_classes = {}
 enum2str_funcs = []
 other_funcs = []
@@ -523,11 +558,11 @@ for func in functions:
 
   t = "_".join(name.split("_")[1:-2]) if name.startswith("str2xed_") and name.endswith("_enum_t") else ""
   if t:
-    enum2str_funcs.append(func._replace(oname="%s_of_string" % t))
+    enum2str_funcs.append(func._replace(oname="%s_of_string" % t, cname=func.oname))
     continue
   t = "_".join(name.split("_")[1:-2]) if name.startswith("xed_") and name.endswith("_enum_t2str") else ""
   if t:
-    enum2str_funcs.append(func._replace(oname="%s_to_string" % t))
+    enum2str_funcs.append(func._replace(oname="%s_to_string" % t, cname=func.oname))
     continue
 
   if len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
@@ -536,98 +571,218 @@ for func in functions:
       method_name = func_class_name_fixes(t, name)
       methods = func_classes.setdefault(func.types[0].type.oname, {})
       assert method_name not in methods, "duplicate decls are not handled"
-      methods[method_name] = func._replace(oname=method_name)
+      methods[method_name] = func._replace(oname=method_name, cname=func.oname)
       continue
 
   if name.startswith("xed3_operand_") and bmatches(func.types[0], BPtr(type=BOpaque(cname="xed_decoded_inst_t", oname=None, size=None), const=None)):
     methods = func_classes.setdefault('operand3', {})
     method_name = name[len("xed3_operand_"):]
     assert method_name not in methods, "duplicate decls are not handled"
-    methods[method_name] = func._replace(oname=method_name)
+    methods[method_name] = func._replace(oname=method_name, cname=func.oname)
     continue
 
   other_funcs.append(func)
 
 
-def outfile(name):
-  return os.path.join(os.path.dirname(__file__), "generated", name)
-
 with open(outfile("enums.ml"), 'w') as f:
   for enum in enum_types:
-    oname, cname, values = enum.oname, enum.cname, enum.elements
     already_vals = {}
     constructors = []
     aliases = []
-    for i in values:
+    for i in enum.elements:
       if i.cval not in already_vals:
         already_vals[i.cval] = i
         constructors.append(i)
       else:
         aliases.append(i)
 
-    print >> f, "type", oname, "=", " | ".join(i.oname for i in constructors)
-    print >> f, "\n".join("let %s = %s" % (i.oname.lower(), already_vals[i.cval].oname) for i in aliases)
+    # Sort by value instead of by name so the Obj.magic (below) might work.
+    constructors.sort(key=lambda x: x.cval)
+
+    print >> f, "type %s =" % enum.oname
+    i = 0
+    while i < len(constructors):
+      line = " "
+      while i < len(constructors):
+        new_line = line + " | " + constructors[i].oname
+        if len(new_line) < 80 or not line.strip():
+          line = new_line
+          i += 1
+        else:
+          break
+      print >> f, line
+
+    for i in aliases:
+      print >> f, "let %s = %s" % (i.oname.lower(), already_vals[i.cval].oname)
+
+    if [i.cval for i in constructors] == range(len(constructors)):
+      # OCaml represents argumentless constructors in a type as sequential integers.
+      print >> f, "let %s_to_int : %s -> int = Obj.magic" % (enum.oname, enum.oname)
+      print >> f, "let %s_of_int : int -> %s = Obj.magic" % (enum.oname, enum.oname)
+    else:
+      print >> f, "let %s_to_int = function" % enum.oname
+      for i in constructors:
+        print >> f, "  | %s -> %d" % (i.oname, i.cval)
+      print >> f, "let %s_of_int = function" % enum.oname
+      for i in constructors:
+        print >> f, "  | %d -> %s" % (i.cval, i.oname)
+      print >> f, "  | _ -> failwith \"%s_of_int: no enum for given int\"" % enum.oname
+
     print >> f, ""
 
-with open(outfile("functions.ml"), 'w') as f:
-  print >> f, "open Ctypes\n"
-  for k, v in func_classes.iteritems():
-    print >> f, "let %s = ptr (typedef void \"%s\")" % (k, "const xed_%s_t" % k)
-    print >> f, "let %s' = ptr (typedef void \"%s\")" % (k, "xed_%s_t" % k)
+
+with open(outfile("api.ml"), 'w') as f:
+  print >> f, "module Bindings = Functions.Bindings(ForeignGenerated)"
   print >> f, ""
 
-  for oname, cname, ctype, elements in enum_types:
-    print >> f, "let %s = typedef %s \"%s\"" % (oname, ctype.kind, cname)
-  print >> f, ""
-
-  print >> f, "module Bindings (F : Cstubs.FOREIGN) = struct"
-  print >> f, "  open F\n"
-
-  def map_type(type, context = ""):
-    if isinstance(type, BPtr) and isinstance(type.type, BOpaque):
-      return type.type.oname if type.const else type.type.oname + "'"
-    elif isinstance(type, BBufArg):
-      if type.ptr.type == BPrim('char', 'char', BBYTE):
-        return 'ocaml_string' if type.ptr.const else 'ocaml_bytes'
-      assert False
-    elif isinstance(type, BPrim):
-      return type.kind
-    else:
-      return type.oname
+  # for k in sorted(func_classes.iterkeys()):
+  #   print >> f, "type", k, "= private unit Ctypes.ptr"
+  #   print >> f, "type", k+"'", "= private unit Ctypes.ptr"
+  # print >> f, ""
 
   lu2uccre = re.compile(r'(?:^|(?<=[a-zA-Z0-9])_)[a-z]')
   def lu2ucc(s):
     """Convert lowercase underscore to upper camel case"""
     return re.sub(lu2uccre, lambda m: m.group(0)[-1].upper(), s)
 
+  def trans(func, indent="", method=None):
+    xargs = []
+    pre = []
+    asserts = []
+    yargs = []
+    post = ""
+
+    bufsize_idxs = {}
+
+    for i, arg in enumerate(func.types[:-1]):
+      if isinstance(arg, BBufArg):
+        bufsize_idxs.setdefault(arg.idx, []).append(i)
+
+    for i, arg in enumerate(func.types[:-1]):
+      name = "a%d" % i
+      if i == 0 and method and func.oname.startswith("init"):
+        assert func.types[-1].kind == BVOID
+        pre.append("let %s = allocate %d in" % (name, func.types[0].type.size))
+        yargs.append(name)
+        assert not post
+        post = "; (Obj.magic %s : t)" % name
+      elif i == 0 and method:
+        xargs.append("(%s : t)" % name)
+        yargs.append("(Obj.magic %s)" % name)
+      elif i in bufsize_idxs:
+        lengths = []
+        for x in bufsize_idxs[i]:
+          t = "String" if func.types[x].ptr.const else "Bytes"
+          lengths.append("%s.length a%d" % (t, x))
+        if lengths <= 1:
+          yargs.append("(" + lengths[0] + ")")
+        else:
+          pre.append("let %s = %s in" % (name, lengths[0]))
+          for x in lengths[1:]:
+            asserts.append("%s = %s" % (x, name))
+          yargs.append(name)
+      elif isinstance(arg, BBufArg):
+        xargs.append(name)
+        t = "ocaml_string_start" if arg.ptr.const else "ocaml_bytes_start"
+        yargs.append("(Ctypes.%s %s)" % (t, name))
+      elif isinstance(arg, BEnum):
+        xargs.append(name)
+        yargs.append("(Enums.%s_to_int %s)" % (arg.oname, name))
+      elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
+        t = lu2ucc(arg.type.oname)
+        if not arg.const:
+          t += "'"
+        t = t + ".t" if t != method else "t"
+        xargs.append("(%s : %s)" % (name, t))
+        yargs.append("(Obj.magic %s)" % name)
+      else:
+        xargs.append(name)
+        yargs.append(name)
+
+      if isinstance(arg, BPrim) and arg.kind is BUINT:
+        asserts.append(name + " >= 0")
+
+    ret = func.types[-1]
+    if isinstance(ret, BEnum):
+      assert not post
+      post = " |> Enums.%s_of_int" % ret.oname
+    elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
+      t = lu2ucc(ret.type.oname)
+      if not ret.const:
+        t += "'"
+      t = t + ".t" if t != method else "t"
+      xargs.append(": %s" % t) # lol
+      assert not post
+      post = " |> Obj.magic"
+
+    return (
+      indent + "let %s %s =\n" % (func.oname, " ".join(xargs or ("()",))) +
+      "".join(indent + "  "+i+"\n" for i in pre) +
+      (indent + "  assert (%s);\n" % " && ".join(asserts) if asserts else "") +
+      indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs)) + post
+    )
+
+  print >> f, "let allocate n = Ctypes.allocate_n Ctypes.char n |> Ctypes.coerce (Ctypes.ptr Ctypes.char) (Ctypes.ptr Ctypes.void)"
+
+  module_defs = {}
   for k in sorted(func_classes.iterkeys()):
     sorted_values = sorted(func_classes[k].itervalues())
     module_name = lu2ucc(k)
-    print >> f, "  module %s = struct" % module_name
+
     def mutating(func):
       return not func.types[0].const
+    any_mutating = False
+
+    qqq = f
+    import StringIO
+    f = StringIO.StringIO('w')
+    print >> f, "module %s = struct" % module_name
+    print >> f, "  type t"
     for func in sorted_values:
-      if not mutating(func):
+      if mutating(func):
+        any_mutating = True
         continue
-      xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
-      xres = map_type(func.types[-1])
-      print >> f, "    let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
-    print >> f, "  end"
-    print >> f, "  module %s' = struct" % module_name
-    for func in sorted_values:
-      xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
-      xres = map_type(func.types[-1])
-      print >> f, "    let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
-    print >> f, "  end"
-    print >> f, ""
+      print >> f, trans(func, indent="  ", method=module_name)
+    print >> f, "end"
+
+    if any_mutating:
+      print >> f, "module %s' = struct" % module_name
+      print >> f, "  type t"
+      print >> f, "  let const : t -> %s.t = Obj.magic" % module_name
+      for func in sorted_values:
+        print >> f, trans(func, indent="  ", method=module_name+"'")
+      print >> f, "end"
+
+    module_defs[module_name] = f.getvalue()
+    f.close()
+    f = qqq
+
+  # Topo sort modules
+  dependencies = {}
+  for k, v in module_defs.iteritems():
+    deps = set()
+    dependencies[k] = deps
+    for modname in module_defs.iterkeys():
+      if modname == k:
+        continue
+      if modname in v:
+        deps.add(modname)
+
+  def all_deps(k):
+    v = set(dependencies[k])
+    for i in dependencies[k]:
+      v |= all_deps(i)
+    return v
+
+  for _, k in sorted((len(all_deps(k)), k) for k in dependencies):
+    print >> f, module_defs[k]
+
 
   if enum2str_funcs:
-    print >> f, "\n  (* enum string conversion funcs *)"
+    print >> f, "\n(* enum string conversion funcs *)"
   for func in enum2str_funcs:
     assert len(func.types) == 2
-    print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, func.types[0].oname, func.types[1].oname)
-
-  print >> f, "end"
+    print >> f, trans(func)
 
 for i in other_funcs:
   print i.cname, ', '.join(str(j) for j in i.types)

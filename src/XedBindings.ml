@@ -1,5 +1,2 @@
-module Enums = struct
-  include Enums
-end
-
-include Functions.Bindings(ForeignGenerated)
+include Enums
+include Api

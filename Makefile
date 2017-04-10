@@ -11,17 +11,16 @@ all: lib test
 clean:
 	rm -Rf ./_build ./generated
 
-OCAMLPRODUCTS:=src/XedBindings.cmi src/XedBindings.cma src/XedBindings.cmxa src/XedBindings.a src/XedBindings.cmxs
-
 install: lib
-	ocamlfind install xed-bindings META $(addprefix _build/,${OCAMLPRODUCTS}) _build/dllxedbindings.so
+	# This is dumb and I should figure out how to use oasis
+	ocamlfind install xed-bindings META `find _build/ -name '*.so' -o -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmxs'`
 
 uninstall:
 	ocamlfind remove xed-bindings
 
 .PHONY: lib
 lib: stubs _build/dllxedbindings.so
-	${OCAMLBUILD} ${OCAMLPRODUCTS}
+	${OCAMLBUILD} src/XedBindings.cmi src/XedBindings.cma src/XedBindings.cmxa src/XedBindings.a src/XedBindings.cmxs
 
 .PHONY: xed
 xed:
