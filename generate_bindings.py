@@ -384,6 +384,21 @@ unwanted_functions = (
   # Exist in headerfile, but no implementation.
   "xed_operand_values_has_disp",
   "xed_operand_values_is_prefetch",
+
+  # TODO: Broken
+  "xed_iform_map",
+  "xed_get_chip_features",
+  "xed_modify_chip_features",
+  "xed3_set_generic_operand",
+  "xed_encoder_request_init_from_decode",
+  "xed_encode_request_print",
+  "xed_init_print_info",
+  "xed_format_generic",
+  "xed_get_cpuid_rec",
+  "xed_addr",
+  "xed_rep",
+  "xed_repne",
+  "xed_convert_to_encoder_request",
 )
 
 def fix_function_name(s):
@@ -436,37 +451,6 @@ for decl in tu.cursor.get_children():
       else:
         # This happens with functions that take function pointer callbacks.
         print >> sys.stderr, "unable to handle", x.cname
-
-  #
-  # # Handle method-like functions
-  #
-  #
-  # special = ( # TODO: Go though these later
-  #   "xed_tables_init",
-  #   "xed_attribute_max",
-  #   "xed_inst_table_base",
-  #   "xed_get_version",
-  #   "xed_get_copyright",
-  #   "xed_set_log_file",
-  #   "xed_set_verbosity",
-  # )
-  # if name in special:
-  #   continue
-  #
-  # print >> sys.stderr, "unhandled func: ", repr_func_decl(decl)
-  #
-  #
-
-
-#
-# for k, v in func_classes.iteritems():
-#   cname = "const xed_%s_t *" % k
-#   ctypemap[cname] = BPrim(cname, lu2ucc(k)+".t", "idk")
-#
-#
-#
-# ctypemap["xed_attributes_t"] = BPrim("xed_attributes_t", "attribute list", "idk")
-
 
 def filter_funcs(func):
   for i in func.types:
@@ -719,7 +703,7 @@ with open(outfile("api.ml"), 'w') as f:
       indent + "let %s %s =\n" % (func.oname, " ".join(xargs or ("()",))) +
       "".join(indent + "  "+i+"\n" for i in pre) +
       (indent + "  assert (%s);\n" % " && ".join(asserts) if asserts else "") +
-      indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs)) + post
+      indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs or ("()",))) + post
     )
 
   print >> f, "let allocate n = Ctypes.allocate_n Ctypes.char n |> Ctypes.coerce (Ctypes.ptr Ctypes.char) (Ctypes.ptr Ctypes.void)"
@@ -781,8 +765,12 @@ with open(outfile("api.ml"), 'w') as f:
   if enum2str_funcs:
     print >> f, "\n(* enum string conversion funcs *)"
   for func in enum2str_funcs:
-    assert len(func.types) == 2
     print >> f, trans(func)
 
-for i in other_funcs:
-  print i.cname, ', '.join(str(j) for j in i.types)
+  if other_funcs:
+    print >> f, "\n(* other *)"
+  for func in other_funcs:
+    print >> f, trans(func)
+
+# for i in other_funcs:
+#   print i.cname, ', '.join(str(j) for j in i.types)
