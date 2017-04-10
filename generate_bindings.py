@@ -29,25 +29,13 @@ except cindex.LibclangError as exc:
   else:
     raise exc
 
-def xedfile(path):
-  return os.path.join(os.path.dirname(__file__), "xed", path)
-
-#
-# We need XED's generated header files, so build it.
-#
-witness = xedfile('obj/xed-reg-enum.h')
-try:
-  skip_build = time.time() < 3600 + os.path.getmtime(witness)
-except OSError:
-  skip_build = False
-if not skip_build:
-  subprocess.check_call(("./mfile.py",), cwd=xedfile("./"), stdout=sys.stderr)
-  os.utime(witness, None)
-
 
 #
 # Parse XED headers.
 #
+def xedfile(path):
+  return os.path.join(os.path.dirname(__file__), "xed", path)
+
 args = ["-I"+xedfile("obj"), "-I"+xedfile("include/public/xed")]
 tu = Index.parse(xedfile("include/public/xed/xed-interface.h"), args=args)
 
@@ -240,8 +228,8 @@ def fix_enum_type_name(s):
     s = s[len("xed_"):]
   if s.endswith("_t"):
     s = s[:-len("_t")]
-  if s.endswith("_enum"):
-    s = s[:-len("_enum")]
+  # if s.endswith("_enum"):
+  #   s = s[:-len("_enum")]
 
   if s == "exception":
     return "iexception"
@@ -581,32 +569,6 @@ with open(outfile("enums.ml"), 'w') as f:
     print >> f, "\n".join("let %s = %s" % (i.oname.lower(), already_vals[i.cval].oname) for i in aliases)
     print >> f, ""
 
-# with open(outfile("BindingTypes.ml"), 'w') as f:
-#   print >> f, "open Ctypes"
-#   print >> f, "open BindingEnums"
-#   print >> f, ""
-#   print >> f, "module Types (S: Cstubs.Types.TYPE) = struct"
-#   print >> f, "  open S"
-#   print >> f, "  let make_enum cname ctype ?unexpected elements ="
-#   print >> f, "    enum cname ?unexpected (List.map (fun (x,y) -> x, constant y int64_t) elements)"
-#   print >> f, ""
-#   for oname, cname, ctype, elements in enum_types:
-#     print >> f, "  let %s = make_enum \"%s\" %s ([" % (oname, cname, ctype.kind)
-#     already_vals = set()
-#     for i in elements:
-#       if i.cval in already_vals:
-#         continue
-#       already_vals.add(i.cval)
-#       print >> f, "    %s, \"%s\";" % (i.oname, i.cname)
-#     print >> f, "  ] : (%s * string) list)\n" % oname
-#
-#   for k, v in func_classes.iteritems():
-#     print >> f, "  let %s = ptr (typedef void \"%s\")" % (k, "const xed_%s_t" % k)
-#     print >> f, "  let %s' = ptr (typedef void \"%s\")" % (k, "xed_%s_t" % k)
-#
-#   print >> f, "end"
-
-
 with open(outfile("functions.ml"), 'w') as f:
   print >> f, "open Ctypes\n"
   for k, v in func_classes.iteritems():
@@ -658,13 +620,13 @@ with open(outfile("functions.ml"), 'w') as f:
       print >> f, "    let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
     print >> f, "  end"
     print >> f, ""
-  
+
   if enum2str_funcs:
     print >> f, "\n  (* enum string conversion funcs *)"
   for func in enum2str_funcs:
     assert len(func.types) == 2
     print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, func.types[0].oname, func.types[1].oname)
-  
+
   print >> f, "end"
 
 for i in other_funcs:

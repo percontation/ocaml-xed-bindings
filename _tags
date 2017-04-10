@@ -1,3 +1,7 @@
-true: package(ctypes,ctypes.stubs)
+<generated/ForeignGenerated.ml>: warn(-11)
+<generated/xedbindings_stubs.c>: use_xed
+<src/test.*>: use_xed
+<src/XedBindings.*>: use_xed
 
-<generated/xbmlstubs.ml>: warn(-11)
+true: package(ctypes,ctypes.stubs)
+true: safe_string, debug, bin_annot

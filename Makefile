@@ -1,27 +1,53 @@
-OCAMLBUILD := ocamlbuild -use-ocamlfind -no-links -Is generated -Xs xed,mbuild \
-  -cflags -ccopt,-I../xed/obj,-ccopt,-I../xed/include/public/xed
+# ocamlbuild gets mad in parallel.
+.NOTPARALLEL:
 
-.PHONY: all clean
-all: test
+OCAMLBUILD := ocamlbuild -use-ocamlfind -j 4 \
+	-no-links -Is src,generated -Xs xed,mbuild \
+	-cflags -strict-sequence
+
+.PHONY: all clean install uninstall
+all: lib test
 
 clean:
 	rm -Rf ./_build ./generated
 
-.PHONY: bindings
-bindings: generate_bindings.py
+OCAMLPRODUCTS:=src/XedBindings.cmi src/XedBindings.cma src/XedBindings.cmxa src/XedBindings.a src/XedBindings.cmxs
+
+install: lib
+	ocamlfind install xed-bindings META $(addprefix _build/,${OCAMLPRODUCTS}) _build/dllxedbindings.so
+
+uninstall:
+	ocamlfind remove xed-bindings
+
+.PHONY: lib
+lib: stubs _build/dllxedbindings.so
+	${OCAMLBUILD} ${OCAMLPRODUCTS}
+
+.PHONY: xed
+xed:
+	cd xed && { test -n "`find obj/xed-reg-enum.h -mtime -1h 2>/dev/null || true`" || { ./mfile.py && touch obj/xed-reg-enum.h; }; }
+
+.PHONY: stubs
+stubs: xed generate_bindings.py
 	mkdir -p generated
 	./generate_bindings.py
-
-stubs: bindings
 	${OCAMLBUILD} generate_stubs.native
 	./_build/generate_stubs.native
 
 .PHONY: test
-test: bindings stubs
-	${OCAMLBUILD} xbcstubs.o
-	${OCAMLBUILD} -lflags -cclib,generated/xbcstubs.o,-cclib,../xed/obj/libxed.a test.native
-	./_build/test.native || true
+test: stubs
+	${OCAMLBUILD} test.native
+	./_build/src/test.native || true
 
-# .PHONY: phony
-# _build/%: phony
-# 	${OCAMLBUILD} "`basename '$@'`"
+_build/dllxed.so: xed
+	cc -shared xed/obj/libxed.a -o $@
+
+ifeq ($(shell uname),Darwin)
+WLIGNORE := -Wl,-flat_namespace,-undefined,dynamic_lookup
+else
+WLIGNORE := -Wl,--unresolved-symbols=ignore-all
+endif
+
+_build/dllxedbindings.so: stubs _build/dllxed.so
+	${OCAMLBUILD} generated/xedbindings_stubs.o
+	cc -shared ${WLIGNORE} _build/generated/xedbindings_stubs.o xed/obj/libxed.a -o $@
