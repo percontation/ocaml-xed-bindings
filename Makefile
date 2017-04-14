@@ -11,7 +11,7 @@ all: lib test
 clean:
 	rm -Rf ./_build ./generated
 
-install: lib
+install: lib uninstall
 	# This is dumb and I should figure out how to use oasis
 	ocamlfind install xed-bindings META `find _build/ -name '*.so' -o -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmxs'`
 
