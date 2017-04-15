@@ -1,1 +1,2 @@
-let () = print_endline (XedBindings.reg_of_string "EAX" |> XedBindings.reg_to_string)
+open XedBindings;;
+let () = print_endline (Enum.reg_of_string "EAX" |> Enum.reg_to_string)

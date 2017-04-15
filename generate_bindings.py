@@ -636,7 +636,7 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
 
 
 with open(outfile("XedBindingsApi.ml"), 'w') as f:
-  print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)"
+  print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)\n"
 #   """module Bindings = XedBindingsStubs.Bindings(struct
 #   type 'a fn = 'a Ctypes.fn
 #   type 'a return = 'a
@@ -646,13 +646,6 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
 #   let foreign x y z = Foreign.foreign x y z
 #   let foreign_value x y = Foreign.foreign_value x y
 # end)"""
-  print >> f, "module Enums = XedBindingsEnums"
-  print >> f, ""
-
-  # for k in sorted(func_classes.iterkeys()):
-  #   print >> f, "type", k, "= private unit Ctypes.ptr"
-  #   print >> f, "type", k+"'", "= private unit Ctypes.ptr"
-  # print >> f, ""
 
   lu2uccre = re.compile(r'(?:^|(?<=[a-zA-Z0-9])_)[a-z]')
   def lu2ucc(s):
@@ -672,11 +665,19 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
       if isinstance(arg, BBufArg):
         bufsize_idxs.setdefault(arg.idx, []).append(i)
 
+    def name_opaque_ptr(x):
+      mod = lu2ucc(x.type.oname)
+      t = "T." + mod + ".t" if mod != method else "t"
+      if x.const:
+        return "[>] " + t
+      else:
+        return "[>`M] " + t
+
     for i, arg in enumerate(func.types[:-1]):
       name = "a%d" % i
       if i == 0 and method and func.oname.startswith("init"):
         assert func.types[-1].kind == BVOID
-        pre.append("let %s = allocate %d in" % (name, func.types[0].type.size))
+        pre.append("let %s = allocate () |> Obj.magic in" % name)
         yargs.append(name)
         assert not post
         post = "; (Obj.magic %s : [>`M] t)" % name
@@ -698,15 +699,9 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
         yargs.append("(Ctypes.%s %s)" % (t, name))
       elif isinstance(arg, BEnum):
         xargs.append(name)
-        yargs.append("(Enums.%s_to_int %s)" % (arg.oname, name))
+        yargs.append("(XedBindingsEnums.%s_to_int %s)" % (arg.oname, name))
       elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
-        t = lu2ucc(arg.type.oname)
-        t = t + ".t" if t != method else "t"
-        if arg.const:
-          t = "[>] " + t
-        else:
-          t = "[>`M] " + t
-        xargs.append("(%s : %s)" % (name, t))
+        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg)))
         yargs.append("(Obj.magic %s)" % name)
       else:
         xargs.append(name)
@@ -718,15 +713,9 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
     ret = func.types[-1]
     if isinstance(ret, BEnum):
       assert not post
-      post = " |> Enums.%s_of_int" % ret.oname
+      post = " |> XedBindingsEnums.%s_of_int" % ret.oname
     elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
-      t = lu2ucc(ret.type.oname)
-      t = t + ".t" if t != method else "t"
-      if ret.const:
-        t = "[>] " + t
-      else:
-        t = "[>`M] " + t
-      xargs.append(": %s" % t) # lol
+      xargs.append(": %s" % name_opaque_ptr(ret))
       assert not post
       post = " |> Obj.magic"
 
@@ -737,53 +726,38 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
       indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs or ("()",))) + post
     )
 
-  print >> f, "let allocate n = Ctypes.allocate_n Ctypes.char n |> Ctypes.coerce (Ctypes.ptr Ctypes.char) (Ctypes.ptr Ctypes.void)\n"
+  print >> f, "let _allocate n = Ctypes.allocate_n Ctypes.char n |> Ctypes.coerce (Ctypes.ptr Ctypes.char) (Ctypes.ptr Ctypes.void)\n"
 
   print >> f, "(* In the modules below, \"[>] Module.t\"s represents const pointers, and"
   print >> f, "   \"[>`M] Class.t\"s represent non-const pointers. *)\n"
 
-  module_defs = {}
+  print >> f, "module T = struct"
+  for k in sorted(func_classes.iterkeys()):
+    module_name = lu2ucc(k)
+    print >> f, "  module %s = struct" % module_name
+    print >> f, "    type +'a t"
+    size = next(func_classes[k].itervalues()).types[0].type.size
+    print >> f, "    let allocate () : [>`M] t = _allocate %d |> Obj.magic" % size
+    print >> f, "  end"
+  print >> f, "end\n"
+
   for k in sorted(func_classes.iterkeys()):
     sorted_values = sorted(func_classes[k].itervalues())
     module_name = lu2ucc(k)
 
-    qqq = f
-    import StringIO
-    f = StringIO.StringIO('w')
     print >> f, "module %s = struct" % module_name
-    print >> f, "  type +'a t"
+    print >> f, "  include T.%s" % module_name
     for func in sorted_values:
       print >> f, trans(func, indent="  ", method=module_name)
-    print >> f, "end"
+    print >> f, "end\n"
 
-    module_defs[module_name] = f.getvalue()
-    f.close()
-    f = qqq
+  print >> f, ""
 
-  # Topo sort modules
-  dependencies = {}
-  for k, v in module_defs.iteritems():
-    deps = set()
-    dependencies[k] = deps
-    for modname in module_defs.iterkeys():
-      if modname == k:
-        continue
-      if modname in v:
-        deps.add(modname)
-
-  def all_deps(k):
-    v = set(dependencies[k])
-    for i in dependencies[k]:
-      v |= all_deps(i)
-    return v
-
-  for _, k in sorted((len(all_deps(k)), k) for k in dependencies):
-    print >> f, module_defs[k]
-
-  if enum2str_funcs:
-    print >> f, "\n(* enum string conversion funcs *)"
+  print >> f, "module Enum = struct"
+  print >> f, "  include XedBindingsEnums"
   for func in enum2str_funcs:
-    print >> f, trans(func)
+    print >> f, trans(func, indent="  ")
+  print >> f, "end"
 
   if other_funcs:
     print >> f, "\n(* other *)"
