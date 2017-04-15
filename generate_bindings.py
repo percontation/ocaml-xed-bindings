@@ -145,11 +145,12 @@ class BOpaque(namedtuple('BOpaque', ('cname', 'oname', 'size'))):
   def __str__(self):
     return "%s:%d" % (self.cname, self.size)
 
-# May only appear as a function arg; idx indicates the sibling arg
-# index for buffer length. Ptr is a BPtr.
-class BBufArg(namedtuple('BBufArg', ('ptr', 'idx'))):
+# May only appear as a function arg. `idx` indicates the sibling arg
+# index for buffer length. `ptr` is a BPtr. `out` indicates whether
+# or not this is an output-only buffer.
+class BBufArg(namedtuple('BBufArg', ('ptr', 'idx', 'out'))):
   def valid(self):
-    return self.idx >= 0 and self.ptr is not None and self.ptr.valid()
+    return self.idx >= 0 and self.ptr is not None and self.ptr.valid() and not (self.out and self.ptr.const)
 
   def __str__(self):
     return "(buf %d) %s" % (self.idx, str(self.ptr))
@@ -358,7 +359,7 @@ typer = ProcessType()
 # Parse function defintions.
 #
 
-unwanted_functions = (
+unwanted_functions = {
   "xed_strlen",
   "xed_strcat",
   "xed_strcpy",
@@ -388,20 +389,7 @@ unwanted_functions = (
   # Exist in headerfile, but no implementation.
   "xed_operand_values_has_disp",
   "xed_operand_values_is_prefetch",
-
-  # TODO: Broken
-  "xed_iform_map",
-  "xed3_set_generic_operand",
-  "xed_encoder_request_init_from_decode",
-  "xed_encode_request_print",
-  "xed_init_print_info",
-  "xed_format_generic",
-  "xed_get_cpuid_rec",
-  "xed_addr",
-  "xed_rep",
-  "xed_repne",
-  "xed_convert_to_encoder_request",
-)
+}
 
 def fix_function_name(s):
   if s in unwanted_functions:
@@ -412,20 +400,20 @@ def fix_function_name(s):
     return s
 
 print_funcs_buf_args = {
-  "xed_operand_print(const xed_operand_t, char *, int)" : ((1,2),),
-  "xed_flag_set_print(const xed_flag_set_t *, char *, int)": ((1,2),),
-  "xed_flag_action_print(const xed_flag_action_t *, char *, int)": ((1,2),),
-  "xed_simple_flag_print(const xed_simple_flag_t *, char *, int)": ((1,2),),
-  "xed_state_print(const xed_state_t *, char *, int)": ((1,2),),
-  "xed_operand_values_dump(const xed_operand_values_t *, char *, int)": ((1,2),),
-  "xed_operand_values_print_short(const xed_operand_values_t *, char *, int)": ((1,2),),
-  "xed_encode_request_print(const xed_encoder_request_t *, char *, xed_uint_t)": ((1,2),),
-  "xed_decoded_inst_dump(const xed_decoded_inst_t *, char *, int)": ((1,2),),
-  "xed_decoded_inst_dump_xed_format(const xed_decoded_inst_t *, char *, int, uint64_t)": ((1,2),),
-  "xed_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2),),
-  "xed_ild_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2),),
-  "xed_operand_print(const xed_operand_t *, char *, int)": ((1,2),),
-  "xed_decode_with_features(xed_decoded_inst_t *, const uint8_t *, const unsigned int, xed_chip_features_t *)": ((1,2),),
+  "xed_operand_print(const xed_operand_t, char *, int)" : ((1,2,True),),
+  "xed_flag_set_print(const xed_flag_set_t *, char *, int)": ((1,2,True),),
+  "xed_flag_action_print(const xed_flag_action_t *, char *, int)": ((1,2,True),),
+  "xed_simple_flag_print(const xed_simple_flag_t *, char *, int)": ((1,2,True),),
+  "xed_state_print(const xed_state_t *, char *, int)": ((1,2,True),),
+  "xed_operand_values_dump(const xed_operand_values_t *, char *, int)": ((1,2,True),),
+  "xed_operand_values_print_short(const xed_operand_values_t *, char *, int)": ((1,2,True),),
+  "xed_encode_request_print(const xed_encoder_request_t *, char *, xed_uint_t)": ((1,2,True),),
+  "xed_decoded_inst_dump(const xed_decoded_inst_t *, char *, int)": ((1,2,True),),
+  "xed_decoded_inst_dump_xed_format(const xed_decoded_inst_t *, char *, int, uint64_t)": ((1,2,True),),
+  "xed_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2,False),),
+  "xed_ild_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2,False),),
+  "xed_operand_print(const xed_operand_t *, char *, int)": ((1,2,True),),
+  "xed_decode_with_features(xed_decoded_inst_t *, const uint8_t *, const unsigned int, xed_chip_features_t *)": ((1,2,False),),
 }
 
 def find_buffer_args(decl):
@@ -442,8 +430,8 @@ def process_function(decl):
   if None in args:
     return None
 
-  for bufi, leni in find_buffer_args(decl):
-    args[bufi] = BBufArg(ptr=args[bufi], idx=leni)
+  for bufi, leni, outi in find_buffer_args(decl):
+    args[bufi] = BBufArg(ptr=args[bufi], idx=leni, out=outi)
 
   return BFunc(oname=oname, cname=decl.spelling, types=tuple(args))
 
@@ -472,13 +460,27 @@ def filter_funcs(func):
       return False
   return True
 
+skip_funcs = {
+  "xed_iform_map",
+  "xed3_set_generic_operand",
+  "xed_encoder_request_init_from_decode",
+  "xed_encode_request_print",
+  "xed_init_print_info",
+  "xed_format_generic",
+  "xed_get_cpuid_rec",
+  "xed_addr",
+  "xed_rep",
+  "xed_repne",
+  "xed_convert_to_encoder_request",
+}
+
 for func in functions:
   if not filter_funcs(func):
     # probably due to directly taking a struct, or taking a buffer we don't understand.
     # Don't care about most, we'll get the ones we do care about later.
     print >> sys.stderr, "not handling", func
 
-functions = filter(filter_funcs, functions)
+functions = [i for i in functions if filter_funcs(i) and i.cname not in skip_funcs]
 
 types = {i for func in functions for i in func.types}
 enum_types = {i for i in types if isinstance(i, BEnum)}
@@ -489,7 +491,7 @@ def outfile(name):
   return os.path.join(os.path.dirname(__file__), "generated", name)
 
 
-with open(outfile("functions.ml"), 'w') as f:
+with open(outfile("XedBindingsStubs.ml"), 'w') as f:
   print >> f, "(* \"Low level\" binding functions, not to be exposed. *)"
   print >> f, "open Ctypes\n"
 
@@ -581,7 +583,7 @@ for func in functions:
   other_funcs.append(func)
 
 
-with open(outfile("enums.ml"), 'w') as f:
+with open(outfile("XedBindingsEnums.ml"), 'w') as f:
   for enum in enum_types:
     already_vals = {}
     constructors = []
@@ -633,8 +635,18 @@ with open(outfile("enums.ml"), 'w') as f:
     print >> f, ""
 
 
-with open(outfile("api.ml"), 'w') as f:
-  print >> f, "module Bindings = Functions.Bindings(ForeignGenerated)"
+with open(outfile("XedBindingsApi.ml"), 'w') as f:
+  print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)"
+#   """module Bindings = XedBindingsStubs.Bindings(struct
+#   type 'a fn = 'a Ctypes.fn
+#   type 'a return = 'a
+#   let (@->) = Ctypes.(@->)
+#   let returning = Ctypes.returning
+#   type 'a result = 'a
+#   let foreign x y z = Foreign.foreign x y z
+#   let foreign_value x y = Foreign.foreign_value x y
+# end)"""
+  print >> f, "module Enums = XedBindingsEnums"
   print >> f, ""
 
   # for k in sorted(func_classes.iterkeys()):

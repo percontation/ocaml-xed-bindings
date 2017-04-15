@@ -12,8 +12,8 @@ clean:
 	rm -Rf ./_build ./generated
 
 install: lib uninstall
-	# This is dumb and I should figure out how to use oasis
-	ocamlfind install xed-bindings META `find _build/ -name '*.so' -o -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmxs'`
+	# This is dumb and I should figure out how to use topkg
+	ocamlfind install xed-bindings META _build/dllxedbindings.so `find _build/src _build/generated -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmxs'`
 
 uninstall:
 	ocamlfind remove xed-bindings
@@ -50,3 +50,7 @@ endif
 _build/dllxedbindings.so: stubs _build/dllxed.so
 	${OCAMLBUILD} generated/xedbindings_stubs.o
 	cc -shared ${WLIGNORE} _build/generated/xedbindings_stubs.o xed/obj/libxed.a -o $@
+
+.PHONY: phony
+_build/%: phony
+	${OCAMLBUILD} ${OFLAGS} '$(@:_build/%=%)'

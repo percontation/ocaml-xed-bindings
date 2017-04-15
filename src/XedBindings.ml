@@ -1,4 +1,4 @@
-include Enums
-include Api
+include XedBindingsEnums
+include XedBindingsApi
 
 let () = xed_tables_init ()
