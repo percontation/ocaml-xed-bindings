@@ -665,13 +665,19 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
       if isinstance(arg, BBufArg):
         bufsize_idxs.setdefault(arg.idx, []).append(i)
 
-    def name_opaque_ptr(x):
+    def name_opaque_ptr(x, input):
       mod = lu2ucc(x.type.oname)
       t = "T." + mod + ".t" if mod != method else "t"
-      if x.const:
-        return "[>] " + t
+      if input:
+        if x.const:
+          return "[<`C|`M] " + t
+        else:
+          return "[<`M] " + t
       else:
-        return "[>`M] " + t
+        if x.const:
+          return "[`C] " + t
+        else:
+          return "[`M] " + t
 
     for i, arg in enumerate(func.types[:-1]):
       name = "a%d" % i
@@ -680,7 +686,7 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
         pre.append("let %s = allocate () |> Obj.magic in" % name)
         yargs.append(name)
         assert not post
-        post = "; (Obj.magic %s : [>`M] t)" % name
+        post = "; (Obj.magic %s : [`M] t)" % name
       elif i in bufsize_idxs:
         lengths = []
         for x in bufsize_idxs[i]:
@@ -701,7 +707,7 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
         xargs.append(name)
         yargs.append("(XedBindingsEnums.%s_to_int %s)" % (arg.oname, name))
       elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
-        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg)))
+        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg, True)))
         yargs.append("(Obj.magic %s)" % name)
       else:
         xargs.append(name)
@@ -715,7 +721,7 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
       assert not post
       post = " |> XedBindingsEnums.%s_of_int" % ret.oname
     elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
-      xargs.append(": %s" % name_opaque_ptr(ret))
+      xargs.append(": %s" % name_opaque_ptr(ret, False))
       assert not post
       post = " |> Obj.magic"
 
@@ -737,7 +743,7 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
     print >> f, "  module %s = struct" % module_name
     print >> f, "    type +'a t"
     size = next(func_classes[k].itervalues()).types[0].type.size
-    print >> f, "    let allocate () : [>`M] t = _allocate %d |> Obj.magic" % size
+    print >> f, "    let allocate () : [`M] t = _allocate %d |> Obj.magic" % size
     print >> f, "  end"
   print >> f, "end\n"
 
