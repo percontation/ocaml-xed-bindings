@@ -226,8 +226,8 @@ def fix_enum_type_name(s):
     s = s[len("xed_"):]
   if s.endswith("_t"):
     s = s[:-len("_t")]
-  # if s.endswith("_enum"):
-  #   s = s[:-len("_enum")]
+  if s.endswith("_enum"):
+    s = s[:-len("_enum")]
 
   if s == "exception":
     return "iexception"
@@ -366,14 +366,14 @@ typer = ProcessType()
 # Parse function defintions.
 #
 
+# Things that are broken or make no sense for OCaml.
 unwanted_functions = {
+  # String/integer utility functions
   "xed_strlen",
   "xed_strcat",
   "xed_strcpy",
   "xed_strncpy",
   "xed_strncat",
-  "xed_internal_assert",
-  "xed_register_abort_function",
   "xed_itoa",
   "xed_itoa_hex_zeros",
   "xed_itoa_hex",
@@ -392,6 +392,16 @@ unwanted_functions = {
   "xed_zero_extend16_32",
   "xed_zero_extend8_32",
   "xed_zero_extend8_16",
+  "xed_make_uint64",
+  "xed_make_int64",
+  "xed_get_byte",
+  "xed_shortest_width_unsigned",
+  "xed_shortest_width_signed",
+
+  # XED stuff.
+  "xed_inst_table_base",
+  "xed_internal_assert",
+  "xed_register_abort_function",
 
   # Exist in headerfile, but no implementation.
   "xed_operand_values_has_disp",
@@ -544,7 +554,7 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
       print >> f, "  | _ -> failwith \"%s_of_int: no enum for given int\"" % enum.oname
 
     enum_ctypes_views.append(
-      "let %s = XedBindingsEnums.(view ~read:%s_of_int ~write:%s_to_int int)" %
+      "let %s_enum = XedBindingsEnums.(view ~read:%s_of_int ~write:%s_to_int int)" %
         (enum.oname, enum.oname, enum.oname)
     )
 
@@ -591,6 +601,8 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
       assert False, type.ptr.type
     elif isinstance(type, BPrim):
       return ctype_for_prim(type)
+    elif isinstance(type, BEnum):
+      return type.oname + "_enum"
     else:
       return type.oname
 
@@ -623,11 +635,11 @@ for func in functions:
 
   t = "_".join(cname.split("_")[1:-2]) if cname.startswith("str2xed_") and cname.endswith("_enum_t") else ""
   if t:
-    enum2str_funcs.append(func._replace(oname="%s_enum_of_string" % t, cname=func.oname))
+    enum2str_funcs.append(func._replace(oname="%s_of_string" % t, cname=func.oname))
     continue
   t = "_".join(cname.split("_")[1:-2]) if cname.startswith("xed_") and cname.endswith("_enum_t2str") else ""
   if t:
-    enum2str_funcs.append(func._replace(oname="%s_enum_to_string" % t, cname=func.oname))
+    enum2str_funcs.append(func._replace(oname="%s_to_string" % t, cname=func.oname))
     continue
 
   if len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
@@ -655,7 +667,7 @@ for func in functions:
   other_funcs.append(func)
 
 
-with open(outfile("XedBindingsApi.ml"), 'w') as f:
+with open(outfile("XedBindingsInternal.ml"), 'w') as f:
   print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)"
   print >> f, ""
 
