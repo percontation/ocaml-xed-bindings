@@ -1,0 +1,22 @@
+opam-version: "1.2"
+name:         "xed-bindings"
+version:      "0.1"
+maintainer:   "ryan@forallsecure.com"
+author:       "Ryan Goulden"
+
+build:   [make]
+install: [make "install"]
+remove:  ["ocamlfind" "remove" "xed-bindings"]
+depends: [
+  "ctypes" {>= "0.4.0"}
+  "ocamlbuild" {build}
+  "ocamlfind" {build}
+]
+depexts: [
+  [["debian"] ["python-clang-3.8" "libclang-dev"]]
+  [["ubuntu"] ["python-clang-3.8" "libclang-dev"]]
+]
+available: [ocaml-version >= "4.03"]
+post-messages: [
+  "This package requires clang's python cindex library (and libclang) on your system" {failure}
+]

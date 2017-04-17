@@ -16,9 +16,10 @@ try:
   Index = cindex.Index.create()
 except cindex.LibclangError as exc:
   globs = [
-    "/usr/lib/llvm-*/lib",
-    "/opt/local/libexec/llvm-*/lib",
-    "/usr/local/opt/llvm*/lib/llvm*/lib",
+    "/usr/lib/llvm-*/lib", # Linux
+    "/usr/local/lib/llvm-*/lib",
+    "/opt/local/libexec/llvm-*/lib", # MacPorts
+    "/usr/local/opt/llvm*/lib/llvm*/lib", # Homebrew, I think?
   ]
   for llvmlib in (j for i in globs for j in glob.iglob(i)):
     cindex.Config.set_library_path(llvmlib)
