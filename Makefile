@@ -22,8 +22,13 @@ uninstall:
 lib: stubs _build/dllxedbindings.so
 	${OCAMLBUILD} src/XedBindings.cmi src/XedBindings.cma src/XedBindings.cmxa src/XedBindings.a src/XedBindings.cmxs src/XedBindings.inferred.mli
 
+.PHONY: submodules
+submodules:
+	git submodule update --init --checkout --recursive -- mbuild
+	git submodule update --init --checkout --recursive -- xed
+
 .PHONY: xed
-xed:
+xed: submodules
 	cd xed && { test -n "`find obj/xed-reg-enum.h -mtime -1h 2>/dev/null || true`" || { ./mfile.py && touch obj/xed-reg-enum.h; }; }
 
 .PHONY: stubs
@@ -47,7 +52,7 @@ else
 WLIGNORE := -Wl,--unresolved-symbols=ignore-all
 endif
 
-_build/dllxedbindings.so: stubs _build/dllxed.so
+_build/dllxedbindings.so: xed stubs _build/dllxed.so
 	${OCAMLBUILD} generated/xedbindings_stubs.o
 	cc -shared ${WLIGNORE} _build/generated/xedbindings_stubs.o xed/obj/libxed.a -o $@
 
