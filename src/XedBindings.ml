@@ -6,12 +6,19 @@ end
 
 module DecodedInst = struct
   include XedBindingsInternal.DecodedInst
+  let init mode =
+    let x = allocate ()
+    in zero_set_mode x mode; x
   let to_string x =
     let bytes = Bytes.create 1024
     in dump x bytes; cstring bytes
   let to_string_xedfmt x addr =
     let bytes = Bytes.create 1024
     in dump_xed_format x bytes addr, cstring bytes
+
+  external _disassemble : int -> nativeint -> int64 -> string = "xb_disassemble"
+  let disassemble x syntax addr =
+    _disassemble (XedBindingsInternal.Enum.syntax_to_int syntax) (const_pointer x |> Ctypes.raw_address_of_ptr) addr
 end
 
 module EncoderRequest = struct
@@ -113,20 +120,26 @@ module Enum = struct
   let attributes = Array.init (xed_attribute_max ()) xed_attribute
 end
 
-let decode s =
-  let x = XedBindingsInternal.DecodedInst.allocate () in
+let () = XedBindingsInternal.xed_tables_init ()
+
+open Enum
+let state32 = State.init2 LEGACY_32 A32b |> XedBindingsStructs.const
+let state64 = State.init2 LONG_64 A64b |> XedBindingsStructs.const
+
+let decode state s =
+  let x = DecodedInst.init state in
   match XedBindingsInternal.xed_decode x s with
   | Enum.NONE -> Ok x
   | err -> Error err
 
-let decode_with_features s chipfeat =
-  let x = XedBindingsInternal.DecodedInst.allocate () in
+let decode_with_features state s chipfeat =
+  let x = DecodedInst.init state in
   match XedBindingsInternal.xed_decode_with_features x s chipfeat with
   | Enum.NONE -> Ok x
   | err -> Error err
 
-let ild_decode s =
-  let x = XedBindingsInternal.DecodedInst.allocate () in
+let ild_decode state s =
+  let x = DecodedInst.init state in
   match XedBindingsInternal.xed_ild_decode x s with
   | Enum.NONE -> Ok x
   | err -> Error err
@@ -134,5 +147,3 @@ let ild_decode s =
 let get_version = XedBindingsInternal.xed_get_version
 let get_copyright = XedBindingsInternal.xed_get_copyright
 let get_cpuid_bit_for_isa_set = XedBindingsInternal.xed_get_cpuid_bit_for_isa_set
-
-let () = XedBindingsInternal.xed_tables_init ()

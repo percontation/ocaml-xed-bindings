@@ -1,6 +1,6 @@
 let main () =
   let ml_out = open_out "generated/XedBindingsGenerated.ml"
-  and c_out = open_out "generated/xedbindings_stubs.c" in
+  and c_out = open_out "generated/xedbindings_genstubs.c" in
   let ml_fmt = Format.formatter_of_out_channel ml_out
   and c_fmt = Format.formatter_of_out_channel c_out in
   Format.pp_print_string c_fmt "#include <xed-interface.h>\n";

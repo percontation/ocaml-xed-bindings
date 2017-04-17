@@ -576,6 +576,8 @@ with open(outfile("XedBindingsStructs.ml"), 'w') as f:
     print >> f, "  type _t"
     print >> f, "  type +'a t = (_t, 'a) myptr"
     print >> f, "  let allocate () : [`M] t = _allocate %d |> Obj.magic" % i.size
+    print >> f, "  let pointer : [`M] t -> unit Ctypes.ptr = Obj.magic"
+    print >> f, "  let const_pointer : [<`M|`C] t -> unit Ctypes.ptr = Obj.magic"
     print >> f, "end"
     fmt1 = "let %s  : [`C] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"const %s\")"
     fmt2 = "let %s' : [`M] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"%s\")"

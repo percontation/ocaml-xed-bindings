@@ -1,5 +1,6 @@
 <generated/ForeignGenerated.ml>: warn(-11)
-<generated/xedbindings_stubs.c>: use_xed
+<generated/xedbindings_genstubs.c>: use_xed
+<src/xedbindings_stubs.c>: use_xed
 <src/test.*>: use_xed
 <src/XedBindings.*>: use_xed
 

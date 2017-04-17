@@ -52,9 +52,9 @@ else
 WLIGNORE := -Wl,--unresolved-symbols=ignore-all
 endif
 
-_build/dllxedbindings.so: xed stubs _build/dllxed.so
-	${OCAMLBUILD} generated/xedbindings_stubs.o
-	cc -shared ${WLIGNORE} _build/generated/xedbindings_stubs.o xed/obj/libxed.a -o $@
+_build/dllxedbindings.so: xed stubs src/xedbindings_stubs.c _build/dllxed.so
+	${OCAMLBUILD} generated/xedbindings_genstubs.o src/xedbindings_stubs.o
+	cc -shared ${WLIGNORE} _build/src/xedbindings_stubs.o _build/generated/xedbindings_genstubs.o xed/obj/libxed.a -o $@
 
 .PHONY: phony
 _build/%: phony

@@ -16,7 +16,7 @@ dispatch begin function
             A"-cclib"; A"../xed/obj/libxed.a";
           ]);
 
-    dep ["link"; "ocaml"; "native"; "use_xed"] ["generated/xedbindings_stubs.o"];
+    dep ["link"; "ocaml"; "native"; "use_xed"] ["generated/xedbindings_genstubs.o"; "src/xedbindings_stubs.o"];
 
     flag ["link"; "ocaml"; "byte"; "use_xed"] (S[A"-dllib"; A"-lxedbindings"]);
 
