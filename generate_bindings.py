@@ -197,7 +197,7 @@ prim_types = [
   BPrim('uint8_t', 'char', BBYTE),
   BPrim('int32_t', 'Signed.Int32.t', BSINT32),
   BPrim('int64_t', 'Signed.Int64.t', BSINT64),
-  BPrim('uint16_t', 'Unsigned.UInt16.t', BUINT32),
+  BPrim('uint16_t', 'Unsigned.UInt16.t', BUINT16),
   BPrim('uint32_t', 'Unsigned.UInt32.t', BUINT32),
   BPrim('uint64_t', 'Unsigned.UInt64.t', BUINT64),
   BPrim('unsigned int', 'int', BUINT),
@@ -611,6 +611,9 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
     if not xargs:
       xargs = "void"
     xres = map_type(func.types[-1])
+    if func.cname == "xed3_operand_get_mem_width":
+      print >> sys.stderr, repr(func)
+      print >> sys.stderr, xargs, xres
     print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
 
   print >> f, "end"
@@ -686,7 +689,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
     pre = []
     asserts = []
     yargs = []
-    post = ""
+    retval = None
 
     bufsize_idxs = {}
 
@@ -708,8 +711,9 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         assert func.types[-1].kind == BVOID
         pre.append("let %s = allocate () in" % name)
         yargs.append("(Obj.magic %s)" % name)
-        assert not post
-        post = "; %s" % name
+        assert not retval
+        retval = name
+        rettype = "[`M] t"
       elif i in bufsize_idxs:
         lengths = []
         for x in bufsize_idxs[i]:
@@ -723,28 +727,38 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
             asserts.append("%s = %s" % (x, name))
           yargs.append(name)
       elif isinstance(arg, BBufArg):
-        xargs.append(name)
+        xargs.append("(%s : %s)" % (name, "string" if arg.ptr.const else "bytes"))
         t = "ocaml_string_start" if arg.ptr.const else "ocaml_bytes_start"
         yargs.append("(Ctypes.%s %s)" % (t, name))
       elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
         xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg, "[<`C|`M]", "[<`M]")))
         yargs.append("(Obj.magic %s)" % name)
+      elif isinstance(arg, BEnum):
+        xargs.append("(%s : XedBindingsEnums.%s)" % (name, arg.oname))
+        yargs.append(name)
       else:
-        xargs.append(name)
+        xargs.append("(%s : %s)" % (name, arg.oname))
         yargs.append(name)
 
       if isinstance(arg, BPrim) and arg.kind is BUINT:
         asserts.append(name + " >= 0")
 
-    if not pre and not post and not asserts and xargs == yargs:
-      return indent + "let %s = Bindings.%s" % (func.oname, func.cname)
+    ret = func.types[-1]
+    if retval:
+      assert rettype
+    elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
+      rettype = name_opaque_ptr(ret, "[`C]", "[`M]")
+    elif isinstance(ret, BEnum):
+      rettype = "XedBindingsEnums.%s" % ret.oname
     else:
-      return (
-        indent + "let %s %s =\n" % (func.oname, " ".join(xargs or ("()",))) +
-        "".join(indent + "  "+i+"\n" for i in pre) +
-        (indent + "  assert (%s);\n" % " && ".join(asserts) if asserts else "") +
-        indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs or ("()",))) + post
-      )
+      rettype = ret.oname
+
+    return (
+      indent + "let %s %s : %s =\n" % (func.oname, " ".join(xargs or ("()",)), rettype) +
+      "".join(indent + "  "+i+"\n" for i in pre) +
+      (indent + "  assert (%s);\n" % " && ".join(asserts) if asserts else "") +
+      indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs or ("()",))) + ("; "+retval if retval else "")
+    )
 
   for module_name in sorted(func_classes.iterkeys()):
     typ, methods = func_classes[module_name]
