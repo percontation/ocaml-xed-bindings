@@ -36,7 +36,7 @@ stubs: xed generate_bindings.py
 .PHONY: test
 test: stubs
 	${OCAMLBUILD} test.native
-	./_build/src/test.native || true
+	./_build/src/test.native
 
 _build/dllxed.so: xed
 	cc -shared xed/obj/libxed.a -o $@

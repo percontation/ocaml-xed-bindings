@@ -1,4 +1,3 @@
-
 let cstring x = Bytes.sub_string x 0 (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
 
 module ChipFeatures = struct
@@ -8,10 +7,10 @@ end
 module DecodedInst = struct
   include XedBindingsApi.DecodedInst
   let to_string x =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 1024
     in dump x bytes; cstring bytes
   let to_string_xedfmt x addr =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 1024
     in dump_xed_format x bytes addr, cstring bytes
 end
 

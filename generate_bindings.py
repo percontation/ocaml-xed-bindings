@@ -81,6 +81,12 @@ def is_const(type):
     return False
 
 
+lu2uccre = re.compile(r'(?:^|(?<=[a-zA-Z0-9])_)[a-z]')
+def lu2ucc(s):
+  """Convert lowercase underscore to upper camel case"""
+  return re.sub(lu2uccre, lambda m: m.group(0)[-1].upper(), s)
+
+
 #
 # Type model
 #
@@ -491,98 +497,7 @@ def outfile(name):
   return os.path.join(os.path.dirname(__file__), "generated", name)
 
 
-with open(outfile("XedBindingsStubs.ml"), 'w') as f:
-  print >> f, "(* \"Low level\" binding functions, not to be exposed. *)"
-  print >> f, "open Ctypes\n"
-
-  print >> f, "module Bindings (F : Cstubs.FOREIGN) = struct"
-  print >> f, "  open F\n"
-
-  for x in sorted(opaque_ptrs, key=lambda x: (x.type.oname, not x.const)):
-    oname = x.type.oname
-    cname = x.type.cname
-    if x.const:
-      cname = "const " + cname
-    else:
-      oname = oname + "'"
-    print >> f, "  let %s = ptr (typedef void \"%s\")" % (oname, cname)
-  print >> f, ""
-
-  def map_type(type, context = ""):
-    if isinstance(type, BPtr) and isinstance(type.type, BOpaque):
-      return type.type.oname if type.const else type.type.oname + "'"
-    elif isinstance(type, BBufArg):
-      if type.ptr.type.kind == BBYTE:
-        return 'ocaml_string' if type.ptr.const else 'ocaml_bytes'
-      assert False, type.ptr.type
-    elif isinstance(type, BPrim):
-      return ctype_for_prim(type)
-    elif isinstance(type, BEnum):
-      return ctype_for_prim(type.ctype)
-    else:
-      return type.oname
-
-  for func in sorted(functions, key=lambda x: x.oname):
-    xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
-    if not xargs:
-      xargs = "void"
-    xres = map_type(func.types[-1])
-    print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
-
-  print >> f, "end"
-
-
-
-def func_class_name_fixes(cname, default=None):
-  if cname == "xed_inst_exception":
-    return "iexception"
-  if cname == "xed_operand_type":
-    return "op_type"
-  if cname == "xed_operand_operand_visibility":
-    return "visibility"
-  return default or cname
-
-# Produced cnames are actually the oname used in functions.ml
-func_classes = {}
-enum2str_funcs = []
-other_funcs = []
-for func in functions:
-  cname = func.cname
-
-  t = "_".join(cname.split("_")[1:-2]) if cname.startswith("str2xed_") and cname.endswith("_enum_t") else ""
-  if t:
-    enum2str_funcs.append(func._replace(oname="%s_of_string" % t, cname=func.oname))
-    continue
-  t = "_".join(cname.split("_")[1:-2]) if cname.startswith("xed_") and cname.endswith("_enum_t2str") else ""
-  if t:
-    enum2str_funcs.append(func._replace(oname="%s_to_string" % t, cname=func.oname))
-    continue
-
-  if len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
-    classname = func.types[0].type.oname
-    t = "xed_" + classname + "_"
-    if cname.startswith(t):
-      method_name = func_class_name_fixes(cname, cname[len(t):])
-    elif cname.startswith("xed_") and cname.endswith(classname):
-      method_name = func_class_name_fixes(cname, cname[4:-len(classname)-1])
-    else:
-      method_name = None
-    if method_name:
-      methods = func_classes.setdefault(classname, {})
-      assert method_name not in methods, "duplicate decl? (%r, %r, %r)" % (classname, method_name, cname)
-      methods[method_name] = func._replace(oname=method_name, cname=func.oname)
-      continue
-
-  if cname.startswith("xed3_operand_") and bmatches(func.types[0], BPtr(type=BOpaque(cname="xed_decoded_inst_t", oname=None, size=None), const=None)):
-    methods = func_classes.setdefault('operand3', {})
-    method_name = cname[len("xed3_operand_"):]
-    assert method_name not in methods, "duplicate decls are not handled"
-    methods[method_name] = func._replace(oname=method_name, cname=func.oname)
-    continue
-
-  other_funcs.append(func)
-
-
+enum_ctypes_views = []
 with open(outfile("XedBindingsEnums.ml"), 'w') as f:
   for enum in enum_types:
     already_vals = {}
@@ -627,16 +542,122 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
         print >> f, "  | %d -> %s" % (i.cval, i.oname)
       print >> f, "  | _ -> failwith \"%s_of_int: no enum for given int\"" % enum.oname
 
-    # enum_ctypes_views.append(
-    #   "let %s = Ctypes.view ~read:Enums.%s_of_int ~write:Enums.%s_of_int Ctypes.int" %
-    #     (enum.oname, enum.oname, enum.oname)
-    # )
+    enum_ctypes_views.append(
+      "let %s = XedBindingsEnums.(view ~read:%s_of_int ~write:%s_to_int int)" %
+        (enum.oname, enum.oname, enum.oname)
+    )
 
     print >> f, ""
 
+struct_ctypes_views = []
+with open(outfile("XedBindingsStructs.ml"), 'w') as f:
+  print >> f, "(* 'a [`C] myptr is const; 'a [`M] myptr is non const. The reason for this"
+  print >> f, "   representation is that polymorphic variants are the only way to get cross-"
+  print >> f, "   module automatic subtyping (that I could find, as of 4.04), which allows"
+  print >> f, "   using writing signatures that accept const or mutable. The generated Ctypes"
+  print >> f, "   module support this, but our (generated) wrapper module can. *)"
+  print >> f, "type (+'a, +'b) myptr"
+  print >> f, "let const : ('a, [<`M|`C]) myptr -> ('a, [`C]) myptr = Obj.magic"
+  print >> f, "let _allocate n : ('a, [`M]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic\n"
+  for i in sorted({i.type for i in opaque_ptrs}):
+    module_name = lu2ucc(i.oname)
+    print >> f, "module %s = struct" % module_name
+    print >> f, "  type _t"
+    print >> f, "  type +'a t = (_t, 'a) myptr"
+    print >> f, "  let allocate () : [`M] t = _allocate %d |> Obj.magic" % i.size
+    print >> f, "end"
+    fmt1 = "let %s  : [`C] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"const %s\")"
+    fmt2 = "let %s' : [`M] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"%s\")"
+    struct_ctypes_views.append(fmt1 % (i.oname, module_name, i.cname))
+    struct_ctypes_views.append(fmt2 % (i.oname, module_name, i.cname))
+
+with open(outfile("XedBindingsStubs.ml"), 'w') as f:
+  print >> f, "(* \"Low level\" binding functions, not to be exposed. *)"
+  print >> f, "open Ctypes"
+  print >> f, ""
+  print >> f, "\n".join(enum_ctypes_views)
+  print >> f, "\n".join(struct_ctypes_views)
+  print >> f, ""
+  print >> f, "module Bindings (F : Cstubs.FOREIGN) = struct"
+  print >> f, "  open F\n"
+
+  def map_type(type, context = ""):
+    if isinstance(type, BPtr) and isinstance(type.type, BOpaque):
+      return type.type.oname if type.const else type.type.oname + "'"
+    elif isinstance(type, BBufArg):
+      if type.ptr.type.kind == BBYTE:
+        return 'ocaml_string' if type.ptr.const else 'ocaml_bytes'
+      assert False, type.ptr.type
+    elif isinstance(type, BPrim):
+      return ctype_for_prim(type)
+    else:
+      return type.oname
+
+  for func in sorted(functions, key=lambda x: x.oname):
+    xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
+    if not xargs:
+      xargs = "void"
+    xres = map_type(func.types[-1])
+    print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
+
+  print >> f, "end"
+
+
+
+def func_class_name_fixes(cname, default=None):
+  if cname == "xed_inst_exception":
+    return "iexception"
+  if cname == "xed_operand_type":
+    return "op_type"
+  if cname == "xed_operand_operand_visibility":
+    return "visibility"
+  return default or cname
+
+# Produced cnames are actually the oname used in functions.ml
+func_classes = {}
+enum2str_funcs = []
+other_funcs = []
+for func in functions:
+  cname = func.cname
+
+  t = "_".join(cname.split("_")[1:-2]) if cname.startswith("str2xed_") and cname.endswith("_enum_t") else ""
+  if t:
+    enum2str_funcs.append(func._replace(oname="%s_enum_of_string" % t, cname=func.oname))
+    continue
+  t = "_".join(cname.split("_")[1:-2]) if cname.startswith("xed_") and cname.endswith("_enum_t2str") else ""
+  if t:
+    enum2str_funcs.append(func._replace(oname="%s_enum_to_string" % t, cname=func.oname))
+    continue
+
+  if len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
+    classname = func.types[0].type.oname
+    t = "xed_" + classname + "_"
+    if cname.startswith(t):
+      method_name = func_class_name_fixes(cname, cname[len(t):])
+    elif cname.startswith("xed_") and cname.endswith(classname):
+      method_name = func_class_name_fixes(cname, cname[4:-len(classname)-1])
+    else:
+      method_name = None
+    if method_name:
+      methods = func_classes.setdefault(lu2ucc(classname), (func.types[0].type, {}))[1]
+      assert method_name not in methods, "duplicate decl? (%r, %r, %r)" % (classname, method_name, cname)
+      methods[method_name] = func._replace(oname=method_name, cname=func.oname)
+      continue
+
+  if cname.startswith("xed3_operand_") and bmatches(func.types[0], BPtr(type=BOpaque(cname="xed_decoded_inst_t", oname=None, size=None), const=None)):
+    methods = func_classes.setdefault("Operand3", (None, {}))[1]
+    method_name = cname[len("xed3_operand_"):]
+    assert method_name not in methods, "duplicate decls are not handled"
+    methods[method_name] = func._replace(oname=method_name, cname=func.oname)
+    continue
+
+  other_funcs.append(func)
+
 
 with open(outfile("XedBindingsApi.ml"), 'w') as f:
-  print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)\n"
+  print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)"
+  print >> f, ""
+
 #   """module Bindings = XedBindingsStubs.Bindings(struct
 #   type 'a fn = 'a Ctypes.fn
 #   type 'a return = 'a
@@ -646,11 +667,6 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
 #   let foreign x y z = Foreign.foreign x y z
 #   let foreign_value x y = Foreign.foreign_value x y
 # end)"""
-
-  lu2uccre = re.compile(r'(?:^|(?<=[a-zA-Z0-9])_)[a-z]')
-  def lu2ucc(s):
-    """Convert lowercase underscore to upper camel case"""
-    return re.sub(lu2uccre, lambda m: m.group(0)[-1].upper(), s)
 
   def trans(func, indent="", method=None):
     xargs = []
@@ -665,28 +681,22 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
       if isinstance(arg, BBufArg):
         bufsize_idxs.setdefault(arg.idx, []).append(i)
 
-    def name_opaque_ptr(x, input):
+    def name_opaque_ptr(x, const, mutable):
       mod = lu2ucc(x.type.oname)
-      t = "T." + mod + ".t" if mod != method else "t"
-      if input:
-        if x.const:
-          return "[<`C|`M] " + t
-        else:
-          return "[<`M] " + t
+      t = " XedBindingsStructs." + mod + ".t" if mod != method else " t"
+      if x.const:
+        return const + t
       else:
-        if x.const:
-          return "[`C] " + t
-        else:
-          return "[`M] " + t
+        return mutable + t
 
     for i, arg in enumerate(func.types[:-1]):
       name = "a%d" % i
       if i == 0 and method and func.oname.startswith("init"):
         assert func.types[-1].kind == BVOID
-        pre.append("let %s = allocate () |> Obj.magic in" % name)
-        yargs.append(name)
+        pre.append("let %s = allocate () in" % name)
+        yargs.append("(Obj.magic %s)" % name)
         assert not post
-        post = "; (Obj.magic %s : [`M] t)" % name
+        post = "; %s" % name
       elif i in bufsize_idxs:
         lengths = []
         for x in bufsize_idxs[i]:
@@ -703,11 +713,8 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
         xargs.append(name)
         t = "ocaml_string_start" if arg.ptr.const else "ocaml_bytes_start"
         yargs.append("(Ctypes.%s %s)" % (t, name))
-      elif isinstance(arg, BEnum):
-        xargs.append(name)
-        yargs.append("(XedBindingsEnums.%s_to_int %s)" % (arg.oname, name))
       elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
-        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg, True)))
+        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg, "[<`C|`M]", "[<`M]")))
         yargs.append("(Obj.magic %s)" % name)
       else:
         xargs.append(name)
@@ -716,44 +723,22 @@ with open(outfile("XedBindingsApi.ml"), 'w') as f:
       if isinstance(arg, BPrim) and arg.kind is BUINT:
         asserts.append(name + " >= 0")
 
-    ret = func.types[-1]
-    if isinstance(ret, BEnum):
-      assert not post
-      post = " |> XedBindingsEnums.%s_of_int" % ret.oname
-    elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
-      xargs.append(": %s" % name_opaque_ptr(ret, False))
-      assert not post
-      post = " |> Obj.magic"
+    if not pre and not post and not asserts and xargs == yargs:
+      return indent + "let %s = Bindings.%s" % (func.oname, func.cname)
+    else:
+      return (
+        indent + "let %s %s =\n" % (func.oname, " ".join(xargs or ("()",))) +
+        "".join(indent + "  "+i+"\n" for i in pre) +
+        (indent + "  assert (%s);\n" % " && ".join(asserts) if asserts else "") +
+        indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs or ("()",))) + post
+      )
 
-    return (
-      indent + "let %s %s =\n" % (func.oname, " ".join(xargs or ("()",))) +
-      "".join(indent + "  "+i+"\n" for i in pre) +
-      (indent + "  assert (%s);\n" % " && ".join(asserts) if asserts else "") +
-      indent + "  Bindings.%s %s" % (func.cname, " ".join(yargs or ("()",))) + post
-    )
-
-  print >> f, "let _allocate n = Ctypes.allocate_n Ctypes.char n |> Ctypes.coerce (Ctypes.ptr Ctypes.char) (Ctypes.ptr Ctypes.void)\n"
-
-  print >> f, "(* In the modules below, \"[>] Module.t\"s represents const pointers, and"
-  print >> f, "   \"[>`M] Class.t\"s represent non-const pointers. *)\n"
-
-  print >> f, "module T = struct"
-  for k in sorted(func_classes.iterkeys()):
-    module_name = lu2ucc(k)
-    print >> f, "  module %s = struct" % module_name
-    print >> f, "    type +'a t"
-    size = next(func_classes[k].itervalues()).types[0].type.size
-    print >> f, "    let allocate () : [`M] t = _allocate %d |> Obj.magic" % size
-    print >> f, "  end"
-  print >> f, "end\n"
-
-  for k in sorted(func_classes.iterkeys()):
-    sorted_values = sorted(func_classes[k].itervalues())
-    module_name = lu2ucc(k)
-
+  for module_name in sorted(func_classes.iterkeys()):
+    typ, methods = func_classes[module_name]
     print >> f, "module %s = struct" % module_name
-    print >> f, "  include T.%s" % module_name
-    for func in sorted_values:
+    if typ is not None:
+      print >> f, "  include XedBindingsStructs.%s" % module_name
+    for func in sorted(methods.itervalues()):
       print >> f, trans(func, indent="  ", method=module_name)
     print >> f, "end\n"
 
