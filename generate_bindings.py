@@ -611,9 +611,6 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
     if not xargs:
       xargs = "void"
     xres = map_type(func.types[-1])
-    if func.cname == "xed3_operand_get_mem_width":
-      print >> sys.stderr, repr(func)
-      print >> sys.stderr, xargs, xres
     print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
 
   print >> f, "end"
