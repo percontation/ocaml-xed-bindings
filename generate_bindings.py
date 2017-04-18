@@ -566,7 +566,7 @@ with open(outfile("XedBindingsStructs.ml"), 'w') as f:
   print >> f, "   representation is that polymorphic variants are the only way to get cross-"
   print >> f, "   module automatic subtyping (that I could find, as of 4.04), which allows"
   print >> f, "   using writing signatures that accept const or mutable. The generated Ctypes"
-  print >> f, "   module support this, but our (generated) wrapper module can. *)"
+  print >> f, "   module won't support this, but our (generated) wrapper module can. *)"
   print >> f, "type (+'a, +'b) myptr"
   print >> f, "let const : ('a, [<`M|`C]) myptr -> ('a, [`C]) myptr = Obj.magic"
   print >> f, "let _allocate n : ('a, [`M]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic\n"

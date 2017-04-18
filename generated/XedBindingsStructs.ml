@@ -2,7 +2,7 @@
    representation is that polymorphic variants are the only way to get cross-
    module automatic subtyping (that I could find, as of 4.04), which allows
    using writing signatures that accept const or mutable. The generated Ctypes
-   module support this, but our (generated) wrapper module can. *)
+   module won't support this, but our (generated) wrapper module can. *)
 type (+'a, +'b) myptr
 let const : ('a, [<`M|`C]) myptr -> ('a, [`C]) myptr = Obj.magic
 let _allocate n : ('a, [`M]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic
