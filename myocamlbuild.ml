@@ -10,17 +10,24 @@ dispatch begin function
             A"-ccopt"; A"-I../xed/include/public/xed";
           ]);
 
-    flag ["link"; "native"; "use_xed"]
+    flag ["link"; "c"; "native"; "use_xed"]
          (S[A"-ccopt"; A"-I../xed/obj";
             A"-ccopt"; A"-I../xed/include/public/xed";
-            A"../xed/obj/libxed.a";
+            A"-cclib"; A"../xed/obj/libxed.a";
           ]);
 
-    flag ["link"; "ocaml"; "native"; "use_xed"]
-      (S[P"generated/xedbindings_genstubs.o";
-         P"src/xedbindings_stubs.o";
-         A"../xed/obj/libxed.a";
+    flag ["link"; "ocaml"; "library"; "native"; "use_xed"]
+      (S[A"-ccopt"; P"$CAMLORIGIN/xedbindings_genstubs.o";
+         A"-ccopt"; P"$CAMLORIGIN/xedbindings_stubs.o";
+         A"-ccopt"; A"$CAMLORIGIN/libxed.a";
        ]);
+
+    flag ["link"; "ocaml"; "program"; "native"; "use_xed"]
+      (S[A"-ccopt"; P"generated/xedbindings_genstubs.o";
+         A"-ccopt"; P"src/xedbindings_stubs.o";
+         A"-ccopt"; A"../xed/obj/libxed.a";
+       ]);
+
 
     flag ["link"; "ocaml"; "byte"; "use_xed"] (S[A"-dllib"; A"-lxedbindings"]);
 
