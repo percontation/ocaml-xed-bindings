@@ -5,11 +5,14 @@ OCAMLBUILD := ocamlbuild -use-ocamlfind -j 4 \
 	-no-links -Is src,generated -Xs xed,mbuild \
 	-cflags -strict-sequence
 
-.PHONY: all clean install uninstall
+.PHONY: all clean veryclean install uninstall
 all: lib test
 
 clean:
 	rm -Rf ./_build ./generated
+
+veryclean: clean
+	rm -Rf ./xed/obj
 
 install: lib uninstall
 	# This is dumb and I should figure out how to use topkg
@@ -29,7 +32,7 @@ submodules:
 
 .PHONY: xed
 xed: submodules
-	cd xed && { test -n "`find obj/xed-reg-enum.h -mtime -1h 2>/dev/null || true`" || { ./mfile.py && touch obj/xed-reg-enum.h; }; }
+	cd xed && { test -n "`find obj/xed-reg-enum.h -mtime -1h 2>/dev/null || true`" || { ./mfile.py --no-werror --extra-flags=-fPIC  && touch obj/xed-reg-enum.h; }; }
 
 .PHONY: stubs
 ifeq (${NO_GENERATE},)
@@ -58,7 +61,7 @@ else
 WLIGNORE := -Wl,--unresolved-symbols=ignore-all
 endif
 
-_build/dllxedbindings.so: xed stubs src/xedbindings_stubs.c _build/dllxed.so
+_build/dllxedbindings.so: xed stubs src/xedbindings_stubs.c
 	${OCAMLBUILD} generated/xedbindings_genstubs.o src/xedbindings_stubs.o
 	cc -shared ${WLIGNORE} _build/src/xedbindings_stubs.o _build/generated/xedbindings_genstubs.o xed/obj/libxed.a -o $@
 

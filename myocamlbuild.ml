@@ -13,10 +13,14 @@ dispatch begin function
     flag ["link"; "native"; "use_xed"]
          (S[A"-ccopt"; A"-I../xed/obj";
             A"-ccopt"; A"-I../xed/include/public/xed";
-            A"-cclib"; A"../xed/obj/libxed.a";
+            A"../xed/obj/libxed.a";
           ]);
 
-    dep ["link"; "ocaml"; "native"; "use_xed"] ["generated/xedbindings_genstubs.o"; "src/xedbindings_stubs.o"];
+    flag ["link"; "ocaml"; "native"; "use_xed"]
+      (S[P"generated/xedbindings_genstubs.o";
+         P"src/xedbindings_stubs.o";
+         A"../xed/obj/libxed.a";
+       ]);
 
     flag ["link"; "ocaml"; "byte"; "use_xed"] (S[A"-dllib"; A"-lxedbindings"]);
 
