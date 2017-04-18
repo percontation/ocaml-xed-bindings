@@ -1,3 +1,5 @@
+(* This binding isn't entirely safe; e.g. `Inst.operand x 9999999` is bad. *)
+
 let cstring x = Bytes.sub_string x 0 (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
 
 module ChipFeatures = struct
@@ -48,6 +50,14 @@ module Operand = struct
   let to_string x =
     let bytes = Bytes.create 128
     in print x bytes; cstring bytes
+  let read x = read x <> 0
+  let read_only x = read_only x <> 0
+  let written x = written x <> 0
+  let written_only x = written_only x <> 0
+  let read_and_written x = read_and_written x <> 0
+  let conditional_read x = conditional_read x <> 0
+  let conditional_write x = conditional_write x <> 0
+  let template_is_register x = template_is_register x <> 0
 end
 
 module Operand3 = struct
