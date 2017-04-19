@@ -1,5 +1,3 @@
-(* This binding isn't entirely safe; e.g. `Inst.operand x 9999999` is bad. *)
-
 let cstring x = Bytes.sub_string x 0 (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
 
 module ChipFeatures = struct
