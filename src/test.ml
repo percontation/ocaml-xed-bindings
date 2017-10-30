@@ -1,4 +1,5 @@
 open XedBindings
+open Result
 
 let (>>=) a b = match a with Ok x -> b x | Error _ as y -> y
 let (>>|) a b = match a with Ok x -> Ok (b x) | Error _ as y -> y

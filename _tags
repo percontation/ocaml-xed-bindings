@@ -4,5 +4,5 @@
 <src/test.*>: use_xed
 <src/XedBindings.*>: use_xed
 
-true: package(ctypes,ctypes.stubs)
+true: package(ctypes,ctypes.stubs,result)
 true: safe_string, debug, bin_annot

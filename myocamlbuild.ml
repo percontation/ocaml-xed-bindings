@@ -3,7 +3,8 @@ open Command;;
 
 dispatch begin function
   | After_rules ->
-    flag ["compile"; "c"] (S[A"-ccopt"; A"-Os"]);
+    flag ["compile"; "c"] (S[A"-ccopt"; A"-Os";
+                             A"-package"; A"ctypes";]);
 
     flag ["compile"; "c"; "use_xed"]
          (S[A"-ccopt"; A"-I../xed/obj";
@@ -14,18 +15,21 @@ dispatch begin function
          (S[A"-ccopt"; A"-I../xed/obj";
             A"-ccopt"; A"-I../xed/include/public/xed";
             A"-cclib"; A"../xed/obj/libxed.a";
+            A"-package"; A"ctypes";
           ]);
 
     flag ["link"; "ocaml"; "library"; "native"; "use_xed"]
       (S[A"-ccopt"; P"$CAMLORIGIN/xedbindings_genstubs.o";
          A"-ccopt"; P"$CAMLORIGIN/xedbindings_stubs.o";
          A"-ccopt"; A"$CAMLORIGIN/libxed.a";
+         A"-package"; A"ctypes";
        ]);
 
     flag ["link"; "ocaml"; "program"; "native"; "use_xed"]
       (S[A"-ccopt"; P"generated/xedbindings_genstubs.o";
          A"-ccopt"; P"src/xedbindings_stubs.o";
          A"-ccopt"; A"../xed/obj/libxed.a";
+         A"-package"; A"ctypes";
        ]);
 
 

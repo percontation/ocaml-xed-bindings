@@ -9,10 +9,11 @@ install: [make "NO_GENERATE=1" "install"]
 remove:  ["ocamlfind" "remove" "xed-bindings"]
 depends: [
   "ctypes" {>= "0.4.0"}
+  "result"
   "ocamlbuild" {build}
   "ocamlfind" {build}
 ]
-available: [ocaml-version >= "4.03"]
+available: [ocaml-version >= "4.02.3"]
 # For building
 # depexts: [
 #   [["debian"] ["python-clang-3.8" "libclang1-3.8"]]
