@@ -468,3527 +468,3538 @@ value stub__78_xed3_operand_get_modep55c(value x232)
    int x234 = xed3_operand_get_modep55c(x233);
    return Val_long(x234);
 }
-value stub__79_xed3_operand_get_modrm(value x235)
+value stub__79_xed3_operand_get_modrm_byte(value x235)
 {
    const xed_decoded_inst_t* x236 = CTYPES_ADDR_OF_FATPTR(x235);
-   int x237 = xed3_operand_get_modrm(x236);
+   int x237 = xed3_operand_get_modrm_byte(x236);
    return Val_long(x237);
 }
-value stub__80_xed3_operand_get_modrm_byte(value x238)
+value stub__80_xed3_operand_get_mpxmode(value x238)
 {
    const xed_decoded_inst_t* x239 = CTYPES_ADDR_OF_FATPTR(x238);
-   int x240 = xed3_operand_get_modrm_byte(x239);
+   int x240 = xed3_operand_get_mpxmode(x239);
    return Val_long(x240);
 }
-value stub__81_xed3_operand_get_mpxmode(value x241)
+value stub__81_xed3_operand_get_need_memdisp(value x241)
 {
    const xed_decoded_inst_t* x242 = CTYPES_ADDR_OF_FATPTR(x241);
-   int x243 = xed3_operand_get_mpxmode(x242);
+   int x243 = xed3_operand_get_need_memdisp(x242);
    return Val_long(x243);
 }
-value stub__82_xed3_operand_get_need_memdisp(value x244)
+value stub__82_xed3_operand_get_needrex(value x244)
 {
    const xed_decoded_inst_t* x245 = CTYPES_ADDR_OF_FATPTR(x244);
-   int x246 = xed3_operand_get_need_memdisp(x245);
+   int x246 = xed3_operand_get_needrex(x245);
    return Val_long(x246);
 }
-value stub__83_xed3_operand_get_needrex(value x247)
+value stub__83_xed3_operand_get_nelem(value x247)
 {
    const xed_decoded_inst_t* x248 = CTYPES_ADDR_OF_FATPTR(x247);
-   int x249 = xed3_operand_get_needrex(x248);
+   int x249 = xed3_operand_get_nelem(x248);
    return Val_long(x249);
 }
-value stub__84_xed3_operand_get_nelem(value x250)
+value stub__84_xed3_operand_get_no_scale_disp8(value x250)
 {
    const xed_decoded_inst_t* x251 = CTYPES_ADDR_OF_FATPTR(x250);
-   int x252 = xed3_operand_get_nelem(x251);
+   int x252 = xed3_operand_get_no_scale_disp8(x251);
    return Val_long(x252);
 }
-value stub__85_xed3_operand_get_no_scale_disp8(value x253)
+value stub__85_xed3_operand_get_nominal_opcode(value x253)
 {
    const xed_decoded_inst_t* x254 = CTYPES_ADDR_OF_FATPTR(x253);
-   int x255 = xed3_operand_get_no_scale_disp8(x254);
+   int x255 = xed3_operand_get_nominal_opcode(x254);
    return Val_long(x255);
 }
-value stub__86_xed3_operand_get_nominal_opcode(value x256)
+value stub__86_xed3_operand_get_norex(value x256)
 {
    const xed_decoded_inst_t* x257 = CTYPES_ADDR_OF_FATPTR(x256);
-   int x258 = xed3_operand_get_nominal_opcode(x257);
+   int x258 = xed3_operand_get_norex(x257);
    return Val_long(x258);
 }
-value stub__87_xed3_operand_get_norex(value x259)
+value stub__87_xed3_operand_get_nprefixes(value x259)
 {
    const xed_decoded_inst_t* x260 = CTYPES_ADDR_OF_FATPTR(x259);
-   int x261 = xed3_operand_get_norex(x260);
+   int x261 = xed3_operand_get_nprefixes(x260);
    return Val_long(x261);
 }
-value stub__88_xed3_operand_get_nprefixes(value x262)
+value stub__88_xed3_operand_get_nrexes(value x262)
 {
    const xed_decoded_inst_t* x263 = CTYPES_ADDR_OF_FATPTR(x262);
-   int x264 = xed3_operand_get_nprefixes(x263);
+   int x264 = xed3_operand_get_nrexes(x263);
    return Val_long(x264);
 }
-value stub__89_xed3_operand_get_nrexes(value x265)
+value stub__89_xed3_operand_get_nseg_prefixes(value x265)
 {
    const xed_decoded_inst_t* x266 = CTYPES_ADDR_OF_FATPTR(x265);
-   int x267 = xed3_operand_get_nrexes(x266);
+   int x267 = xed3_operand_get_nseg_prefixes(x266);
    return Val_long(x267);
 }
-value stub__90_xed3_operand_get_nseg_prefixes(value x268)
+value stub__90_xed3_operand_get_osz(value x268)
 {
    const xed_decoded_inst_t* x269 = CTYPES_ADDR_OF_FATPTR(x268);
-   int x270 = xed3_operand_get_nseg_prefixes(x269);
+   int x270 = xed3_operand_get_osz(x269);
    return Val_long(x270);
 }
-value stub__91_xed3_operand_get_osz(value x271)
+value stub__91_xed3_operand_get_out_of_bytes(value x271)
 {
    const xed_decoded_inst_t* x272 = CTYPES_ADDR_OF_FATPTR(x271);
-   int x273 = xed3_operand_get_osz(x272);
+   int x273 = xed3_operand_get_out_of_bytes(x272);
    return Val_long(x273);
 }
-value stub__92_xed3_operand_get_out_of_bytes(value x274)
+value stub__92_xed3_operand_get_outreg(value x274)
 {
    const xed_decoded_inst_t* x275 = CTYPES_ADDR_OF_FATPTR(x274);
-   int x276 = xed3_operand_get_out_of_bytes(x275);
+   int x276 = xed3_operand_get_outreg(x275);
    return Val_long(x276);
 }
-value stub__93_xed3_operand_get_outreg(value x277)
+value stub__93_xed3_operand_get_p4(value x277)
 {
    const xed_decoded_inst_t* x278 = CTYPES_ADDR_OF_FATPTR(x277);
-   int x279 = xed3_operand_get_outreg(x278);
+   int x279 = xed3_operand_get_p4(x278);
    return Val_long(x279);
 }
-value stub__94_xed3_operand_get_p4(value x280)
+value stub__94_xed3_operand_get_pos_disp(value x280)
 {
    const xed_decoded_inst_t* x281 = CTYPES_ADDR_OF_FATPTR(x280);
-   int x282 = xed3_operand_get_p4(x281);
+   int x282 = xed3_operand_get_pos_disp(x281);
    return Val_long(x282);
 }
-value stub__95_xed3_operand_get_pos_disp(value x283)
+value stub__95_xed3_operand_get_pos_imm(value x283)
 {
    const xed_decoded_inst_t* x284 = CTYPES_ADDR_OF_FATPTR(x283);
-   int x285 = xed3_operand_get_pos_disp(x284);
+   int x285 = xed3_operand_get_pos_imm(x284);
    return Val_long(x285);
 }
-value stub__96_xed3_operand_get_pos_imm(value x286)
+value stub__96_xed3_operand_get_pos_imm1(value x286)
 {
    const xed_decoded_inst_t* x287 = CTYPES_ADDR_OF_FATPTR(x286);
-   int x288 = xed3_operand_get_pos_imm(x287);
+   int x288 = xed3_operand_get_pos_imm1(x287);
    return Val_long(x288);
 }
-value stub__97_xed3_operand_get_pos_imm1(value x289)
+value stub__97_xed3_operand_get_pos_modrm(value x289)
 {
    const xed_decoded_inst_t* x290 = CTYPES_ADDR_OF_FATPTR(x289);
-   int x291 = xed3_operand_get_pos_imm1(x290);
+   int x291 = xed3_operand_get_pos_modrm(x290);
    return Val_long(x291);
 }
-value stub__98_xed3_operand_get_pos_modrm(value x292)
+value stub__98_xed3_operand_get_pos_nominal_opcode(value x292)
 {
    const xed_decoded_inst_t* x293 = CTYPES_ADDR_OF_FATPTR(x292);
-   int x294 = xed3_operand_get_pos_modrm(x293);
+   int x294 = xed3_operand_get_pos_nominal_opcode(x293);
    return Val_long(x294);
 }
-value stub__99_xed3_operand_get_pos_nominal_opcode(value x295)
+value stub__99_xed3_operand_get_pos_sib(value x295)
 {
    const xed_decoded_inst_t* x296 = CTYPES_ADDR_OF_FATPTR(x295);
-   int x297 = xed3_operand_get_pos_nominal_opcode(x296);
+   int x297 = xed3_operand_get_pos_sib(x296);
    return Val_long(x297);
 }
-value stub__100_xed3_operand_get_pos_sib(value x298)
+value stub__100_xed3_operand_get_prefix66(value x298)
 {
    const xed_decoded_inst_t* x299 = CTYPES_ADDR_OF_FATPTR(x298);
-   int x300 = xed3_operand_get_pos_sib(x299);
+   int x300 = xed3_operand_get_prefix66(x299);
    return Val_long(x300);
 }
-value stub__101_xed3_operand_get_prefix66(value x301)
+value stub__101_xed3_operand_get_ptr(value x301)
 {
    const xed_decoded_inst_t* x302 = CTYPES_ADDR_OF_FATPTR(x301);
-   int x303 = xed3_operand_get_prefix66(x302);
+   int x303 = xed3_operand_get_ptr(x302);
    return Val_long(x303);
 }
-value stub__102_xed3_operand_get_ptr(value x304)
+value stub__102_xed3_operand_get_realmode(value x304)
 {
    const xed_decoded_inst_t* x305 = CTYPES_ADDR_OF_FATPTR(x304);
-   int x306 = xed3_operand_get_ptr(x305);
+   int x306 = xed3_operand_get_realmode(x305);
    return Val_long(x306);
 }
-value stub__103_xed3_operand_get_realmode(value x307)
+value stub__103_xed3_operand_get_reg(value x307)
 {
    const xed_decoded_inst_t* x308 = CTYPES_ADDR_OF_FATPTR(x307);
-   int x309 = xed3_operand_get_realmode(x308);
+   int x309 = xed3_operand_get_reg(x308);
    return Val_long(x309);
 }
-value stub__104_xed3_operand_get_reg(value x310)
+value stub__104_xed3_operand_get_reg0(value x310)
 {
    const xed_decoded_inst_t* x311 = CTYPES_ADDR_OF_FATPTR(x310);
-   int x312 = xed3_operand_get_reg(x311);
+   int x312 = xed3_operand_get_reg0(x311);
    return Val_long(x312);
 }
-value stub__105_xed3_operand_get_reg0(value x313)
+value stub__105_xed3_operand_get_reg1(value x313)
 {
    const xed_decoded_inst_t* x314 = CTYPES_ADDR_OF_FATPTR(x313);
-   int x315 = xed3_operand_get_reg0(x314);
+   int x315 = xed3_operand_get_reg1(x314);
    return Val_long(x315);
 }
-value stub__106_xed3_operand_get_reg1(value x316)
+value stub__106_xed3_operand_get_reg2(value x316)
 {
    const xed_decoded_inst_t* x317 = CTYPES_ADDR_OF_FATPTR(x316);
-   int x318 = xed3_operand_get_reg1(x317);
+   int x318 = xed3_operand_get_reg2(x317);
    return Val_long(x318);
 }
-value stub__107_xed3_operand_get_reg2(value x319)
+value stub__107_xed3_operand_get_reg3(value x319)
 {
    const xed_decoded_inst_t* x320 = CTYPES_ADDR_OF_FATPTR(x319);
-   int x321 = xed3_operand_get_reg2(x320);
+   int x321 = xed3_operand_get_reg3(x320);
    return Val_long(x321);
 }
-value stub__108_xed3_operand_get_reg3(value x322)
+value stub__108_xed3_operand_get_reg4(value x322)
 {
    const xed_decoded_inst_t* x323 = CTYPES_ADDR_OF_FATPTR(x322);
-   int x324 = xed3_operand_get_reg3(x323);
+   int x324 = xed3_operand_get_reg4(x323);
    return Val_long(x324);
 }
-value stub__109_xed3_operand_get_reg4(value x325)
+value stub__109_xed3_operand_get_reg5(value x325)
 {
    const xed_decoded_inst_t* x326 = CTYPES_ADDR_OF_FATPTR(x325);
-   int x327 = xed3_operand_get_reg4(x326);
+   int x327 = xed3_operand_get_reg5(x326);
    return Val_long(x327);
 }
-value stub__110_xed3_operand_get_reg5(value x328)
+value stub__110_xed3_operand_get_reg6(value x328)
 {
    const xed_decoded_inst_t* x329 = CTYPES_ADDR_OF_FATPTR(x328);
-   int x330 = xed3_operand_get_reg5(x329);
+   int x330 = xed3_operand_get_reg6(x329);
    return Val_long(x330);
 }
-value stub__111_xed3_operand_get_reg6(value x331)
+value stub__111_xed3_operand_get_reg7(value x331)
 {
    const xed_decoded_inst_t* x332 = CTYPES_ADDR_OF_FATPTR(x331);
-   int x333 = xed3_operand_get_reg6(x332);
+   int x333 = xed3_operand_get_reg7(x332);
    return Val_long(x333);
 }
-value stub__112_xed3_operand_get_reg7(value x334)
+value stub__112_xed3_operand_get_reg8(value x334)
 {
    const xed_decoded_inst_t* x335 = CTYPES_ADDR_OF_FATPTR(x334);
-   int x336 = xed3_operand_get_reg7(x335);
+   int x336 = xed3_operand_get_reg8(x335);
    return Val_long(x336);
 }
-value stub__113_xed3_operand_get_reg8(value x337)
+value stub__113_xed3_operand_get_relbr(value x337)
 {
    const xed_decoded_inst_t* x338 = CTYPES_ADDR_OF_FATPTR(x337);
-   int x339 = xed3_operand_get_reg8(x338);
+   int x339 = xed3_operand_get_relbr(x338);
    return Val_long(x339);
 }
-value stub__114_xed3_operand_get_relbr(value x340)
+value stub__114_xed3_operand_get_rep(value x340)
 {
    const xed_decoded_inst_t* x341 = CTYPES_ADDR_OF_FATPTR(x340);
-   int x342 = xed3_operand_get_relbr(x341);
+   int x342 = xed3_operand_get_rep(x341);
    return Val_long(x342);
 }
-value stub__115_xed3_operand_get_rep(value x343)
+value stub__115_xed3_operand_get_rex(value x343)
 {
    const xed_decoded_inst_t* x344 = CTYPES_ADDR_OF_FATPTR(x343);
-   int x345 = xed3_operand_get_rep(x344);
+   int x345 = xed3_operand_get_rex(x344);
    return Val_long(x345);
 }
-value stub__116_xed3_operand_get_rex(value x346)
+value stub__116_xed3_operand_get_rexb(value x346)
 {
    const xed_decoded_inst_t* x347 = CTYPES_ADDR_OF_FATPTR(x346);
-   int x348 = xed3_operand_get_rex(x347);
+   int x348 = xed3_operand_get_rexb(x347);
    return Val_long(x348);
 }
-value stub__117_xed3_operand_get_rexb(value x349)
+value stub__117_xed3_operand_get_rexr(value x349)
 {
    const xed_decoded_inst_t* x350 = CTYPES_ADDR_OF_FATPTR(x349);
-   int x351 = xed3_operand_get_rexb(x350);
+   int x351 = xed3_operand_get_rexr(x350);
    return Val_long(x351);
 }
-value stub__118_xed3_operand_get_rexr(value x352)
+value stub__118_xed3_operand_get_rexrr(value x352)
 {
    const xed_decoded_inst_t* x353 = CTYPES_ADDR_OF_FATPTR(x352);
-   int x354 = xed3_operand_get_rexr(x353);
+   int x354 = xed3_operand_get_rexrr(x353);
    return Val_long(x354);
 }
-value stub__119_xed3_operand_get_rexrr(value x355)
+value stub__119_xed3_operand_get_rexw(value x355)
 {
    const xed_decoded_inst_t* x356 = CTYPES_ADDR_OF_FATPTR(x355);
-   int x357 = xed3_operand_get_rexrr(x356);
+   int x357 = xed3_operand_get_rexw(x356);
    return Val_long(x357);
 }
-value stub__120_xed3_operand_get_rexw(value x358)
+value stub__120_xed3_operand_get_rexx(value x358)
 {
    const xed_decoded_inst_t* x359 = CTYPES_ADDR_OF_FATPTR(x358);
-   int x360 = xed3_operand_get_rexw(x359);
+   int x360 = xed3_operand_get_rexx(x359);
    return Val_long(x360);
 }
-value stub__121_xed3_operand_get_rexx(value x361)
+value stub__121_xed3_operand_get_rm(value x361)
 {
    const xed_decoded_inst_t* x362 = CTYPES_ADDR_OF_FATPTR(x361);
-   int x363 = xed3_operand_get_rexx(x362);
+   int x363 = xed3_operand_get_rm(x362);
    return Val_long(x363);
 }
-value stub__122_xed3_operand_get_rm(value x364)
+value stub__122_xed3_operand_get_roundc(value x364)
 {
    const xed_decoded_inst_t* x365 = CTYPES_ADDR_OF_FATPTR(x364);
-   int x366 = xed3_operand_get_rm(x365);
+   int x366 = xed3_operand_get_roundc(x365);
    return Val_long(x366);
 }
-value stub__123_xed3_operand_get_roundc(value x367)
+value stub__123_xed3_operand_get_sae(value x367)
 {
    const xed_decoded_inst_t* x368 = CTYPES_ADDR_OF_FATPTR(x367);
-   int x369 = xed3_operand_get_roundc(x368);
+   int x369 = xed3_operand_get_sae(x368);
    return Val_long(x369);
 }
-value stub__124_xed3_operand_get_sae(value x370)
+value stub__124_xed3_operand_get_scale(value x370)
 {
    const xed_decoded_inst_t* x371 = CTYPES_ADDR_OF_FATPTR(x370);
-   int x372 = xed3_operand_get_sae(x371);
+   int x372 = xed3_operand_get_scale(x371);
    return Val_long(x372);
 }
-value stub__125_xed3_operand_get_scale(value x373)
+value stub__125_xed3_operand_get_seg0(value x373)
 {
    const xed_decoded_inst_t* x374 = CTYPES_ADDR_OF_FATPTR(x373);
-   int x375 = xed3_operand_get_scale(x374);
+   int x375 = xed3_operand_get_seg0(x374);
    return Val_long(x375);
 }
-value stub__126_xed3_operand_get_seg0(value x376)
+value stub__126_xed3_operand_get_seg1(value x376)
 {
    const xed_decoded_inst_t* x377 = CTYPES_ADDR_OF_FATPTR(x376);
-   int x378 = xed3_operand_get_seg0(x377);
+   int x378 = xed3_operand_get_seg1(x377);
    return Val_long(x378);
 }
-value stub__127_xed3_operand_get_seg1(value x379)
+value stub__127_xed3_operand_get_seg_ovd(value x379)
 {
    const xed_decoded_inst_t* x380 = CTYPES_ADDR_OF_FATPTR(x379);
-   int x381 = xed3_operand_get_seg1(x380);
+   int x381 = xed3_operand_get_seg_ovd(x380);
    return Val_long(x381);
 }
-value stub__128_xed3_operand_get_seg_ovd(value x382)
+value stub__128_xed3_operand_get_sib(value x382)
 {
    const xed_decoded_inst_t* x383 = CTYPES_ADDR_OF_FATPTR(x382);
-   int x384 = xed3_operand_get_seg_ovd(x383);
+   int x384 = xed3_operand_get_sib(x383);
    return Val_long(x384);
 }
-value stub__129_xed3_operand_get_sib(value x385)
+value stub__129_xed3_operand_get_sibbase(value x385)
 {
    const xed_decoded_inst_t* x386 = CTYPES_ADDR_OF_FATPTR(x385);
-   int x387 = xed3_operand_get_sib(x386);
+   int x387 = xed3_operand_get_sibbase(x386);
    return Val_long(x387);
 }
-value stub__130_xed3_operand_get_sibbase(value x388)
+value stub__130_xed3_operand_get_sibindex(value x388)
 {
    const xed_decoded_inst_t* x389 = CTYPES_ADDR_OF_FATPTR(x388);
-   int x390 = xed3_operand_get_sibbase(x389);
+   int x390 = xed3_operand_get_sibindex(x389);
    return Val_long(x390);
 }
-value stub__131_xed3_operand_get_sibindex(value x391)
+value stub__131_xed3_operand_get_sibscale(value x391)
 {
    const xed_decoded_inst_t* x392 = CTYPES_ADDR_OF_FATPTR(x391);
-   int x393 = xed3_operand_get_sibindex(x392);
+   int x393 = xed3_operand_get_sibscale(x392);
    return Val_long(x393);
 }
-value stub__132_xed3_operand_get_sibscale(value x394)
+value stub__132_xed3_operand_get_skip_osz(value x394)
 {
    const xed_decoded_inst_t* x395 = CTYPES_ADDR_OF_FATPTR(x394);
-   int x396 = xed3_operand_get_sibscale(x395);
+   int x396 = xed3_operand_get_skip_osz(x395);
    return Val_long(x396);
 }
-value stub__133_xed3_operand_get_skip_osz(value x397)
+value stub__133_xed3_operand_get_smode(value x397)
 {
    const xed_decoded_inst_t* x398 = CTYPES_ADDR_OF_FATPTR(x397);
-   int x399 = xed3_operand_get_skip_osz(x398);
+   int x399 = xed3_operand_get_smode(x398);
    return Val_long(x399);
 }
-value stub__134_xed3_operand_get_smode(value x400)
+value stub__134_xed3_operand_get_srm(value x400)
 {
    const xed_decoded_inst_t* x401 = CTYPES_ADDR_OF_FATPTR(x400);
-   int x402 = xed3_operand_get_smode(x401);
+   int x402 = xed3_operand_get_srm(x401);
    return Val_long(x402);
 }
-value stub__135_xed3_operand_get_srm(value x403)
+value stub__135_xed3_operand_get_type(value x403)
 {
    const xed_decoded_inst_t* x404 = CTYPES_ADDR_OF_FATPTR(x403);
-   int x405 = xed3_operand_get_srm(x404);
+   int x405 = xed3_operand_get_type(x404);
    return Val_long(x405);
 }
-value stub__136_xed3_operand_get_type(value x406)
+value stub__136_xed3_operand_get_tzcnt(value x406)
 {
    const xed_decoded_inst_t* x407 = CTYPES_ADDR_OF_FATPTR(x406);
-   int x408 = xed3_operand_get_type(x407);
+   int x408 = xed3_operand_get_tzcnt(x407);
    return Val_long(x408);
 }
-value stub__137_xed3_operand_get_tzcnt(value x409)
+value stub__137_xed3_operand_get_ubit(value x409)
 {
    const xed_decoded_inst_t* x410 = CTYPES_ADDR_OF_FATPTR(x409);
-   int x411 = xed3_operand_get_tzcnt(x410);
+   int x411 = xed3_operand_get_ubit(x410);
    return Val_long(x411);
 }
-value stub__138_xed3_operand_get_ubit(value x412)
+value stub__138_xed3_operand_get_uimm0(value x412)
 {
    const xed_decoded_inst_t* x413 = CTYPES_ADDR_OF_FATPTR(x412);
-   int x414 = xed3_operand_get_ubit(x413);
-   return Val_long(x414);
+   uint64_t x414 = xed3_operand_get_uimm0(x413);
+   return integers_copy_uint64(x414);
 }
-value stub__139_xed3_operand_get_uimm0(value x415)
+value stub__139_xed3_operand_get_uimm1(value x415)
 {
    const xed_decoded_inst_t* x416 = CTYPES_ADDR_OF_FATPTR(x415);
-   uint64_t x417 = xed3_operand_get_uimm0(x416);
-   return integers_copy_uint64(x417);
+   char x417 = xed3_operand_get_uimm1(x416);
+   return Ctypes_val_char(x417);
 }
-value stub__140_xed3_operand_get_uimm1(value x418)
+value stub__140_xed3_operand_get_using_default_segment0(value x418)
 {
    const xed_decoded_inst_t* x419 = CTYPES_ADDR_OF_FATPTR(x418);
-   char x420 = xed3_operand_get_uimm1(x419);
-   return Ctypes_val_char(x420);
+   int x420 = xed3_operand_get_using_default_segment0(x419);
+   return Val_long(x420);
 }
-value stub__141_xed3_operand_get_using_default_segment0(value x421)
+value stub__141_xed3_operand_get_using_default_segment1(value x421)
 {
    const xed_decoded_inst_t* x422 = CTYPES_ADDR_OF_FATPTR(x421);
-   int x423 = xed3_operand_get_using_default_segment0(x422);
+   int x423 = xed3_operand_get_using_default_segment1(x422);
    return Val_long(x423);
 }
-value stub__142_xed3_operand_get_using_default_segment1(value x424)
+value stub__142_xed3_operand_get_vex_c4(value x424)
 {
    const xed_decoded_inst_t* x425 = CTYPES_ADDR_OF_FATPTR(x424);
-   int x426 = xed3_operand_get_using_default_segment1(x425);
+   int x426 = xed3_operand_get_vex_c4(x425);
    return Val_long(x426);
 }
-value stub__143_xed3_operand_get_vex_c4(value x427)
+value stub__143_xed3_operand_get_vex_prefix(value x427)
 {
    const xed_decoded_inst_t* x428 = CTYPES_ADDR_OF_FATPTR(x427);
-   int x429 = xed3_operand_get_vex_c4(x428);
+   int x429 = xed3_operand_get_vex_prefix(x428);
    return Val_long(x429);
 }
-value stub__144_xed3_operand_get_vex_prefix(value x430)
+value stub__144_xed3_operand_get_vexdest210(value x430)
 {
    const xed_decoded_inst_t* x431 = CTYPES_ADDR_OF_FATPTR(x430);
-   int x432 = xed3_operand_get_vex_prefix(x431);
+   int x432 = xed3_operand_get_vexdest210(x431);
    return Val_long(x432);
 }
-value stub__145_xed3_operand_get_vexdest210(value x433)
+value stub__145_xed3_operand_get_vexdest3(value x433)
 {
    const xed_decoded_inst_t* x434 = CTYPES_ADDR_OF_FATPTR(x433);
-   int x435 = xed3_operand_get_vexdest210(x434);
+   int x435 = xed3_operand_get_vexdest3(x434);
    return Val_long(x435);
 }
-value stub__146_xed3_operand_get_vexdest3(value x436)
+value stub__146_xed3_operand_get_vexdest4(value x436)
 {
    const xed_decoded_inst_t* x437 = CTYPES_ADDR_OF_FATPTR(x436);
-   int x438 = xed3_operand_get_vexdest3(x437);
+   int x438 = xed3_operand_get_vexdest4(x437);
    return Val_long(x438);
 }
-value stub__147_xed3_operand_get_vexdest4(value x439)
+value stub__147_xed3_operand_get_vexvalid(value x439)
 {
    const xed_decoded_inst_t* x440 = CTYPES_ADDR_OF_FATPTR(x439);
-   int x441 = xed3_operand_get_vexdest4(x440);
+   int x441 = xed3_operand_get_vexvalid(x440);
    return Val_long(x441);
 }
-value stub__148_xed3_operand_get_vexvalid(value x442)
+value stub__148_xed3_operand_get_vl(value x442)
 {
    const xed_decoded_inst_t* x443 = CTYPES_ADDR_OF_FATPTR(x442);
-   int x444 = xed3_operand_get_vexvalid(x443);
+   int x444 = xed3_operand_get_vl(x443);
    return Val_long(x444);
 }
-value stub__149_xed3_operand_get_vl(value x445)
+value stub__149_xed3_operand_get_zeroing(value x445)
 {
    const xed_decoded_inst_t* x446 = CTYPES_ADDR_OF_FATPTR(x445);
-   int x447 = xed3_operand_get_vl(x446);
+   int x447 = xed3_operand_get_zeroing(x446);
    return Val_long(x447);
 }
-value stub__150_xed3_operand_get_zeroing(value x448)
+value stub__150_xed3_operand_set_agen(value x449, value x448)
 {
-   const xed_decoded_inst_t* x449 = CTYPES_ADDR_OF_FATPTR(x448);
-   int x450 = xed3_operand_get_zeroing(x449);
-   return Val_long(x450);
+   xed_decoded_inst_t* x450 = CTYPES_ADDR_OF_FATPTR(x449);
+   int x451 = Long_val(x448);
+   xed3_operand_set_agen(x450, x451);
+   return Val_unit;
 }
-value stub__151_xed3_operand_set_agen(value x452, value x451)
+value stub__151_xed3_operand_set_amd3dnow(value x456, value x455)
 {
-   xed_decoded_inst_t* x453 = CTYPES_ADDR_OF_FATPTR(x452);
-   int x454 = Long_val(x451);
-   xed3_operand_set_agen(x453, x454);
+   xed_decoded_inst_t* x457 = CTYPES_ADDR_OF_FATPTR(x456);
+   int x458 = Long_val(x455);
+   xed3_operand_set_amd3dnow(x457, x458);
    return Val_unit;
 }
-value stub__152_xed3_operand_set_amd3dnow(value x459, value x458)
+value stub__152_xed3_operand_set_asz(value x463, value x462)
 {
-   xed_decoded_inst_t* x460 = CTYPES_ADDR_OF_FATPTR(x459);
-   int x461 = Long_val(x458);
-   xed3_operand_set_amd3dnow(x460, x461);
+   xed_decoded_inst_t* x464 = CTYPES_ADDR_OF_FATPTR(x463);
+   int x465 = Long_val(x462);
+   xed3_operand_set_asz(x464, x465);
    return Val_unit;
 }
-value stub__153_xed3_operand_set_asz(value x466, value x465)
+value stub__153_xed3_operand_set_base0(value x470, value x469)
 {
-   xed_decoded_inst_t* x467 = CTYPES_ADDR_OF_FATPTR(x466);
-   int x468 = Long_val(x465);
-   xed3_operand_set_asz(x467, x468);
+   xed_decoded_inst_t* x471 = CTYPES_ADDR_OF_FATPTR(x470);
+   int x472 = Long_val(x469);
+   xed3_operand_set_base0(x471, x472);
    return Val_unit;
 }
-value stub__154_xed3_operand_set_base0(value x473, value x472)
+value stub__154_xed3_operand_set_base1(value x477, value x476)
 {
-   xed_decoded_inst_t* x474 = CTYPES_ADDR_OF_FATPTR(x473);
-   int x475 = Long_val(x472);
-   xed3_operand_set_base0(x474, x475);
+   xed_decoded_inst_t* x478 = CTYPES_ADDR_OF_FATPTR(x477);
+   int x479 = Long_val(x476);
+   xed3_operand_set_base1(x478, x479);
    return Val_unit;
 }
-value stub__155_xed3_operand_set_base1(value x480, value x479)
+value stub__155_xed3_operand_set_bcast(value x484, value x483)
 {
-   xed_decoded_inst_t* x481 = CTYPES_ADDR_OF_FATPTR(x480);
-   int x482 = Long_val(x479);
-   xed3_operand_set_base1(x481, x482);
+   xed_decoded_inst_t* x485 = CTYPES_ADDR_OF_FATPTR(x484);
+   int x486 = Long_val(x483);
+   xed3_operand_set_bcast(x485, x486);
    return Val_unit;
 }
-value stub__156_xed3_operand_set_bcast(value x487, value x486)
+value stub__156_xed3_operand_set_bcrc(value x491, value x490)
 {
-   xed_decoded_inst_t* x488 = CTYPES_ADDR_OF_FATPTR(x487);
-   int x489 = Long_val(x486);
-   xed3_operand_set_bcast(x488, x489);
+   xed_decoded_inst_t* x492 = CTYPES_ADDR_OF_FATPTR(x491);
+   int x493 = Long_val(x490);
+   xed3_operand_set_bcrc(x492, x493);
    return Val_unit;
 }
-value stub__157_xed3_operand_set_bcrc(value x494, value x493)
+value stub__157_xed3_operand_set_brdisp_width(value x498, value x497)
 {
-   xed_decoded_inst_t* x495 = CTYPES_ADDR_OF_FATPTR(x494);
-   int x496 = Long_val(x493);
-   xed3_operand_set_bcrc(x495, x496);
+   xed_decoded_inst_t* x499 = CTYPES_ADDR_OF_FATPTR(x498);
+   int x500 = Int_val(x497);
+   xed3_operand_set_brdisp_width(x499, (char)x500);
    return Val_unit;
 }
-value stub__158_xed3_operand_set_brdisp_width(value x501, value x500)
+value stub__158_xed3_operand_set_cet(value x505, value x504)
 {
-   xed_decoded_inst_t* x502 = CTYPES_ADDR_OF_FATPTR(x501);
-   int x503 = Int_val(x500);
-   xed3_operand_set_brdisp_width(x502, (char)x503);
+   xed_decoded_inst_t* x506 = CTYPES_ADDR_OF_FATPTR(x505);
+   int x507 = Long_val(x504);
+   xed3_operand_set_cet(x506, x507);
    return Val_unit;
 }
-value stub__159_xed3_operand_set_cet(value x508, value x507)
+value stub__159_xed3_operand_set_chip(value x512, value x511)
 {
-   xed_decoded_inst_t* x509 = CTYPES_ADDR_OF_FATPTR(x508);
-   int x510 = Long_val(x507);
-   xed3_operand_set_cet(x509, x510);
+   xed_decoded_inst_t* x513 = CTYPES_ADDR_OF_FATPTR(x512);
+   int x514 = Long_val(x511);
+   xed3_operand_set_chip(x513, x514);
    return Val_unit;
 }
-value stub__160_xed3_operand_set_chip(value x515, value x514)
+value stub__160_xed3_operand_set_default_seg(value x519, value x518)
 {
-   xed_decoded_inst_t* x516 = CTYPES_ADDR_OF_FATPTR(x515);
-   int x517 = Long_val(x514);
-   xed3_operand_set_chip(x516, x517);
+   xed_decoded_inst_t* x520 = CTYPES_ADDR_OF_FATPTR(x519);
+   int x521 = Long_val(x518);
+   xed3_operand_set_default_seg(x520, x521);
    return Val_unit;
 }
-value stub__161_xed3_operand_set_default_seg(value x522, value x521)
+value stub__161_xed3_operand_set_df32(value x526, value x525)
 {
-   xed_decoded_inst_t* x523 = CTYPES_ADDR_OF_FATPTR(x522);
-   int x524 = Long_val(x521);
-   xed3_operand_set_default_seg(x523, x524);
+   xed_decoded_inst_t* x527 = CTYPES_ADDR_OF_FATPTR(x526);
+   int x528 = Long_val(x525);
+   xed3_operand_set_df32(x527, x528);
    return Val_unit;
 }
-value stub__162_xed3_operand_set_df32(value x529, value x528)
+value stub__162_xed3_operand_set_df64(value x533, value x532)
 {
-   xed_decoded_inst_t* x530 = CTYPES_ADDR_OF_FATPTR(x529);
-   int x531 = Long_val(x528);
-   xed3_operand_set_df32(x530, x531);
+   xed_decoded_inst_t* x534 = CTYPES_ADDR_OF_FATPTR(x533);
+   int x535 = Long_val(x532);
+   xed3_operand_set_df64(x534, x535);
    return Val_unit;
 }
-value stub__163_xed3_operand_set_df64(value x536, value x535)
+value stub__163_xed3_operand_set_disp(value x540, value x539)
 {
-   xed_decoded_inst_t* x537 = CTYPES_ADDR_OF_FATPTR(x536);
-   int x538 = Long_val(x535);
-   xed3_operand_set_df64(x537, x538);
+   xed_decoded_inst_t* x541 = CTYPES_ADDR_OF_FATPTR(x540);
+   int64_t x542 = Int64_val(x539);
+   xed3_operand_set_disp(x541, x542);
    return Val_unit;
 }
-value stub__164_xed3_operand_set_disp(value x543, value x542)
+value stub__164_xed3_operand_set_disp_width(value x547, value x546)
 {
-   xed_decoded_inst_t* x544 = CTYPES_ADDR_OF_FATPTR(x543);
-   int64_t x545 = Int64_val(x542);
-   xed3_operand_set_disp(x544, x545);
+   xed_decoded_inst_t* x548 = CTYPES_ADDR_OF_FATPTR(x547);
+   int x549 = Int_val(x546);
+   xed3_operand_set_disp_width(x548, (char)x549);
    return Val_unit;
 }
-value stub__165_xed3_operand_set_disp_width(value x550, value x549)
+value stub__165_xed3_operand_set_dummy(value x554, value x553)
 {
-   xed_decoded_inst_t* x551 = CTYPES_ADDR_OF_FATPTR(x550);
-   int x552 = Int_val(x549);
-   xed3_operand_set_disp_width(x551, (char)x552);
+   xed_decoded_inst_t* x555 = CTYPES_ADDR_OF_FATPTR(x554);
+   int x556 = Long_val(x553);
+   xed3_operand_set_dummy(x555, x556);
    return Val_unit;
 }
-value stub__166_xed3_operand_set_dummy(value x557, value x556)
+value stub__166_xed3_operand_set_easz(value x561, value x560)
 {
-   xed_decoded_inst_t* x558 = CTYPES_ADDR_OF_FATPTR(x557);
-   int x559 = Long_val(x556);
-   xed3_operand_set_dummy(x558, x559);
+   xed_decoded_inst_t* x562 = CTYPES_ADDR_OF_FATPTR(x561);
+   int x563 = Long_val(x560);
+   xed3_operand_set_easz(x562, x563);
    return Val_unit;
 }
-value stub__167_xed3_operand_set_easz(value x564, value x563)
+value stub__167_xed3_operand_set_element_size(value x568, value x567)
 {
-   xed_decoded_inst_t* x565 = CTYPES_ADDR_OF_FATPTR(x564);
-   int x566 = Long_val(x563);
-   xed3_operand_set_easz(x565, x566);
+   xed_decoded_inst_t* x569 = CTYPES_ADDR_OF_FATPTR(x568);
+   int x570 = Long_val(x567);
+   xed3_operand_set_element_size(x569, x570);
    return Val_unit;
 }
-value stub__168_xed3_operand_set_element_size(value x571, value x570)
+value stub__168_xed3_operand_set_encoder_preferred(value x575, value x574)
 {
-   xed_decoded_inst_t* x572 = CTYPES_ADDR_OF_FATPTR(x571);
-   int x573 = Long_val(x570);
-   xed3_operand_set_element_size(x572, x573);
+   xed_decoded_inst_t* x576 = CTYPES_ADDR_OF_FATPTR(x575);
+   int x577 = Long_val(x574);
+   xed3_operand_set_encoder_preferred(x576, x577);
    return Val_unit;
 }
-value stub__169_xed3_operand_set_encoder_preferred(value x578, value x577)
+value stub__169_xed3_operand_set_eosz(value x582, value x581)
 {
-   xed_decoded_inst_t* x579 = CTYPES_ADDR_OF_FATPTR(x578);
-   int x580 = Long_val(x577);
-   xed3_operand_set_encoder_preferred(x579, x580);
+   xed_decoded_inst_t* x583 = CTYPES_ADDR_OF_FATPTR(x582);
+   int x584 = Long_val(x581);
+   xed3_operand_set_eosz(x583, x584);
    return Val_unit;
 }
-value stub__170_xed3_operand_set_eosz(value x585, value x584)
+value stub__170_xed3_operand_set_error(value x589, value x588)
 {
-   xed_decoded_inst_t* x586 = CTYPES_ADDR_OF_FATPTR(x585);
-   int x587 = Long_val(x584);
-   xed3_operand_set_eosz(x586, x587);
+   xed_decoded_inst_t* x590 = CTYPES_ADDR_OF_FATPTR(x589);
+   int x591 = Long_val(x588);
+   xed3_operand_set_error(x590, x591);
    return Val_unit;
 }
-value stub__171_xed3_operand_set_error(value x592, value x591)
+value stub__171_xed3_operand_set_esrc(value x596, value x595)
 {
-   xed_decoded_inst_t* x593 = CTYPES_ADDR_OF_FATPTR(x592);
-   int x594 = Long_val(x591);
-   xed3_operand_set_error(x593, x594);
+   xed_decoded_inst_t* x597 = CTYPES_ADDR_OF_FATPTR(x596);
+   int x598 = Long_val(x595);
+   xed3_operand_set_esrc(x597, x598);
    return Val_unit;
 }
-value stub__172_xed3_operand_set_esrc(value x599, value x598)
+value stub__172_xed3_operand_set_evexrr(value x603, value x602)
 {
-   xed_decoded_inst_t* x600 = CTYPES_ADDR_OF_FATPTR(x599);
-   int x601 = Long_val(x598);
-   xed3_operand_set_esrc(x600, x601);
+   xed_decoded_inst_t* x604 = CTYPES_ADDR_OF_FATPTR(x603);
+   int x605 = Long_val(x602);
+   xed3_operand_set_evexrr(x604, x605);
    return Val_unit;
 }
-value stub__173_xed3_operand_set_evexrr(value x606, value x605)
+value stub__173_xed3_operand_set_first_f2f3(value x610, value x609)
 {
-   xed_decoded_inst_t* x607 = CTYPES_ADDR_OF_FATPTR(x606);
-   int x608 = Long_val(x605);
-   xed3_operand_set_evexrr(x607, x608);
+   xed_decoded_inst_t* x611 = CTYPES_ADDR_OF_FATPTR(x610);
+   int x612 = Long_val(x609);
+   xed3_operand_set_first_f2f3(x611, x612);
    return Val_unit;
 }
-value stub__174_xed3_operand_set_first_f2f3(value x613, value x612)
+value stub__174_xed3_operand_set_has_modrm(value x617, value x616)
 {
-   xed_decoded_inst_t* x614 = CTYPES_ADDR_OF_FATPTR(x613);
-   int x615 = Long_val(x612);
-   xed3_operand_set_first_f2f3(x614, x615);
+   xed_decoded_inst_t* x618 = CTYPES_ADDR_OF_FATPTR(x617);
+   int x619 = Long_val(x616);
+   xed3_operand_set_has_modrm(x618, x619);
    return Val_unit;
 }
-value stub__175_xed3_operand_set_has_modrm(value x620, value x619)
+value stub__175_xed3_operand_set_has_sib(value x624, value x623)
 {
-   xed_decoded_inst_t* x621 = CTYPES_ADDR_OF_FATPTR(x620);
-   int x622 = Long_val(x619);
-   xed3_operand_set_has_modrm(x621, x622);
+   xed_decoded_inst_t* x625 = CTYPES_ADDR_OF_FATPTR(x624);
+   int x626 = Long_val(x623);
+   xed3_operand_set_has_sib(x625, x626);
    return Val_unit;
 }
-value stub__176_xed3_operand_set_has_sib(value x627, value x626)
+value stub__176_xed3_operand_set_hint(value x631, value x630)
 {
-   xed_decoded_inst_t* x628 = CTYPES_ADDR_OF_FATPTR(x627);
-   int x629 = Long_val(x626);
-   xed3_operand_set_has_sib(x628, x629);
+   xed_decoded_inst_t* x632 = CTYPES_ADDR_OF_FATPTR(x631);
+   int x633 = Long_val(x630);
+   xed3_operand_set_hint(x632, x633);
    return Val_unit;
 }
-value stub__177_xed3_operand_set_hint(value x634, value x633)
+value stub__177_xed3_operand_set_iclass(value x638, value x637)
 {
-   xed_decoded_inst_t* x635 = CTYPES_ADDR_OF_FATPTR(x634);
-   int x636 = Long_val(x633);
-   xed3_operand_set_hint(x635, x636);
+   xed_decoded_inst_t* x639 = CTYPES_ADDR_OF_FATPTR(x638);
+   int x640 = Long_val(x637);
+   xed3_operand_set_iclass(x639, x640);
    return Val_unit;
 }
-value stub__178_xed3_operand_set_iclass(value x641, value x640)
+value stub__178_xed3_operand_set_ild_f2(value x645, value x644)
 {
-   xed_decoded_inst_t* x642 = CTYPES_ADDR_OF_FATPTR(x641);
-   int x643 = Long_val(x640);
-   xed3_operand_set_iclass(x642, x643);
+   xed_decoded_inst_t* x646 = CTYPES_ADDR_OF_FATPTR(x645);
+   int x647 = Long_val(x644);
+   xed3_operand_set_ild_f2(x646, x647);
    return Val_unit;
 }
-value stub__179_xed3_operand_set_ild_f2(value x648, value x647)
+value stub__179_xed3_operand_set_ild_f3(value x652, value x651)
 {
-   xed_decoded_inst_t* x649 = CTYPES_ADDR_OF_FATPTR(x648);
-   int x650 = Long_val(x647);
-   xed3_operand_set_ild_f2(x649, x650);
+   xed_decoded_inst_t* x653 = CTYPES_ADDR_OF_FATPTR(x652);
+   int x654 = Long_val(x651);
+   xed3_operand_set_ild_f3(x653, x654);
    return Val_unit;
 }
-value stub__180_xed3_operand_set_ild_f3(value x655, value x654)
+value stub__180_xed3_operand_set_ild_seg(value x659, value x658)
 {
-   xed_decoded_inst_t* x656 = CTYPES_ADDR_OF_FATPTR(x655);
-   int x657 = Long_val(x654);
-   xed3_operand_set_ild_f3(x656, x657);
+   xed_decoded_inst_t* x660 = CTYPES_ADDR_OF_FATPTR(x659);
+   int x661 = Long_val(x658);
+   xed3_operand_set_ild_seg(x660, x661);
    return Val_unit;
 }
-value stub__181_xed3_operand_set_ild_seg(value x662, value x661)
+value stub__181_xed3_operand_set_imm0(value x666, value x665)
 {
-   xed_decoded_inst_t* x663 = CTYPES_ADDR_OF_FATPTR(x662);
-   int x664 = Long_val(x661);
-   xed3_operand_set_ild_seg(x663, x664);
+   xed_decoded_inst_t* x667 = CTYPES_ADDR_OF_FATPTR(x666);
+   int x668 = Long_val(x665);
+   xed3_operand_set_imm0(x667, x668);
    return Val_unit;
 }
-value stub__182_xed3_operand_set_imm0(value x669, value x668)
+value stub__182_xed3_operand_set_imm0signed(value x673, value x672)
 {
-   xed_decoded_inst_t* x670 = CTYPES_ADDR_OF_FATPTR(x669);
-   int x671 = Long_val(x668);
-   xed3_operand_set_imm0(x670, x671);
+   xed_decoded_inst_t* x674 = CTYPES_ADDR_OF_FATPTR(x673);
+   int x675 = Long_val(x672);
+   xed3_operand_set_imm0signed(x674, x675);
    return Val_unit;
 }
-value stub__183_xed3_operand_set_imm0signed(value x676, value x675)
+value stub__183_xed3_operand_set_imm1(value x680, value x679)
 {
-   xed_decoded_inst_t* x677 = CTYPES_ADDR_OF_FATPTR(x676);
-   int x678 = Long_val(x675);
-   xed3_operand_set_imm0signed(x677, x678);
+   xed_decoded_inst_t* x681 = CTYPES_ADDR_OF_FATPTR(x680);
+   int x682 = Long_val(x679);
+   xed3_operand_set_imm1(x681, x682);
    return Val_unit;
 }
-value stub__184_xed3_operand_set_imm1(value x683, value x682)
+value stub__184_xed3_operand_set_imm1_bytes(value x687, value x686)
 {
-   xed_decoded_inst_t* x684 = CTYPES_ADDR_OF_FATPTR(x683);
-   int x685 = Long_val(x682);
-   xed3_operand_set_imm1(x684, x685);
+   xed_decoded_inst_t* x688 = CTYPES_ADDR_OF_FATPTR(x687);
+   int x689 = Long_val(x686);
+   xed3_operand_set_imm1_bytes(x688, x689);
    return Val_unit;
 }
-value stub__185_xed3_operand_set_imm1_bytes(value x690, value x689)
+value stub__185_xed3_operand_set_imm_width(value x694, value x693)
 {
-   xed_decoded_inst_t* x691 = CTYPES_ADDR_OF_FATPTR(x690);
-   int x692 = Long_val(x689);
-   xed3_operand_set_imm1_bytes(x691, x692);
+   xed_decoded_inst_t* x695 = CTYPES_ADDR_OF_FATPTR(x694);
+   int x696 = Int_val(x693);
+   xed3_operand_set_imm_width(x695, (char)x696);
    return Val_unit;
 }
-value stub__186_xed3_operand_set_imm_width(value x697, value x696)
+value stub__186_xed3_operand_set_index(value x701, value x700)
 {
-   xed_decoded_inst_t* x698 = CTYPES_ADDR_OF_FATPTR(x697);
-   int x699 = Int_val(x696);
-   xed3_operand_set_imm_width(x698, (char)x699);
+   xed_decoded_inst_t* x702 = CTYPES_ADDR_OF_FATPTR(x701);
+   int x703 = Long_val(x700);
+   xed3_operand_set_index(x702, x703);
    return Val_unit;
 }
-value stub__187_xed3_operand_set_index(value x704, value x703)
+value stub__187_xed3_operand_set_last_f2f3(value x708, value x707)
 {
-   xed_decoded_inst_t* x705 = CTYPES_ADDR_OF_FATPTR(x704);
-   int x706 = Long_val(x703);
-   xed3_operand_set_index(x705, x706);
+   xed_decoded_inst_t* x709 = CTYPES_ADDR_OF_FATPTR(x708);
+   int x710 = Long_val(x707);
+   xed3_operand_set_last_f2f3(x709, x710);
    return Val_unit;
 }
-value stub__188_xed3_operand_set_last_f2f3(value x711, value x710)
+value stub__188_xed3_operand_set_llrc(value x715, value x714)
 {
-   xed_decoded_inst_t* x712 = CTYPES_ADDR_OF_FATPTR(x711);
-   int x713 = Long_val(x710);
-   xed3_operand_set_last_f2f3(x712, x713);
+   xed_decoded_inst_t* x716 = CTYPES_ADDR_OF_FATPTR(x715);
+   int x717 = Long_val(x714);
+   xed3_operand_set_llrc(x716, x717);
    return Val_unit;
 }
-value stub__189_xed3_operand_set_llrc(value x718, value x717)
+value stub__189_xed3_operand_set_lock(value x722, value x721)
 {
-   xed_decoded_inst_t* x719 = CTYPES_ADDR_OF_FATPTR(x718);
-   int x720 = Long_val(x717);
-   xed3_operand_set_llrc(x719, x720);
+   xed_decoded_inst_t* x723 = CTYPES_ADDR_OF_FATPTR(x722);
+   int x724 = Long_val(x721);
+   xed3_operand_set_lock(x723, x724);
    return Val_unit;
 }
-value stub__190_xed3_operand_set_lock(value x725, value x724)
+value stub__190_xed3_operand_set_lzcnt(value x729, value x728)
 {
-   xed_decoded_inst_t* x726 = CTYPES_ADDR_OF_FATPTR(x725);
-   int x727 = Long_val(x724);
-   xed3_operand_set_lock(x726, x727);
+   xed_decoded_inst_t* x730 = CTYPES_ADDR_OF_FATPTR(x729);
+   int x731 = Long_val(x728);
+   xed3_operand_set_lzcnt(x730, x731);
    return Val_unit;
 }
-value stub__191_xed3_operand_set_lzcnt(value x732, value x731)
+value stub__191_xed3_operand_set_map(value x736, value x735)
 {
-   xed_decoded_inst_t* x733 = CTYPES_ADDR_OF_FATPTR(x732);
-   int x734 = Long_val(x731);
-   xed3_operand_set_lzcnt(x733, x734);
+   xed_decoded_inst_t* x737 = CTYPES_ADDR_OF_FATPTR(x736);
+   int x738 = Long_val(x735);
+   xed3_operand_set_map(x737, x738);
    return Val_unit;
 }
-value stub__192_xed3_operand_set_map(value x739, value x738)
+value stub__192_xed3_operand_set_mask(value x743, value x742)
 {
-   xed_decoded_inst_t* x740 = CTYPES_ADDR_OF_FATPTR(x739);
-   int x741 = Long_val(x738);
-   xed3_operand_set_map(x740, x741);
+   xed_decoded_inst_t* x744 = CTYPES_ADDR_OF_FATPTR(x743);
+   int x745 = Long_val(x742);
+   xed3_operand_set_mask(x744, x745);
    return Val_unit;
 }
-value stub__193_xed3_operand_set_mask(value x746, value x745)
+value stub__193_xed3_operand_set_max_bytes(value x750, value x749)
 {
-   xed_decoded_inst_t* x747 = CTYPES_ADDR_OF_FATPTR(x746);
-   int x748 = Long_val(x745);
-   xed3_operand_set_mask(x747, x748);
+   xed_decoded_inst_t* x751 = CTYPES_ADDR_OF_FATPTR(x750);
+   int x752 = Long_val(x749);
+   xed3_operand_set_max_bytes(x751, x752);
    return Val_unit;
 }
-value stub__194_xed3_operand_set_max_bytes(value x753, value x752)
+value stub__194_xed3_operand_set_mem0(value x757, value x756)
 {
-   xed_decoded_inst_t* x754 = CTYPES_ADDR_OF_FATPTR(x753);
-   int x755 = Long_val(x752);
-   xed3_operand_set_max_bytes(x754, x755);
+   xed_decoded_inst_t* x758 = CTYPES_ADDR_OF_FATPTR(x757);
+   int x759 = Long_val(x756);
+   xed3_operand_set_mem0(x758, x759);
    return Val_unit;
 }
-value stub__195_xed3_operand_set_mem0(value x760, value x759)
+value stub__195_xed3_operand_set_mem1(value x764, value x763)
 {
-   xed_decoded_inst_t* x761 = CTYPES_ADDR_OF_FATPTR(x760);
-   int x762 = Long_val(x759);
-   xed3_operand_set_mem0(x761, x762);
+   xed_decoded_inst_t* x765 = CTYPES_ADDR_OF_FATPTR(x764);
+   int x766 = Long_val(x763);
+   xed3_operand_set_mem1(x765, x766);
    return Val_unit;
 }
-value stub__196_xed3_operand_set_mem1(value x767, value x766)
+value stub__196_xed3_operand_set_mem_width(value x771, value x770)
 {
-   xed_decoded_inst_t* x768 = CTYPES_ADDR_OF_FATPTR(x767);
-   int x769 = Long_val(x766);
-   xed3_operand_set_mem1(x768, x769);
+   xed_decoded_inst_t* x772 = CTYPES_ADDR_OF_FATPTR(x771);
+   uint16_t x773 = Uint16_val(x770);
+   xed3_operand_set_mem_width(x772, x773);
    return Val_unit;
 }
-value stub__197_xed3_operand_set_mem_width(value x774, value x773)
+value stub__197_xed3_operand_set_mod(value x778, value x777)
 {
-   xed_decoded_inst_t* x775 = CTYPES_ADDR_OF_FATPTR(x774);
-   uint16_t x776 = Uint16_val(x773);
-   xed3_operand_set_mem_width(x775, x776);
+   xed_decoded_inst_t* x779 = CTYPES_ADDR_OF_FATPTR(x778);
+   int x780 = Long_val(x777);
+   xed3_operand_set_mod(x779, x780);
    return Val_unit;
 }
-value stub__198_xed3_operand_set_mod(value x781, value x780)
+value stub__198_xed3_operand_set_mode(value x785, value x784)
 {
-   xed_decoded_inst_t* x782 = CTYPES_ADDR_OF_FATPTR(x781);
-   int x783 = Long_val(x780);
-   xed3_operand_set_mod(x782, x783);
+   xed_decoded_inst_t* x786 = CTYPES_ADDR_OF_FATPTR(x785);
+   int x787 = Long_val(x784);
+   xed3_operand_set_mode(x786, x787);
    return Val_unit;
 }
-value stub__199_xed3_operand_set_mode(value x788, value x787)
+value stub__199_xed3_operand_set_mode_first_prefix(value x792, value x791)
 {
-   xed_decoded_inst_t* x789 = CTYPES_ADDR_OF_FATPTR(x788);
-   int x790 = Long_val(x787);
-   xed3_operand_set_mode(x789, x790);
+   xed_decoded_inst_t* x793 = CTYPES_ADDR_OF_FATPTR(x792);
+   int x794 = Long_val(x791);
+   xed3_operand_set_mode_first_prefix(x793, x794);
    return Val_unit;
 }
-value stub__200_xed3_operand_set_mode_first_prefix(value x795, value x794)
+value stub__200_xed3_operand_set_modep5(value x799, value x798)
 {
-   xed_decoded_inst_t* x796 = CTYPES_ADDR_OF_FATPTR(x795);
-   int x797 = Long_val(x794);
-   xed3_operand_set_mode_first_prefix(x796, x797);
+   xed_decoded_inst_t* x800 = CTYPES_ADDR_OF_FATPTR(x799);
+   int x801 = Long_val(x798);
+   xed3_operand_set_modep5(x800, x801);
    return Val_unit;
 }
-value stub__201_xed3_operand_set_modep5(value x802, value x801)
+value stub__201_xed3_operand_set_modep55c(value x806, value x805)
 {
-   xed_decoded_inst_t* x803 = CTYPES_ADDR_OF_FATPTR(x802);
-   int x804 = Long_val(x801);
-   xed3_operand_set_modep5(x803, x804);
+   xed_decoded_inst_t* x807 = CTYPES_ADDR_OF_FATPTR(x806);
+   int x808 = Long_val(x805);
+   xed3_operand_set_modep55c(x807, x808);
    return Val_unit;
 }
-value stub__202_xed3_operand_set_modep55c(value x809, value x808)
+value stub__202_xed3_operand_set_modrm_byte(value x813, value x812)
 {
-   xed_decoded_inst_t* x810 = CTYPES_ADDR_OF_FATPTR(x809);
-   int x811 = Long_val(x808);
-   xed3_operand_set_modep55c(x810, x811);
+   xed_decoded_inst_t* x814 = CTYPES_ADDR_OF_FATPTR(x813);
+   int x815 = Long_val(x812);
+   xed3_operand_set_modrm_byte(x814, x815);
    return Val_unit;
 }
-value stub__203_xed3_operand_set_modrm(value x816, value x815)
+value stub__203_xed3_operand_set_mpxmode(value x820, value x819)
 {
-   xed_decoded_inst_t* x817 = CTYPES_ADDR_OF_FATPTR(x816);
-   int x818 = Long_val(x815);
-   xed3_operand_set_modrm(x817, x818);
+   xed_decoded_inst_t* x821 = CTYPES_ADDR_OF_FATPTR(x820);
+   int x822 = Long_val(x819);
+   xed3_operand_set_mpxmode(x821, x822);
    return Val_unit;
 }
-value stub__204_xed3_operand_set_modrm_byte(value x823, value x822)
+value stub__204_xed3_operand_set_need_memdisp(value x827, value x826)
 {
-   xed_decoded_inst_t* x824 = CTYPES_ADDR_OF_FATPTR(x823);
-   int x825 = Long_val(x822);
-   xed3_operand_set_modrm_byte(x824, x825);
+   xed_decoded_inst_t* x828 = CTYPES_ADDR_OF_FATPTR(x827);
+   int x829 = Long_val(x826);
+   xed3_operand_set_need_memdisp(x828, x829);
    return Val_unit;
 }
-value stub__205_xed3_operand_set_mpxmode(value x830, value x829)
+value stub__205_xed3_operand_set_needrex(value x834, value x833)
 {
-   xed_decoded_inst_t* x831 = CTYPES_ADDR_OF_FATPTR(x830);
-   int x832 = Long_val(x829);
-   xed3_operand_set_mpxmode(x831, x832);
+   xed_decoded_inst_t* x835 = CTYPES_ADDR_OF_FATPTR(x834);
+   int x836 = Long_val(x833);
+   xed3_operand_set_needrex(x835, x836);
    return Val_unit;
 }
-value stub__206_xed3_operand_set_need_memdisp(value x837, value x836)
+value stub__206_xed3_operand_set_nelem(value x841, value x840)
 {
-   xed_decoded_inst_t* x838 = CTYPES_ADDR_OF_FATPTR(x837);
-   int x839 = Long_val(x836);
-   xed3_operand_set_need_memdisp(x838, x839);
+   xed_decoded_inst_t* x842 = CTYPES_ADDR_OF_FATPTR(x841);
+   int x843 = Long_val(x840);
+   xed3_operand_set_nelem(x842, x843);
    return Val_unit;
 }
-value stub__207_xed3_operand_set_needrex(value x844, value x843)
+value stub__207_xed3_operand_set_no_scale_disp8(value x848, value x847)
 {
-   xed_decoded_inst_t* x845 = CTYPES_ADDR_OF_FATPTR(x844);
-   int x846 = Long_val(x843);
-   xed3_operand_set_needrex(x845, x846);
+   xed_decoded_inst_t* x849 = CTYPES_ADDR_OF_FATPTR(x848);
+   int x850 = Long_val(x847);
+   xed3_operand_set_no_scale_disp8(x849, x850);
    return Val_unit;
 }
-value stub__208_xed3_operand_set_nelem(value x851, value x850)
+value stub__208_xed3_operand_set_nominal_opcode(value x855, value x854)
 {
-   xed_decoded_inst_t* x852 = CTYPES_ADDR_OF_FATPTR(x851);
-   int x853 = Long_val(x850);
-   xed3_operand_set_nelem(x852, x853);
+   xed_decoded_inst_t* x856 = CTYPES_ADDR_OF_FATPTR(x855);
+   int x857 = Long_val(x854);
+   xed3_operand_set_nominal_opcode(x856, x857);
    return Val_unit;
 }
-value stub__209_xed3_operand_set_no_scale_disp8(value x858, value x857)
+value stub__209_xed3_operand_set_norex(value x862, value x861)
 {
-   xed_decoded_inst_t* x859 = CTYPES_ADDR_OF_FATPTR(x858);
-   int x860 = Long_val(x857);
-   xed3_operand_set_no_scale_disp8(x859, x860);
+   xed_decoded_inst_t* x863 = CTYPES_ADDR_OF_FATPTR(x862);
+   int x864 = Long_val(x861);
+   xed3_operand_set_norex(x863, x864);
    return Val_unit;
 }
-value stub__210_xed3_operand_set_nominal_opcode(value x865, value x864)
+value stub__210_xed3_operand_set_nprefixes(value x869, value x868)
 {
-   xed_decoded_inst_t* x866 = CTYPES_ADDR_OF_FATPTR(x865);
-   int x867 = Long_val(x864);
-   xed3_operand_set_nominal_opcode(x866, x867);
+   xed_decoded_inst_t* x870 = CTYPES_ADDR_OF_FATPTR(x869);
+   int x871 = Long_val(x868);
+   xed3_operand_set_nprefixes(x870, x871);
    return Val_unit;
 }
-value stub__211_xed3_operand_set_norex(value x872, value x871)
+value stub__211_xed3_operand_set_nrexes(value x876, value x875)
 {
-   xed_decoded_inst_t* x873 = CTYPES_ADDR_OF_FATPTR(x872);
-   int x874 = Long_val(x871);
-   xed3_operand_set_norex(x873, x874);
+   xed_decoded_inst_t* x877 = CTYPES_ADDR_OF_FATPTR(x876);
+   int x878 = Long_val(x875);
+   xed3_operand_set_nrexes(x877, x878);
    return Val_unit;
 }
-value stub__212_xed3_operand_set_nprefixes(value x879, value x878)
+value stub__212_xed3_operand_set_nseg_prefixes(value x883, value x882)
 {
-   xed_decoded_inst_t* x880 = CTYPES_ADDR_OF_FATPTR(x879);
-   int x881 = Long_val(x878);
-   xed3_operand_set_nprefixes(x880, x881);
+   xed_decoded_inst_t* x884 = CTYPES_ADDR_OF_FATPTR(x883);
+   int x885 = Long_val(x882);
+   xed3_operand_set_nseg_prefixes(x884, x885);
    return Val_unit;
 }
-value stub__213_xed3_operand_set_nrexes(value x886, value x885)
+value stub__213_xed3_operand_set_osz(value x890, value x889)
 {
-   xed_decoded_inst_t* x887 = CTYPES_ADDR_OF_FATPTR(x886);
-   int x888 = Long_val(x885);
-   xed3_operand_set_nrexes(x887, x888);
+   xed_decoded_inst_t* x891 = CTYPES_ADDR_OF_FATPTR(x890);
+   int x892 = Long_val(x889);
+   xed3_operand_set_osz(x891, x892);
    return Val_unit;
 }
-value stub__214_xed3_operand_set_nseg_prefixes(value x893, value x892)
+value stub__214_xed3_operand_set_out_of_bytes(value x897, value x896)
 {
-   xed_decoded_inst_t* x894 = CTYPES_ADDR_OF_FATPTR(x893);
-   int x895 = Long_val(x892);
-   xed3_operand_set_nseg_prefixes(x894, x895);
+   xed_decoded_inst_t* x898 = CTYPES_ADDR_OF_FATPTR(x897);
+   int x899 = Long_val(x896);
+   xed3_operand_set_out_of_bytes(x898, x899);
    return Val_unit;
 }
-value stub__215_xed3_operand_set_osz(value x900, value x899)
+value stub__215_xed3_operand_set_outreg(value x904, value x903)
 {
-   xed_decoded_inst_t* x901 = CTYPES_ADDR_OF_FATPTR(x900);
-   int x902 = Long_val(x899);
-   xed3_operand_set_osz(x901, x902);
+   xed_decoded_inst_t* x905 = CTYPES_ADDR_OF_FATPTR(x904);
+   int x906 = Long_val(x903);
+   xed3_operand_set_outreg(x905, x906);
    return Val_unit;
 }
-value stub__216_xed3_operand_set_out_of_bytes(value x907, value x906)
+value stub__216_xed3_operand_set_p4(value x911, value x910)
 {
-   xed_decoded_inst_t* x908 = CTYPES_ADDR_OF_FATPTR(x907);
-   int x909 = Long_val(x906);
-   xed3_operand_set_out_of_bytes(x908, x909);
+   xed_decoded_inst_t* x912 = CTYPES_ADDR_OF_FATPTR(x911);
+   int x913 = Long_val(x910);
+   xed3_operand_set_p4(x912, x913);
    return Val_unit;
 }
-value stub__217_xed3_operand_set_outreg(value x914, value x913)
+value stub__217_xed3_operand_set_pos_disp(value x918, value x917)
 {
-   xed_decoded_inst_t* x915 = CTYPES_ADDR_OF_FATPTR(x914);
-   int x916 = Long_val(x913);
-   xed3_operand_set_outreg(x915, x916);
+   xed_decoded_inst_t* x919 = CTYPES_ADDR_OF_FATPTR(x918);
+   int x920 = Long_val(x917);
+   xed3_operand_set_pos_disp(x919, x920);
    return Val_unit;
 }
-value stub__218_xed3_operand_set_p4(value x921, value x920)
+value stub__218_xed3_operand_set_pos_imm(value x925, value x924)
 {
-   xed_decoded_inst_t* x922 = CTYPES_ADDR_OF_FATPTR(x921);
-   int x923 = Long_val(x920);
-   xed3_operand_set_p4(x922, x923);
+   xed_decoded_inst_t* x926 = CTYPES_ADDR_OF_FATPTR(x925);
+   int x927 = Long_val(x924);
+   xed3_operand_set_pos_imm(x926, x927);
    return Val_unit;
 }
-value stub__219_xed3_operand_set_pos_disp(value x928, value x927)
+value stub__219_xed3_operand_set_pos_imm1(value x932, value x931)
 {
-   xed_decoded_inst_t* x929 = CTYPES_ADDR_OF_FATPTR(x928);
-   int x930 = Long_val(x927);
-   xed3_operand_set_pos_disp(x929, x930);
+   xed_decoded_inst_t* x933 = CTYPES_ADDR_OF_FATPTR(x932);
+   int x934 = Long_val(x931);
+   xed3_operand_set_pos_imm1(x933, x934);
    return Val_unit;
 }
-value stub__220_xed3_operand_set_pos_imm(value x935, value x934)
+value stub__220_xed3_operand_set_pos_modrm(value x939, value x938)
 {
-   xed_decoded_inst_t* x936 = CTYPES_ADDR_OF_FATPTR(x935);
-   int x937 = Long_val(x934);
-   xed3_operand_set_pos_imm(x936, x937);
+   xed_decoded_inst_t* x940 = CTYPES_ADDR_OF_FATPTR(x939);
+   int x941 = Long_val(x938);
+   xed3_operand_set_pos_modrm(x940, x941);
    return Val_unit;
 }
-value stub__221_xed3_operand_set_pos_imm1(value x942, value x941)
+value stub__221_xed3_operand_set_pos_nominal_opcode(value x946, value x945)
 {
-   xed_decoded_inst_t* x943 = CTYPES_ADDR_OF_FATPTR(x942);
-   int x944 = Long_val(x941);
-   xed3_operand_set_pos_imm1(x943, x944);
+   xed_decoded_inst_t* x947 = CTYPES_ADDR_OF_FATPTR(x946);
+   int x948 = Long_val(x945);
+   xed3_operand_set_pos_nominal_opcode(x947, x948);
    return Val_unit;
 }
-value stub__222_xed3_operand_set_pos_modrm(value x949, value x948)
+value stub__222_xed3_operand_set_pos_sib(value x953, value x952)
 {
-   xed_decoded_inst_t* x950 = CTYPES_ADDR_OF_FATPTR(x949);
-   int x951 = Long_val(x948);
-   xed3_operand_set_pos_modrm(x950, x951);
+   xed_decoded_inst_t* x954 = CTYPES_ADDR_OF_FATPTR(x953);
+   int x955 = Long_val(x952);
+   xed3_operand_set_pos_sib(x954, x955);
    return Val_unit;
 }
-value stub__223_xed3_operand_set_pos_nominal_opcode(value x956, value x955)
+value stub__223_xed3_operand_set_prefix66(value x960, value x959)
 {
-   xed_decoded_inst_t* x957 = CTYPES_ADDR_OF_FATPTR(x956);
-   int x958 = Long_val(x955);
-   xed3_operand_set_pos_nominal_opcode(x957, x958);
+   xed_decoded_inst_t* x961 = CTYPES_ADDR_OF_FATPTR(x960);
+   int x962 = Long_val(x959);
+   xed3_operand_set_prefix66(x961, x962);
    return Val_unit;
 }
-value stub__224_xed3_operand_set_pos_sib(value x963, value x962)
+value stub__224_xed3_operand_set_ptr(value x967, value x966)
 {
-   xed_decoded_inst_t* x964 = CTYPES_ADDR_OF_FATPTR(x963);
-   int x965 = Long_val(x962);
-   xed3_operand_set_pos_sib(x964, x965);
+   xed_decoded_inst_t* x968 = CTYPES_ADDR_OF_FATPTR(x967);
+   int x969 = Long_val(x966);
+   xed3_operand_set_ptr(x968, x969);
    return Val_unit;
 }
-value stub__225_xed3_operand_set_prefix66(value x970, value x969)
+value stub__225_xed3_operand_set_realmode(value x974, value x973)
 {
-   xed_decoded_inst_t* x971 = CTYPES_ADDR_OF_FATPTR(x970);
-   int x972 = Long_val(x969);
-   xed3_operand_set_prefix66(x971, x972);
+   xed_decoded_inst_t* x975 = CTYPES_ADDR_OF_FATPTR(x974);
+   int x976 = Long_val(x973);
+   xed3_operand_set_realmode(x975, x976);
    return Val_unit;
 }
-value stub__226_xed3_operand_set_ptr(value x977, value x976)
+value stub__226_xed3_operand_set_reg(value x981, value x980)
 {
-   xed_decoded_inst_t* x978 = CTYPES_ADDR_OF_FATPTR(x977);
-   int x979 = Long_val(x976);
-   xed3_operand_set_ptr(x978, x979);
+   xed_decoded_inst_t* x982 = CTYPES_ADDR_OF_FATPTR(x981);
+   int x983 = Long_val(x980);
+   xed3_operand_set_reg(x982, x983);
    return Val_unit;
 }
-value stub__227_xed3_operand_set_realmode(value x984, value x983)
+value stub__227_xed3_operand_set_reg0(value x988, value x987)
 {
-   xed_decoded_inst_t* x985 = CTYPES_ADDR_OF_FATPTR(x984);
-   int x986 = Long_val(x983);
-   xed3_operand_set_realmode(x985, x986);
+   xed_decoded_inst_t* x989 = CTYPES_ADDR_OF_FATPTR(x988);
+   int x990 = Long_val(x987);
+   xed3_operand_set_reg0(x989, x990);
    return Val_unit;
 }
-value stub__228_xed3_operand_set_reg(value x991, value x990)
+value stub__228_xed3_operand_set_reg1(value x995, value x994)
 {
-   xed_decoded_inst_t* x992 = CTYPES_ADDR_OF_FATPTR(x991);
-   int x993 = Long_val(x990);
-   xed3_operand_set_reg(x992, x993);
+   xed_decoded_inst_t* x996 = CTYPES_ADDR_OF_FATPTR(x995);
+   int x997 = Long_val(x994);
+   xed3_operand_set_reg1(x996, x997);
    return Val_unit;
 }
-value stub__229_xed3_operand_set_reg0(value x998, value x997)
+value stub__229_xed3_operand_set_reg2(value x1002, value x1001)
 {
-   xed_decoded_inst_t* x999 = CTYPES_ADDR_OF_FATPTR(x998);
-   int x1000 = Long_val(x997);
-   xed3_operand_set_reg0(x999, x1000);
+   xed_decoded_inst_t* x1003 = CTYPES_ADDR_OF_FATPTR(x1002);
+   int x1004 = Long_val(x1001);
+   xed3_operand_set_reg2(x1003, x1004);
    return Val_unit;
 }
-value stub__230_xed3_operand_set_reg1(value x1005, value x1004)
+value stub__230_xed3_operand_set_reg3(value x1009, value x1008)
 {
-   xed_decoded_inst_t* x1006 = CTYPES_ADDR_OF_FATPTR(x1005);
-   int x1007 = Long_val(x1004);
-   xed3_operand_set_reg1(x1006, x1007);
+   xed_decoded_inst_t* x1010 = CTYPES_ADDR_OF_FATPTR(x1009);
+   int x1011 = Long_val(x1008);
+   xed3_operand_set_reg3(x1010, x1011);
    return Val_unit;
 }
-value stub__231_xed3_operand_set_reg2(value x1012, value x1011)
+value stub__231_xed3_operand_set_reg4(value x1016, value x1015)
 {
-   xed_decoded_inst_t* x1013 = CTYPES_ADDR_OF_FATPTR(x1012);
-   int x1014 = Long_val(x1011);
-   xed3_operand_set_reg2(x1013, x1014);
+   xed_decoded_inst_t* x1017 = CTYPES_ADDR_OF_FATPTR(x1016);
+   int x1018 = Long_val(x1015);
+   xed3_operand_set_reg4(x1017, x1018);
    return Val_unit;
 }
-value stub__232_xed3_operand_set_reg3(value x1019, value x1018)
+value stub__232_xed3_operand_set_reg5(value x1023, value x1022)
 {
-   xed_decoded_inst_t* x1020 = CTYPES_ADDR_OF_FATPTR(x1019);
-   int x1021 = Long_val(x1018);
-   xed3_operand_set_reg3(x1020, x1021);
+   xed_decoded_inst_t* x1024 = CTYPES_ADDR_OF_FATPTR(x1023);
+   int x1025 = Long_val(x1022);
+   xed3_operand_set_reg5(x1024, x1025);
    return Val_unit;
 }
-value stub__233_xed3_operand_set_reg4(value x1026, value x1025)
+value stub__233_xed3_operand_set_reg6(value x1030, value x1029)
 {
-   xed_decoded_inst_t* x1027 = CTYPES_ADDR_OF_FATPTR(x1026);
-   int x1028 = Long_val(x1025);
-   xed3_operand_set_reg4(x1027, x1028);
+   xed_decoded_inst_t* x1031 = CTYPES_ADDR_OF_FATPTR(x1030);
+   int x1032 = Long_val(x1029);
+   xed3_operand_set_reg6(x1031, x1032);
    return Val_unit;
 }
-value stub__234_xed3_operand_set_reg5(value x1033, value x1032)
+value stub__234_xed3_operand_set_reg7(value x1037, value x1036)
 {
-   xed_decoded_inst_t* x1034 = CTYPES_ADDR_OF_FATPTR(x1033);
-   int x1035 = Long_val(x1032);
-   xed3_operand_set_reg5(x1034, x1035);
+   xed_decoded_inst_t* x1038 = CTYPES_ADDR_OF_FATPTR(x1037);
+   int x1039 = Long_val(x1036);
+   xed3_operand_set_reg7(x1038, x1039);
    return Val_unit;
 }
-value stub__235_xed3_operand_set_reg6(value x1040, value x1039)
+value stub__235_xed3_operand_set_reg8(value x1044, value x1043)
 {
-   xed_decoded_inst_t* x1041 = CTYPES_ADDR_OF_FATPTR(x1040);
-   int x1042 = Long_val(x1039);
-   xed3_operand_set_reg6(x1041, x1042);
+   xed_decoded_inst_t* x1045 = CTYPES_ADDR_OF_FATPTR(x1044);
+   int x1046 = Long_val(x1043);
+   xed3_operand_set_reg8(x1045, x1046);
    return Val_unit;
 }
-value stub__236_xed3_operand_set_reg7(value x1047, value x1046)
+value stub__236_xed3_operand_set_relbr(value x1051, value x1050)
 {
-   xed_decoded_inst_t* x1048 = CTYPES_ADDR_OF_FATPTR(x1047);
-   int x1049 = Long_val(x1046);
-   xed3_operand_set_reg7(x1048, x1049);
+   xed_decoded_inst_t* x1052 = CTYPES_ADDR_OF_FATPTR(x1051);
+   int x1053 = Long_val(x1050);
+   xed3_operand_set_relbr(x1052, x1053);
    return Val_unit;
 }
-value stub__237_xed3_operand_set_reg8(value x1054, value x1053)
+value stub__237_xed3_operand_set_rep(value x1058, value x1057)
 {
-   xed_decoded_inst_t* x1055 = CTYPES_ADDR_OF_FATPTR(x1054);
-   int x1056 = Long_val(x1053);
-   xed3_operand_set_reg8(x1055, x1056);
+   xed_decoded_inst_t* x1059 = CTYPES_ADDR_OF_FATPTR(x1058);
+   int x1060 = Long_val(x1057);
+   xed3_operand_set_rep(x1059, x1060);
    return Val_unit;
 }
-value stub__238_xed3_operand_set_relbr(value x1061, value x1060)
+value stub__238_xed3_operand_set_rex(value x1065, value x1064)
 {
-   xed_decoded_inst_t* x1062 = CTYPES_ADDR_OF_FATPTR(x1061);
-   int x1063 = Long_val(x1060);
-   xed3_operand_set_relbr(x1062, x1063);
+   xed_decoded_inst_t* x1066 = CTYPES_ADDR_OF_FATPTR(x1065);
+   int x1067 = Long_val(x1064);
+   xed3_operand_set_rex(x1066, x1067);
    return Val_unit;
 }
-value stub__239_xed3_operand_set_rep(value x1068, value x1067)
+value stub__239_xed3_operand_set_rexb(value x1072, value x1071)
 {
-   xed_decoded_inst_t* x1069 = CTYPES_ADDR_OF_FATPTR(x1068);
-   int x1070 = Long_val(x1067);
-   xed3_operand_set_rep(x1069, x1070);
+   xed_decoded_inst_t* x1073 = CTYPES_ADDR_OF_FATPTR(x1072);
+   int x1074 = Long_val(x1071);
+   xed3_operand_set_rexb(x1073, x1074);
    return Val_unit;
 }
-value stub__240_xed3_operand_set_rex(value x1075, value x1074)
+value stub__240_xed3_operand_set_rexr(value x1079, value x1078)
 {
-   xed_decoded_inst_t* x1076 = CTYPES_ADDR_OF_FATPTR(x1075);
-   int x1077 = Long_val(x1074);
-   xed3_operand_set_rex(x1076, x1077);
+   xed_decoded_inst_t* x1080 = CTYPES_ADDR_OF_FATPTR(x1079);
+   int x1081 = Long_val(x1078);
+   xed3_operand_set_rexr(x1080, x1081);
    return Val_unit;
 }
-value stub__241_xed3_operand_set_rexb(value x1082, value x1081)
+value stub__241_xed3_operand_set_rexrr(value x1086, value x1085)
 {
-   xed_decoded_inst_t* x1083 = CTYPES_ADDR_OF_FATPTR(x1082);
-   int x1084 = Long_val(x1081);
-   xed3_operand_set_rexb(x1083, x1084);
+   xed_decoded_inst_t* x1087 = CTYPES_ADDR_OF_FATPTR(x1086);
+   int x1088 = Long_val(x1085);
+   xed3_operand_set_rexrr(x1087, x1088);
    return Val_unit;
 }
-value stub__242_xed3_operand_set_rexr(value x1089, value x1088)
+value stub__242_xed3_operand_set_rexw(value x1093, value x1092)
 {
-   xed_decoded_inst_t* x1090 = CTYPES_ADDR_OF_FATPTR(x1089);
-   int x1091 = Long_val(x1088);
-   xed3_operand_set_rexr(x1090, x1091);
+   xed_decoded_inst_t* x1094 = CTYPES_ADDR_OF_FATPTR(x1093);
+   int x1095 = Long_val(x1092);
+   xed3_operand_set_rexw(x1094, x1095);
    return Val_unit;
 }
-value stub__243_xed3_operand_set_rexrr(value x1096, value x1095)
+value stub__243_xed3_operand_set_rexx(value x1100, value x1099)
 {
-   xed_decoded_inst_t* x1097 = CTYPES_ADDR_OF_FATPTR(x1096);
-   int x1098 = Long_val(x1095);
-   xed3_operand_set_rexrr(x1097, x1098);
+   xed_decoded_inst_t* x1101 = CTYPES_ADDR_OF_FATPTR(x1100);
+   int x1102 = Long_val(x1099);
+   xed3_operand_set_rexx(x1101, x1102);
    return Val_unit;
 }
-value stub__244_xed3_operand_set_rexw(value x1103, value x1102)
+value stub__244_xed3_operand_set_rm(value x1107, value x1106)
 {
-   xed_decoded_inst_t* x1104 = CTYPES_ADDR_OF_FATPTR(x1103);
-   int x1105 = Long_val(x1102);
-   xed3_operand_set_rexw(x1104, x1105);
+   xed_decoded_inst_t* x1108 = CTYPES_ADDR_OF_FATPTR(x1107);
+   int x1109 = Long_val(x1106);
+   xed3_operand_set_rm(x1108, x1109);
    return Val_unit;
 }
-value stub__245_xed3_operand_set_rexx(value x1110, value x1109)
+value stub__245_xed3_operand_set_roundc(value x1114, value x1113)
 {
-   xed_decoded_inst_t* x1111 = CTYPES_ADDR_OF_FATPTR(x1110);
-   int x1112 = Long_val(x1109);
-   xed3_operand_set_rexx(x1111, x1112);
+   xed_decoded_inst_t* x1115 = CTYPES_ADDR_OF_FATPTR(x1114);
+   int x1116 = Long_val(x1113);
+   xed3_operand_set_roundc(x1115, x1116);
    return Val_unit;
 }
-value stub__246_xed3_operand_set_rm(value x1117, value x1116)
+value stub__246_xed3_operand_set_sae(value x1121, value x1120)
 {
-   xed_decoded_inst_t* x1118 = CTYPES_ADDR_OF_FATPTR(x1117);
-   int x1119 = Long_val(x1116);
-   xed3_operand_set_rm(x1118, x1119);
+   xed_decoded_inst_t* x1122 = CTYPES_ADDR_OF_FATPTR(x1121);
+   int x1123 = Long_val(x1120);
+   xed3_operand_set_sae(x1122, x1123);
    return Val_unit;
 }
-value stub__247_xed3_operand_set_roundc(value x1124, value x1123)
+value stub__247_xed3_operand_set_scale(value x1128, value x1127)
 {
-   xed_decoded_inst_t* x1125 = CTYPES_ADDR_OF_FATPTR(x1124);
-   int x1126 = Long_val(x1123);
-   xed3_operand_set_roundc(x1125, x1126);
+   xed_decoded_inst_t* x1129 = CTYPES_ADDR_OF_FATPTR(x1128);
+   int x1130 = Long_val(x1127);
+   xed3_operand_set_scale(x1129, x1130);
    return Val_unit;
 }
-value stub__248_xed3_operand_set_sae(value x1131, value x1130)
+value stub__248_xed3_operand_set_seg0(value x1135, value x1134)
 {
-   xed_decoded_inst_t* x1132 = CTYPES_ADDR_OF_FATPTR(x1131);
-   int x1133 = Long_val(x1130);
-   xed3_operand_set_sae(x1132, x1133);
+   xed_decoded_inst_t* x1136 = CTYPES_ADDR_OF_FATPTR(x1135);
+   int x1137 = Long_val(x1134);
+   xed3_operand_set_seg0(x1136, x1137);
    return Val_unit;
 }
-value stub__249_xed3_operand_set_scale(value x1138, value x1137)
+value stub__249_xed3_operand_set_seg1(value x1142, value x1141)
 {
-   xed_decoded_inst_t* x1139 = CTYPES_ADDR_OF_FATPTR(x1138);
-   int x1140 = Long_val(x1137);
-   xed3_operand_set_scale(x1139, x1140);
+   xed_decoded_inst_t* x1143 = CTYPES_ADDR_OF_FATPTR(x1142);
+   int x1144 = Long_val(x1141);
+   xed3_operand_set_seg1(x1143, x1144);
    return Val_unit;
 }
-value stub__250_xed3_operand_set_seg0(value x1145, value x1144)
+value stub__250_xed3_operand_set_seg_ovd(value x1149, value x1148)
 {
-   xed_decoded_inst_t* x1146 = CTYPES_ADDR_OF_FATPTR(x1145);
-   int x1147 = Long_val(x1144);
-   xed3_operand_set_seg0(x1146, x1147);
+   xed_decoded_inst_t* x1150 = CTYPES_ADDR_OF_FATPTR(x1149);
+   int x1151 = Long_val(x1148);
+   xed3_operand_set_seg_ovd(x1150, x1151);
    return Val_unit;
 }
-value stub__251_xed3_operand_set_seg1(value x1152, value x1151)
+value stub__251_xed3_operand_set_sib(value x1156, value x1155)
 {
-   xed_decoded_inst_t* x1153 = CTYPES_ADDR_OF_FATPTR(x1152);
-   int x1154 = Long_val(x1151);
-   xed3_operand_set_seg1(x1153, x1154);
+   xed_decoded_inst_t* x1157 = CTYPES_ADDR_OF_FATPTR(x1156);
+   int x1158 = Long_val(x1155);
+   xed3_operand_set_sib(x1157, x1158);
    return Val_unit;
 }
-value stub__252_xed3_operand_set_seg_ovd(value x1159, value x1158)
+value stub__252_xed3_operand_set_sibbase(value x1163, value x1162)
 {
-   xed_decoded_inst_t* x1160 = CTYPES_ADDR_OF_FATPTR(x1159);
-   int x1161 = Long_val(x1158);
-   xed3_operand_set_seg_ovd(x1160, x1161);
+   xed_decoded_inst_t* x1164 = CTYPES_ADDR_OF_FATPTR(x1163);
+   int x1165 = Long_val(x1162);
+   xed3_operand_set_sibbase(x1164, x1165);
    return Val_unit;
 }
-value stub__253_xed3_operand_set_sib(value x1166, value x1165)
+value stub__253_xed3_operand_set_sibindex(value x1170, value x1169)
 {
-   xed_decoded_inst_t* x1167 = CTYPES_ADDR_OF_FATPTR(x1166);
-   int x1168 = Long_val(x1165);
-   xed3_operand_set_sib(x1167, x1168);
+   xed_decoded_inst_t* x1171 = CTYPES_ADDR_OF_FATPTR(x1170);
+   int x1172 = Long_val(x1169);
+   xed3_operand_set_sibindex(x1171, x1172);
    return Val_unit;
 }
-value stub__254_xed3_operand_set_sibbase(value x1173, value x1172)
+value stub__254_xed3_operand_set_sibscale(value x1177, value x1176)
 {
-   xed_decoded_inst_t* x1174 = CTYPES_ADDR_OF_FATPTR(x1173);
-   int x1175 = Long_val(x1172);
-   xed3_operand_set_sibbase(x1174, x1175);
+   xed_decoded_inst_t* x1178 = CTYPES_ADDR_OF_FATPTR(x1177);
+   int x1179 = Long_val(x1176);
+   xed3_operand_set_sibscale(x1178, x1179);
    return Val_unit;
 }
-value stub__255_xed3_operand_set_sibindex(value x1180, value x1179)
+value stub__255_xed3_operand_set_skip_osz(value x1184, value x1183)
 {
-   xed_decoded_inst_t* x1181 = CTYPES_ADDR_OF_FATPTR(x1180);
-   int x1182 = Long_val(x1179);
-   xed3_operand_set_sibindex(x1181, x1182);
+   xed_decoded_inst_t* x1185 = CTYPES_ADDR_OF_FATPTR(x1184);
+   int x1186 = Long_val(x1183);
+   xed3_operand_set_skip_osz(x1185, x1186);
    return Val_unit;
 }
-value stub__256_xed3_operand_set_sibscale(value x1187, value x1186)
+value stub__256_xed3_operand_set_smode(value x1191, value x1190)
 {
-   xed_decoded_inst_t* x1188 = CTYPES_ADDR_OF_FATPTR(x1187);
-   int x1189 = Long_val(x1186);
-   xed3_operand_set_sibscale(x1188, x1189);
+   xed_decoded_inst_t* x1192 = CTYPES_ADDR_OF_FATPTR(x1191);
+   int x1193 = Long_val(x1190);
+   xed3_operand_set_smode(x1192, x1193);
    return Val_unit;
 }
-value stub__257_xed3_operand_set_skip_osz(value x1194, value x1193)
+value stub__257_xed3_operand_set_srm(value x1198, value x1197)
 {
-   xed_decoded_inst_t* x1195 = CTYPES_ADDR_OF_FATPTR(x1194);
-   int x1196 = Long_val(x1193);
-   xed3_operand_set_skip_osz(x1195, x1196);
+   xed_decoded_inst_t* x1199 = CTYPES_ADDR_OF_FATPTR(x1198);
+   int x1200 = Long_val(x1197);
+   xed3_operand_set_srm(x1199, x1200);
    return Val_unit;
 }
-value stub__258_xed3_operand_set_smode(value x1201, value x1200)
+value stub__258_xed3_operand_set_type(value x1205, value x1204)
 {
-   xed_decoded_inst_t* x1202 = CTYPES_ADDR_OF_FATPTR(x1201);
-   int x1203 = Long_val(x1200);
-   xed3_operand_set_smode(x1202, x1203);
+   xed_decoded_inst_t* x1206 = CTYPES_ADDR_OF_FATPTR(x1205);
+   int x1207 = Long_val(x1204);
+   xed3_operand_set_type(x1206, x1207);
    return Val_unit;
 }
-value stub__259_xed3_operand_set_srm(value x1208, value x1207)
+value stub__259_xed3_operand_set_tzcnt(value x1212, value x1211)
 {
-   xed_decoded_inst_t* x1209 = CTYPES_ADDR_OF_FATPTR(x1208);
-   int x1210 = Long_val(x1207);
-   xed3_operand_set_srm(x1209, x1210);
+   xed_decoded_inst_t* x1213 = CTYPES_ADDR_OF_FATPTR(x1212);
+   int x1214 = Long_val(x1211);
+   xed3_operand_set_tzcnt(x1213, x1214);
    return Val_unit;
 }
-value stub__260_xed3_operand_set_type(value x1215, value x1214)
+value stub__260_xed3_operand_set_ubit(value x1219, value x1218)
 {
-   xed_decoded_inst_t* x1216 = CTYPES_ADDR_OF_FATPTR(x1215);
-   int x1217 = Long_val(x1214);
-   xed3_operand_set_type(x1216, x1217);
+   xed_decoded_inst_t* x1220 = CTYPES_ADDR_OF_FATPTR(x1219);
+   int x1221 = Long_val(x1218);
+   xed3_operand_set_ubit(x1220, x1221);
    return Val_unit;
 }
-value stub__261_xed3_operand_set_tzcnt(value x1222, value x1221)
+value stub__261_xed3_operand_set_uimm0(value x1226, value x1225)
 {
-   xed_decoded_inst_t* x1223 = CTYPES_ADDR_OF_FATPTR(x1222);
-   int x1224 = Long_val(x1221);
-   xed3_operand_set_tzcnt(x1223, x1224);
+   xed_decoded_inst_t* x1227 = CTYPES_ADDR_OF_FATPTR(x1226);
+   uint64_t x1228 = Uint64_val(x1225);
+   xed3_operand_set_uimm0(x1227, x1228);
    return Val_unit;
 }
-value stub__262_xed3_operand_set_ubit(value x1229, value x1228)
+value stub__262_xed3_operand_set_uimm1(value x1233, value x1232)
 {
-   xed_decoded_inst_t* x1230 = CTYPES_ADDR_OF_FATPTR(x1229);
-   int x1231 = Long_val(x1228);
-   xed3_operand_set_ubit(x1230, x1231);
+   xed_decoded_inst_t* x1234 = CTYPES_ADDR_OF_FATPTR(x1233);
+   int x1235 = Int_val(x1232);
+   xed3_operand_set_uimm1(x1234, (char)x1235);
    return Val_unit;
 }
-value stub__263_xed3_operand_set_uimm0(value x1236, value x1235)
+value stub__263_xed3_operand_set_using_default_segment0(value x1240,
+                                                        value x1239)
 {
-   xed_decoded_inst_t* x1237 = CTYPES_ADDR_OF_FATPTR(x1236);
-   uint64_t x1238 = Uint64_val(x1235);
-   xed3_operand_set_uimm0(x1237, x1238);
+   xed_decoded_inst_t* x1241 = CTYPES_ADDR_OF_FATPTR(x1240);
+   int x1242 = Long_val(x1239);
+   xed3_operand_set_using_default_segment0(x1241, x1242);
    return Val_unit;
 }
-value stub__264_xed3_operand_set_uimm1(value x1243, value x1242)
+value stub__264_xed3_operand_set_using_default_segment1(value x1247,
+                                                        value x1246)
 {
-   xed_decoded_inst_t* x1244 = CTYPES_ADDR_OF_FATPTR(x1243);
-   int x1245 = Int_val(x1242);
-   xed3_operand_set_uimm1(x1244, (char)x1245);
+   xed_decoded_inst_t* x1248 = CTYPES_ADDR_OF_FATPTR(x1247);
+   int x1249 = Long_val(x1246);
+   xed3_operand_set_using_default_segment1(x1248, x1249);
    return Val_unit;
 }
-value stub__265_xed3_operand_set_using_default_segment0(value x1250,
-                                                        value x1249)
+value stub__265_xed3_operand_set_vex_c4(value x1254, value x1253)
 {
-   xed_decoded_inst_t* x1251 = CTYPES_ADDR_OF_FATPTR(x1250);
-   int x1252 = Long_val(x1249);
-   xed3_operand_set_using_default_segment0(x1251, x1252);
+   xed_decoded_inst_t* x1255 = CTYPES_ADDR_OF_FATPTR(x1254);
+   int x1256 = Long_val(x1253);
+   xed3_operand_set_vex_c4(x1255, x1256);
    return Val_unit;
 }
-value stub__266_xed3_operand_set_using_default_segment1(value x1257,
-                                                        value x1256)
+value stub__266_xed3_operand_set_vex_prefix(value x1261, value x1260)
 {
-   xed_decoded_inst_t* x1258 = CTYPES_ADDR_OF_FATPTR(x1257);
-   int x1259 = Long_val(x1256);
-   xed3_operand_set_using_default_segment1(x1258, x1259);
+   xed_decoded_inst_t* x1262 = CTYPES_ADDR_OF_FATPTR(x1261);
+   int x1263 = Long_val(x1260);
+   xed3_operand_set_vex_prefix(x1262, x1263);
    return Val_unit;
 }
-value stub__267_xed3_operand_set_vex_c4(value x1264, value x1263)
+value stub__267_xed3_operand_set_vexdest210(value x1268, value x1267)
 {
-   xed_decoded_inst_t* x1265 = CTYPES_ADDR_OF_FATPTR(x1264);
-   int x1266 = Long_val(x1263);
-   xed3_operand_set_vex_c4(x1265, x1266);
+   xed_decoded_inst_t* x1269 = CTYPES_ADDR_OF_FATPTR(x1268);
+   int x1270 = Long_val(x1267);
+   xed3_operand_set_vexdest210(x1269, x1270);
    return Val_unit;
 }
-value stub__268_xed3_operand_set_vex_prefix(value x1271, value x1270)
+value stub__268_xed3_operand_set_vexdest3(value x1275, value x1274)
 {
-   xed_decoded_inst_t* x1272 = CTYPES_ADDR_OF_FATPTR(x1271);
-   int x1273 = Long_val(x1270);
-   xed3_operand_set_vex_prefix(x1272, x1273);
+   xed_decoded_inst_t* x1276 = CTYPES_ADDR_OF_FATPTR(x1275);
+   int x1277 = Long_val(x1274);
+   xed3_operand_set_vexdest3(x1276, x1277);
    return Val_unit;
 }
-value stub__269_xed3_operand_set_vexdest210(value x1278, value x1277)
+value stub__269_xed3_operand_set_vexdest4(value x1282, value x1281)
 {
-   xed_decoded_inst_t* x1279 = CTYPES_ADDR_OF_FATPTR(x1278);
-   int x1280 = Long_val(x1277);
-   xed3_operand_set_vexdest210(x1279, x1280);
+   xed_decoded_inst_t* x1283 = CTYPES_ADDR_OF_FATPTR(x1282);
+   int x1284 = Long_val(x1281);
+   xed3_operand_set_vexdest4(x1283, x1284);
    return Val_unit;
 }
-value stub__270_xed3_operand_set_vexdest3(value x1285, value x1284)
+value stub__270_xed3_operand_set_vexvalid(value x1289, value x1288)
 {
-   xed_decoded_inst_t* x1286 = CTYPES_ADDR_OF_FATPTR(x1285);
-   int x1287 = Long_val(x1284);
-   xed3_operand_set_vexdest3(x1286, x1287);
+   xed_decoded_inst_t* x1290 = CTYPES_ADDR_OF_FATPTR(x1289);
+   int x1291 = Long_val(x1288);
+   xed3_operand_set_vexvalid(x1290, x1291);
    return Val_unit;
 }
-value stub__271_xed3_operand_set_vexdest4(value x1292, value x1291)
+value stub__271_xed3_operand_set_vl(value x1296, value x1295)
 {
-   xed_decoded_inst_t* x1293 = CTYPES_ADDR_OF_FATPTR(x1292);
-   int x1294 = Long_val(x1291);
-   xed3_operand_set_vexdest4(x1293, x1294);
+   xed_decoded_inst_t* x1297 = CTYPES_ADDR_OF_FATPTR(x1296);
+   int x1298 = Long_val(x1295);
+   xed3_operand_set_vl(x1297, x1298);
    return Val_unit;
 }
-value stub__272_xed3_operand_set_vexvalid(value x1299, value x1298)
+value stub__272_xed3_operand_set_zeroing(value x1303, value x1302)
 {
-   xed_decoded_inst_t* x1300 = CTYPES_ADDR_OF_FATPTR(x1299);
-   int x1301 = Long_val(x1298);
-   xed3_operand_set_vexvalid(x1300, x1301);
+   xed_decoded_inst_t* x1304 = CTYPES_ADDR_OF_FATPTR(x1303);
+   int x1305 = Long_val(x1302);
+   xed3_operand_set_zeroing(x1304, x1305);
    return Val_unit;
 }
-value stub__273_xed3_operand_set_vl(value x1306, value x1305)
+value stub__273_xed_address_width_enum_t2str(value x1309)
 {
-   xed_decoded_inst_t* x1307 = CTYPES_ADDR_OF_FATPTR(x1306);
-   int x1308 = Long_val(x1305);
-   xed3_operand_set_vl(x1307, x1308);
-   return Val_unit;
+   int x1310 = Long_val(x1309);
+   char* x1313 = xed_address_width_enum_t2str(x1310);
+   return CTYPES_FROM_PTR(x1313);
 }
-value stub__274_xed3_operand_set_zeroing(value x1313, value x1312)
+value stub__274_xed_attribute(value x1314)
 {
-   xed_decoded_inst_t* x1314 = CTYPES_ADDR_OF_FATPTR(x1313);
-   int x1315 = Long_val(x1312);
-   xed3_operand_set_zeroing(x1314, x1315);
-   return Val_unit;
+   int x1315 = Long_val(x1314);
+   int x1318 = xed_attribute(x1315);
+   return Val_long(x1318);
 }
-value stub__275_xed_address_width_enum_t2str(value x1319)
+value stub__275_xed_attribute_enum_t2str(value x1319)
 {
    int x1320 = Long_val(x1319);
-   char* x1323 = xed_address_width_enum_t2str(x1320);
+   char* x1323 = xed_attribute_enum_t2str(x1320);
    return CTYPES_FROM_PTR(x1323);
 }
-value stub__276_xed_attribute(value x1324)
+value stub__276_xed_attribute_max(value x1324)
 {
-   int x1325 = Long_val(x1324);
-   int x1328 = xed_attribute(x1325);
-   return Val_long(x1328);
+   int x1325 = xed_attribute_max();
+   return Val_long(x1325);
 }
-value stub__277_xed_attribute_enum_t2str(value x1329)
+value stub__277_xed_category_enum_t2str(value x1326)
 {
-   int x1330 = Long_val(x1329);
-   char* x1333 = xed_attribute_enum_t2str(x1330);
-   return CTYPES_FROM_PTR(x1333);
+   int x1327 = Long_val(x1326);
+   char* x1330 = xed_category_enum_t2str(x1327);
+   return CTYPES_FROM_PTR(x1330);
 }
-value stub__278_xed_attribute_max(value x1334)
+value stub__278_xed_chip_enum_t2str(value x1331)
 {
-   int x1335 = xed_attribute_max();
-   return Val_long(x1335);
+   int x1332 = Long_val(x1331);
+   char* x1335 = xed_chip_enum_t2str(x1332);
+   return CTYPES_FROM_PTR(x1335);
 }
-value stub__279_xed_category_enum_t2str(value x1336)
+value stub__279_xed_classify_avx(value x1336)
 {
-   int x1337 = Long_val(x1336);
-   char* x1340 = xed_category_enum_t2str(x1337);
-   return CTYPES_FROM_PTR(x1340);
+   const xed_decoded_inst_t* x1337 = CTYPES_ADDR_OF_FATPTR(x1336);
+   _Bool x1338 = xed_classify_avx(x1337);
+   return Val_bool(x1338);
 }
-value stub__280_xed_chip_enum_t2str(value x1341)
+value stub__280_xed_classify_avx512(value x1339)
 {
-   int x1342 = Long_val(x1341);
-   char* x1345 = xed_chip_enum_t2str(x1342);
-   return CTYPES_FROM_PTR(x1345);
+   const xed_decoded_inst_t* x1340 = CTYPES_ADDR_OF_FATPTR(x1339);
+   _Bool x1341 = xed_classify_avx512(x1340);
+   return Val_bool(x1341);
 }
-value stub__281_xed_cpuid_bit_enum_t2str(value x1346)
+value stub__281_xed_classify_avx512_maskop(value x1342)
 {
-   int x1347 = Long_val(x1346);
-   char* x1350 = xed_cpuid_bit_enum_t2str(x1347);
-   return CTYPES_FROM_PTR(x1350);
+   const xed_decoded_inst_t* x1343 = CTYPES_ADDR_OF_FATPTR(x1342);
+   _Bool x1344 = xed_classify_avx512_maskop(x1343);
+   return Val_bool(x1344);
 }
-value stub__282_xed_decode(value x1353, value x1352, value x1351)
+value stub__282_xed_classify_sse(value x1345)
 {
-   xed_decoded_inst_t* x1354 = CTYPES_ADDR_OF_FATPTR(x1353);
-   char* x1355 = CTYPES_PTR_OF_OCAML_STRING(x1352);
-   int x1356 = Long_val(x1351);
-   int x1359 = xed_decode(x1354, x1355, x1356);
-   return Val_long(x1359);
+   const xed_decoded_inst_t* x1346 = CTYPES_ADDR_OF_FATPTR(x1345);
+   _Bool x1347 = xed_classify_sse(x1346);
+   return Val_bool(x1347);
 }
-value stub__283_xed_decode_with_features(value x1363, value x1362,
-                                         value x1361, value x1360)
+value stub__283_xed_cpuid_bit_enum_t2str(value x1348)
 {
-   xed_decoded_inst_t* x1364 = CTYPES_ADDR_OF_FATPTR(x1363);
-   char* x1365 = CTYPES_PTR_OF_OCAML_STRING(x1362);
-   int x1366 = Long_val(x1361);
-   xed_chip_features_t* x1369 = CTYPES_ADDR_OF_FATPTR(x1360);
-   int x1370 = xed_decode_with_features(x1364, x1365, x1366, x1369);
-   return Val_long(x1370);
+   int x1349 = Long_val(x1348);
+   char* x1352 = xed_cpuid_bit_enum_t2str(x1349);
+   return CTYPES_FROM_PTR(x1352);
 }
-value stub__284_xed_decoded_inst_conditionally_writes_registers(value x1371)
+value stub__284_xed_decode(value x1355, value x1354, value x1353)
 {
-   const xed_decoded_inst_t* x1372 = CTYPES_ADDR_OF_FATPTR(x1371);
-   _Bool x1373 = xed_decoded_inst_conditionally_writes_registers(x1372);
-   return Val_bool(x1373);
+   xed_decoded_inst_t* x1356 = CTYPES_ADDR_OF_FATPTR(x1355);
+   char* x1357 = CTYPES_PTR_OF_OCAML_STRING(x1354);
+   int x1358 = Long_val(x1353);
+   int x1361 = xed_decode(x1356, x1357, x1358);
+   return Val_long(x1361);
 }
-value stub__285_xed_decoded_inst_dump(value x1376, value x1375, value x1374)
+value stub__285_xed_decode_with_features(value x1365, value x1364,
+                                         value x1363, value x1362)
 {
-   const xed_decoded_inst_t* x1377 = CTYPES_ADDR_OF_FATPTR(x1376);
-   char* x1378 = CTYPES_PTR_OF_OCAML_STRING(x1375);
-   int x1379 = Long_val(x1374);
-   xed_decoded_inst_dump(x1377, x1378, x1379);
+   xed_decoded_inst_t* x1366 = CTYPES_ADDR_OF_FATPTR(x1365);
+   char* x1367 = CTYPES_PTR_OF_OCAML_STRING(x1364);
+   int x1368 = Long_val(x1363);
+   xed_chip_features_t* x1371 = CTYPES_ADDR_OF_FATPTR(x1362);
+   int x1372 = xed_decode_with_features(x1366, x1367, x1368, x1371);
+   return Val_long(x1372);
+}
+value stub__286_xed_decoded_inst_conditionally_writes_registers(value x1373)
+{
+   const xed_decoded_inst_t* x1374 = CTYPES_ADDR_OF_FATPTR(x1373);
+   _Bool x1375 = xed_decoded_inst_conditionally_writes_registers(x1374);
+   return Val_bool(x1375);
+}
+value stub__287_xed_decoded_inst_dump(value x1378, value x1377, value x1376)
+{
+   const xed_decoded_inst_t* x1379 = CTYPES_ADDR_OF_FATPTR(x1378);
+   char* x1380 = CTYPES_PTR_OF_OCAML_STRING(x1377);
+   int x1381 = Long_val(x1376);
+   xed_decoded_inst_dump(x1379, x1380, x1381);
    return Val_unit;
 }
-value stub__286_xed_decoded_inst_dump_xed_format(value x1386, value x1385,
-                                                 value x1384, value x1383)
+value stub__288_xed_decoded_inst_dump_xed_format(value x1388, value x1387,
+                                                 value x1386, value x1385)
 {
-   const xed_decoded_inst_t* x1387 = CTYPES_ADDR_OF_FATPTR(x1386);
-   char* x1388 = CTYPES_PTR_OF_OCAML_STRING(x1385);
-   int x1389 = Long_val(x1384);
-   uint64_t x1392 = Uint64_val(x1383);
-   _Bool x1395 =
-   xed_decoded_inst_dump_xed_format(x1387, x1388, x1389, x1392);
-   return Val_bool(x1395);
+   const xed_decoded_inst_t* x1389 = CTYPES_ADDR_OF_FATPTR(x1388);
+   char* x1390 = CTYPES_PTR_OF_OCAML_STRING(x1387);
+   int x1391 = Long_val(x1386);
+   uint64_t x1394 = Uint64_val(x1385);
+   _Bool x1397 =
+   xed_decoded_inst_dump_xed_format(x1389, x1390, x1391, x1394);
+   return Val_bool(x1397);
 }
-value stub__287_xed_decoded_inst_get_attribute(value x1397, value x1396)
+value stub__289_xed_decoded_inst_get_attribute(value x1399, value x1398)
 {
-   const xed_decoded_inst_t* x1398 = CTYPES_ADDR_OF_FATPTR(x1397);
-   int x1399 = Long_val(x1396);
-   uint32_t x1402 = xed_decoded_inst_get_attribute(x1398, x1399);
-   return integers_copy_uint32(x1402);
+   const xed_decoded_inst_t* x1400 = CTYPES_ADDR_OF_FATPTR(x1399);
+   int x1401 = Long_val(x1398);
+   uint32_t x1404 = xed_decoded_inst_get_attribute(x1400, x1401);
+   return integers_copy_uint32(x1404);
 }
-value stub__288_xed_decoded_inst_get_base_reg(value x1404, value x1403)
+value stub__290_xed_decoded_inst_get_base_reg(value x1406, value x1405)
 {
-   const xed_decoded_inst_t* x1405 = CTYPES_ADDR_OF_FATPTR(x1404);
-   int x1406 = Long_val(x1403);
-   int x1409 = xed_decoded_inst_get_base_reg(x1405, x1406);
-   return Val_long(x1409);
+   const xed_decoded_inst_t* x1407 = CTYPES_ADDR_OF_FATPTR(x1406);
+   int x1408 = Long_val(x1405);
+   int x1411 = xed_decoded_inst_get_base_reg(x1407, x1408);
+   return Val_long(x1411);
 }
-value stub__289_xed_decoded_inst_get_branch_displacement(value x1410)
+value stub__291_xed_decoded_inst_get_branch_displacement(value x1412)
 {
-   const xed_decoded_inst_t* x1411 = CTYPES_ADDR_OF_FATPTR(x1410);
-   int32_t x1412 = xed_decoded_inst_get_branch_displacement(x1411);
-   return caml_copy_int32(x1412);
+   const xed_decoded_inst_t* x1413 = CTYPES_ADDR_OF_FATPTR(x1412);
+   int32_t x1414 = xed_decoded_inst_get_branch_displacement(x1413);
+   return caml_copy_int32(x1414);
 }
-value stub__290_xed_decoded_inst_get_branch_displacement_width(value x1413)
+value stub__292_xed_decoded_inst_get_branch_displacement_width(value x1415)
 {
-   const xed_decoded_inst_t* x1414 = CTYPES_ADDR_OF_FATPTR(x1413);
-   int x1415 = xed_decoded_inst_get_branch_displacement_width(x1414);
-   return Val_long(x1415);
+   const xed_decoded_inst_t* x1416 = CTYPES_ADDR_OF_FATPTR(x1415);
+   int x1417 = xed_decoded_inst_get_branch_displacement_width(x1416);
+   return Val_long(x1417);
 }
-value stub__291_xed_decoded_inst_get_branch_displacement_width_bits(value x1416)
+value stub__293_xed_decoded_inst_get_branch_displacement_width_bits(value x1418)
 {
-   const xed_decoded_inst_t* x1417 = CTYPES_ADDR_OF_FATPTR(x1416);
-   int x1418 = xed_decoded_inst_get_branch_displacement_width_bits(x1417);
-   return Val_long(x1418);
+   const xed_decoded_inst_t* x1419 = CTYPES_ADDR_OF_FATPTR(x1418);
+   int x1420 = xed_decoded_inst_get_branch_displacement_width_bits(x1419);
+   return Val_long(x1420);
 }
-value stub__292_xed_decoded_inst_get_byte(value x1420, value x1419)
+value stub__294_xed_decoded_inst_get_byte(value x1422, value x1421)
 {
-   const xed_decoded_inst_t* x1421 = CTYPES_ADDR_OF_FATPTR(x1420);
-   int x1422 = Long_val(x1419);
-   char x1425 = xed_decoded_inst_get_byte(x1421, x1422);
-   return Ctypes_val_char(x1425);
+   const xed_decoded_inst_t* x1423 = CTYPES_ADDR_OF_FATPTR(x1422);
+   int x1424 = Long_val(x1421);
+   char x1427 = xed_decoded_inst_get_byte(x1423, x1424);
+   return Ctypes_val_char(x1427);
 }
-value stub__293_xed_decoded_inst_get_category(value x1426)
+value stub__295_xed_decoded_inst_get_category(value x1428)
 {
-   const xed_decoded_inst_t* x1427 = CTYPES_ADDR_OF_FATPTR(x1426);
-   int x1428 = xed_decoded_inst_get_category(x1427);
-   return Val_long(x1428);
+   const xed_decoded_inst_t* x1429 = CTYPES_ADDR_OF_FATPTR(x1428);
+   int x1430 = xed_decoded_inst_get_category(x1429);
+   return Val_long(x1430);
 }
-value stub__294_xed_decoded_inst_get_extension(value x1429)
+value stub__296_xed_decoded_inst_get_extension(value x1431)
 {
-   const xed_decoded_inst_t* x1430 = CTYPES_ADDR_OF_FATPTR(x1429);
-   int x1431 = xed_decoded_inst_get_extension(x1430);
-   return Val_long(x1431);
+   const xed_decoded_inst_t* x1432 = CTYPES_ADDR_OF_FATPTR(x1431);
+   int x1433 = xed_decoded_inst_get_extension(x1432);
+   return Val_long(x1433);
 }
-value stub__295_xed_decoded_inst_get_iclass(value x1432)
+value stub__297_xed_decoded_inst_get_iclass(value x1434)
 {
-   const xed_decoded_inst_t* x1433 = CTYPES_ADDR_OF_FATPTR(x1432);
-   int x1434 = xed_decoded_inst_get_iclass(x1433);
-   return Val_long(x1434);
+   const xed_decoded_inst_t* x1435 = CTYPES_ADDR_OF_FATPTR(x1434);
+   int x1436 = xed_decoded_inst_get_iclass(x1435);
+   return Val_long(x1436);
 }
-value stub__296_xed_decoded_inst_get_iform_enum(value x1435)
+value stub__298_xed_decoded_inst_get_iform_enum(value x1437)
 {
-   const xed_decoded_inst_t* x1436 = CTYPES_ADDR_OF_FATPTR(x1435);
-   int x1437 = xed_decoded_inst_get_iform_enum(x1436);
-   return Val_long(x1437);
+   const xed_decoded_inst_t* x1438 = CTYPES_ADDR_OF_FATPTR(x1437);
+   int x1439 = xed_decoded_inst_get_iform_enum(x1438);
+   return Val_long(x1439);
 }
-value stub__297_xed_decoded_inst_get_iform_enum_dispatch(value x1438)
+value stub__299_xed_decoded_inst_get_iform_enum_dispatch(value x1440)
 {
-   const xed_decoded_inst_t* x1439 = CTYPES_ADDR_OF_FATPTR(x1438);
-   int x1440 = xed_decoded_inst_get_iform_enum_dispatch(x1439);
-   return Val_long(x1440);
+   const xed_decoded_inst_t* x1441 = CTYPES_ADDR_OF_FATPTR(x1440);
+   int x1442 = xed_decoded_inst_get_iform_enum_dispatch(x1441);
+   return Val_long(x1442);
 }
-value stub__298_xed_decoded_inst_get_immediate_is_signed(value x1441)
+value stub__300_xed_decoded_inst_get_immediate_is_signed(value x1443)
 {
-   const xed_decoded_inst_t* x1442 = CTYPES_ADDR_OF_FATPTR(x1441);
-   int x1443 = xed_decoded_inst_get_immediate_is_signed(x1442);
-   return Val_long(x1443);
+   const xed_decoded_inst_t* x1444 = CTYPES_ADDR_OF_FATPTR(x1443);
+   int x1445 = xed_decoded_inst_get_immediate_is_signed(x1444);
+   return Val_long(x1445);
 }
-value stub__299_xed_decoded_inst_get_immediate_width(value x1444)
+value stub__301_xed_decoded_inst_get_immediate_width(value x1446)
 {
-   const xed_decoded_inst_t* x1445 = CTYPES_ADDR_OF_FATPTR(x1444);
-   int x1446 = xed_decoded_inst_get_immediate_width(x1445);
-   return Val_long(x1446);
+   const xed_decoded_inst_t* x1447 = CTYPES_ADDR_OF_FATPTR(x1446);
+   int x1448 = xed_decoded_inst_get_immediate_width(x1447);
+   return Val_long(x1448);
 }
-value stub__300_xed_decoded_inst_get_immediate_width_bits(value x1447)
+value stub__302_xed_decoded_inst_get_immediate_width_bits(value x1449)
 {
-   const xed_decoded_inst_t* x1448 = CTYPES_ADDR_OF_FATPTR(x1447);
-   int x1449 = xed_decoded_inst_get_immediate_width_bits(x1448);
-   return Val_long(x1449);
+   const xed_decoded_inst_t* x1450 = CTYPES_ADDR_OF_FATPTR(x1449);
+   int x1451 = xed_decoded_inst_get_immediate_width_bits(x1450);
+   return Val_long(x1451);
 }
-value stub__301_xed_decoded_inst_get_index_reg(value x1451, value x1450)
+value stub__303_xed_decoded_inst_get_index_reg(value x1453, value x1452)
 {
-   const xed_decoded_inst_t* x1452 = CTYPES_ADDR_OF_FATPTR(x1451);
-   int x1453 = Long_val(x1450);
-   int x1456 = xed_decoded_inst_get_index_reg(x1452, x1453);
-   return Val_long(x1456);
+   const xed_decoded_inst_t* x1454 = CTYPES_ADDR_OF_FATPTR(x1453);
+   int x1455 = Long_val(x1452);
+   int x1458 = xed_decoded_inst_get_index_reg(x1454, x1455);
+   return Val_long(x1458);
 }
-value stub__302_xed_decoded_inst_get_input_chip(value x1457)
+value stub__304_xed_decoded_inst_get_input_chip(value x1459)
 {
-   const xed_decoded_inst_t* x1458 = CTYPES_ADDR_OF_FATPTR(x1457);
-   int x1459 = xed_decoded_inst_get_input_chip(x1458);
-   return Val_long(x1459);
+   const xed_decoded_inst_t* x1460 = CTYPES_ADDR_OF_FATPTR(x1459);
+   int x1461 = xed_decoded_inst_get_input_chip(x1460);
+   return Val_long(x1461);
 }
-value stub__303_xed_decoded_inst_get_isa_set(value x1460)
+value stub__305_xed_decoded_inst_get_isa_set(value x1462)
 {
-   const xed_decoded_inst_t* x1461 = CTYPES_ADDR_OF_FATPTR(x1460);
-   int x1462 = xed_decoded_inst_get_isa_set(x1461);
-   return Val_long(x1462);
+   const xed_decoded_inst_t* x1463 = CTYPES_ADDR_OF_FATPTR(x1462);
+   int x1464 = xed_decoded_inst_get_isa_set(x1463);
+   return Val_long(x1464);
 }
-value stub__304_xed_decoded_inst_get_length(value x1463)
+value stub__306_xed_decoded_inst_get_length(value x1465)
 {
-   const xed_decoded_inst_t* x1464 = CTYPES_ADDR_OF_FATPTR(x1463);
-   int x1465 = xed_decoded_inst_get_length(x1464);
-   return Val_long(x1465);
+   const xed_decoded_inst_t* x1466 = CTYPES_ADDR_OF_FATPTR(x1465);
+   int x1467 = xed_decoded_inst_get_length(x1466);
+   return Val_long(x1467);
 }
-value stub__305_xed_decoded_inst_get_machine_mode_bits(value x1466)
+value stub__307_xed_decoded_inst_get_machine_mode_bits(value x1468)
 {
-   const xed_decoded_inst_t* x1467 = CTYPES_ADDR_OF_FATPTR(x1466);
-   int x1468 = xed_decoded_inst_get_machine_mode_bits(x1467);
-   return Val_long(x1468);
+   const xed_decoded_inst_t* x1469 = CTYPES_ADDR_OF_FATPTR(x1468);
+   int x1470 = xed_decoded_inst_get_machine_mode_bits(x1469);
+   return Val_long(x1470);
 }
-value stub__306_xed_decoded_inst_get_memop_address_width(value x1470,
-                                                         value x1469)
+value stub__308_xed_decoded_inst_get_memop_address_width(value x1472,
+                                                         value x1471)
 {
-   const xed_decoded_inst_t* x1471 = CTYPES_ADDR_OF_FATPTR(x1470);
-   int x1472 = Long_val(x1469);
-   int x1475 = xed_decoded_inst_get_memop_address_width(x1471, x1472);
-   return Val_long(x1475);
+   const xed_decoded_inst_t* x1473 = CTYPES_ADDR_OF_FATPTR(x1472);
+   int x1474 = Long_val(x1471);
+   int x1477 = xed_decoded_inst_get_memop_address_width(x1473, x1474);
+   return Val_long(x1477);
 }
-value stub__307_xed_decoded_inst_get_memory_displacement(value x1477,
-                                                         value x1476)
+value stub__309_xed_decoded_inst_get_memory_displacement(value x1479,
+                                                         value x1478)
 {
-   const xed_decoded_inst_t* x1478 = CTYPES_ADDR_OF_FATPTR(x1477);
-   int x1479 = Long_val(x1476);
-   int64_t x1482 = xed_decoded_inst_get_memory_displacement(x1478, x1479);
-   return caml_copy_int64(x1482);
+   const xed_decoded_inst_t* x1480 = CTYPES_ADDR_OF_FATPTR(x1479);
+   int x1481 = Long_val(x1478);
+   int64_t x1484 = xed_decoded_inst_get_memory_displacement(x1480, x1481);
+   return caml_copy_int64(x1484);
 }
-value stub__308_xed_decoded_inst_get_memory_displacement_width(value x1484,
-                                                               value x1483)
+value stub__310_xed_decoded_inst_get_memory_displacement_width(value x1486,
+                                                               value x1485)
 {
-   const xed_decoded_inst_t* x1485 = CTYPES_ADDR_OF_FATPTR(x1484);
-   int x1486 = Long_val(x1483);
-   int x1489 = xed_decoded_inst_get_memory_displacement_width(x1485, x1486);
-   return Val_long(x1489);
+   const xed_decoded_inst_t* x1487 = CTYPES_ADDR_OF_FATPTR(x1486);
+   int x1488 = Long_val(x1485);
+   int x1491 = xed_decoded_inst_get_memory_displacement_width(x1487, x1488);
+   return Val_long(x1491);
 }
-value stub__309_xed_decoded_inst_get_memory_displacement_width_bits(value x1491,
-                                                                    value x1490)
+value stub__311_xed_decoded_inst_get_memory_displacement_width_bits(value x1493,
+                                                                    value x1492)
 {
-   const xed_decoded_inst_t* x1492 = CTYPES_ADDR_OF_FATPTR(x1491);
-   int x1493 = Long_val(x1490);
-   int x1496 =
-   xed_decoded_inst_get_memory_displacement_width_bits(x1492, x1493);
-   return Val_long(x1496);
+   const xed_decoded_inst_t* x1494 = CTYPES_ADDR_OF_FATPTR(x1493);
+   int x1495 = Long_val(x1492);
+   int x1498 =
+   xed_decoded_inst_get_memory_displacement_width_bits(x1494, x1495);
+   return Val_long(x1498);
 }
-value stub__310_xed_decoded_inst_get_memory_operand_length(value x1498,
-                                                           value x1497)
+value stub__312_xed_decoded_inst_get_memory_operand_length(value x1500,
+                                                           value x1499)
 {
-   const xed_decoded_inst_t* x1499 = CTYPES_ADDR_OF_FATPTR(x1498);
-   int x1500 = Long_val(x1497);
-   int x1503 = xed_decoded_inst_get_memory_operand_length(x1499, x1500);
-   return Val_long(x1503);
+   const xed_decoded_inst_t* x1501 = CTYPES_ADDR_OF_FATPTR(x1500);
+   int x1502 = Long_val(x1499);
+   int x1505 = xed_decoded_inst_get_memory_operand_length(x1501, x1502);
+   return Val_long(x1505);
 }
-value stub__311_xed_decoded_inst_get_modrm(value x1504)
+value stub__313_xed_decoded_inst_get_modrm(value x1506)
 {
-   const xed_decoded_inst_t* x1505 = CTYPES_ADDR_OF_FATPTR(x1504);
-   char x1506 = xed_decoded_inst_get_modrm(x1505);
-   return Ctypes_val_char(x1506);
+   const xed_decoded_inst_t* x1507 = CTYPES_ADDR_OF_FATPTR(x1506);
+   char x1508 = xed_decoded_inst_get_modrm(x1507);
+   return Ctypes_val_char(x1508);
 }
-value stub__312_xed_decoded_inst_get_nprefixes(value x1507)
+value stub__314_xed_decoded_inst_get_nprefixes(value x1509)
 {
-   xed_decoded_inst_t* x1508 = CTYPES_ADDR_OF_FATPTR(x1507);
-   int x1509 = xed_decoded_inst_get_nprefixes(x1508);
-   return Val_long(x1509);
+   xed_decoded_inst_t* x1510 = CTYPES_ADDR_OF_FATPTR(x1509);
+   int x1511 = xed_decoded_inst_get_nprefixes(x1510);
+   return Val_long(x1511);
 }
-value stub__313_xed_decoded_inst_get_operand_width(value x1510)
+value stub__315_xed_decoded_inst_get_operand_width(value x1512)
 {
-   const xed_decoded_inst_t* x1511 = CTYPES_ADDR_OF_FATPTR(x1510);
-   uint32_t x1512 = xed_decoded_inst_get_operand_width(x1511);
-   return integers_copy_uint32(x1512);
+   const xed_decoded_inst_t* x1513 = CTYPES_ADDR_OF_FATPTR(x1512);
+   uint32_t x1514 = xed_decoded_inst_get_operand_width(x1513);
+   return integers_copy_uint32(x1514);
 }
-value stub__314_xed_decoded_inst_get_reg(value x1514, value x1513)
+value stub__316_xed_decoded_inst_get_reg(value x1516, value x1515)
 {
-   const xed_decoded_inst_t* x1515 = CTYPES_ADDR_OF_FATPTR(x1514);
-   int x1516 = Long_val(x1513);
-   int x1519 = xed_decoded_inst_get_reg(x1515, x1516);
-   return Val_long(x1519);
+   const xed_decoded_inst_t* x1517 = CTYPES_ADDR_OF_FATPTR(x1516);
+   int x1518 = Long_val(x1515);
+   int x1521 = xed_decoded_inst_get_reg(x1517, x1518);
+   return Val_long(x1521);
 }
-value stub__315_xed_decoded_inst_get_rflags_info(value x1520)
+value stub__317_xed_decoded_inst_get_rflags_info(value x1522)
 {
-   const xed_decoded_inst_t* x1521 = CTYPES_ADDR_OF_FATPTR(x1520);
-   const xed_simple_flag_t* x1522 = xed_decoded_inst_get_rflags_info(x1521);
-   return CTYPES_FROM_PTR(x1522);
+   const xed_decoded_inst_t* x1523 = CTYPES_ADDR_OF_FATPTR(x1522);
+   const xed_simple_flag_t* x1524 = xed_decoded_inst_get_rflags_info(x1523);
+   return CTYPES_FROM_PTR(x1524);
 }
-value stub__316_xed_decoded_inst_get_scale(value x1524, value x1523)
+value stub__318_xed_decoded_inst_get_scale(value x1526, value x1525)
 {
-   const xed_decoded_inst_t* x1525 = CTYPES_ADDR_OF_FATPTR(x1524);
-   int x1526 = Long_val(x1523);
-   int x1529 = xed_decoded_inst_get_scale(x1525, x1526);
-   return Val_long(x1529);
+   const xed_decoded_inst_t* x1527 = CTYPES_ADDR_OF_FATPTR(x1526);
+   int x1528 = Long_val(x1525);
+   int x1531 = xed_decoded_inst_get_scale(x1527, x1528);
+   return Val_long(x1531);
 }
-value stub__317_xed_decoded_inst_get_second_immediate(value x1530)
+value stub__319_xed_decoded_inst_get_second_immediate(value x1532)
 {
-   const xed_decoded_inst_t* x1531 = CTYPES_ADDR_OF_FATPTR(x1530);
-   char x1532 = xed_decoded_inst_get_second_immediate(x1531);
-   return Ctypes_val_char(x1532);
+   const xed_decoded_inst_t* x1533 = CTYPES_ADDR_OF_FATPTR(x1532);
+   char x1534 = xed_decoded_inst_get_second_immediate(x1533);
+   return Ctypes_val_char(x1534);
 }
-value stub__318_xed_decoded_inst_get_seg_reg(value x1534, value x1533)
+value stub__320_xed_decoded_inst_get_seg_reg(value x1536, value x1535)
 {
-   const xed_decoded_inst_t* x1535 = CTYPES_ADDR_OF_FATPTR(x1534);
-   int x1536 = Long_val(x1533);
-   int x1539 = xed_decoded_inst_get_seg_reg(x1535, x1536);
-   return Val_long(x1539);
+   const xed_decoded_inst_t* x1537 = CTYPES_ADDR_OF_FATPTR(x1536);
+   int x1538 = Long_val(x1535);
+   int x1541 = xed_decoded_inst_get_seg_reg(x1537, x1538);
+   return Val_long(x1541);
 }
-value stub__319_xed_decoded_inst_get_signed_immediate(value x1540)
+value stub__321_xed_decoded_inst_get_signed_immediate(value x1542)
 {
-   const xed_decoded_inst_t* x1541 = CTYPES_ADDR_OF_FATPTR(x1540);
-   int32_t x1542 = xed_decoded_inst_get_signed_immediate(x1541);
-   return caml_copy_int32(x1542);
+   const xed_decoded_inst_t* x1543 = CTYPES_ADDR_OF_FATPTR(x1542);
+   int32_t x1544 = xed_decoded_inst_get_signed_immediate(x1543);
+   return caml_copy_int32(x1544);
 }
-value stub__320_xed_decoded_inst_get_stack_address_mode_bits(value x1543)
+value stub__322_xed_decoded_inst_get_stack_address_mode_bits(value x1545)
 {
-   const xed_decoded_inst_t* x1544 = CTYPES_ADDR_OF_FATPTR(x1543);
-   int x1545 = xed_decoded_inst_get_stack_address_mode_bits(x1544);
-   return Val_long(x1545);
+   const xed_decoded_inst_t* x1546 = CTYPES_ADDR_OF_FATPTR(x1545);
+   int x1547 = xed_decoded_inst_get_stack_address_mode_bits(x1546);
+   return Val_long(x1547);
 }
-value stub__321_xed_decoded_inst_get_unsigned_immediate(value x1546)
+value stub__323_xed_decoded_inst_get_unsigned_immediate(value x1548)
 {
-   const xed_decoded_inst_t* x1547 = CTYPES_ADDR_OF_FATPTR(x1546);
-   uint64_t x1548 = xed_decoded_inst_get_unsigned_immediate(x1547);
-   return integers_copy_uint64(x1548);
+   const xed_decoded_inst_t* x1549 = CTYPES_ADDR_OF_FATPTR(x1548);
+   uint64_t x1550 = xed_decoded_inst_get_unsigned_immediate(x1549);
+   return integers_copy_uint64(x1550);
 }
-value stub__322_xed_decoded_inst_get_user_data(value x1549)
+value stub__324_xed_decoded_inst_get_user_data(value x1551)
 {
-   xed_decoded_inst_t* x1550 = CTYPES_ADDR_OF_FATPTR(x1549);
-   uint64_t x1551 = xed_decoded_inst_get_user_data(x1550);
-   return integers_copy_uint64(x1551);
+   xed_decoded_inst_t* x1552 = CTYPES_ADDR_OF_FATPTR(x1551);
+   uint64_t x1553 = xed_decoded_inst_get_user_data(x1552);
+   return integers_copy_uint64(x1553);
 }
-value stub__323_xed_decoded_inst_has_mpx_prefix(value x1552)
+value stub__325_xed_decoded_inst_has_mpx_prefix(value x1554)
 {
-   const xed_decoded_inst_t* x1553 = CTYPES_ADDR_OF_FATPTR(x1552);
-   uint32_t x1554 = xed_decoded_inst_has_mpx_prefix(x1553);
-   return integers_copy_uint32(x1554);
+   const xed_decoded_inst_t* x1555 = CTYPES_ADDR_OF_FATPTR(x1554);
+   uint32_t x1556 = xed_decoded_inst_has_mpx_prefix(x1555);
+   return integers_copy_uint32(x1556);
 }
-value stub__324_xed_decoded_inst_inst(value x1555)
+value stub__326_xed_decoded_inst_inst(value x1557)
 {
-   const xed_decoded_inst_t* x1556 = CTYPES_ADDR_OF_FATPTR(x1555);
-   const xed_inst_t* x1557 = xed_decoded_inst_inst(x1556);
-   return CTYPES_FROM_PTR(x1557);
+   const xed_decoded_inst_t* x1558 = CTYPES_ADDR_OF_FATPTR(x1557);
+   const xed_inst_t* x1559 = xed_decoded_inst_inst(x1558);
+   return CTYPES_FROM_PTR(x1559);
 }
-value stub__325_xed_decoded_inst_is_broadcast(value x1558)
+value stub__327_xed_decoded_inst_is_broadcast(value x1560)
 {
-   const xed_decoded_inst_t* x1559 = CTYPES_ADDR_OF_FATPTR(x1558);
-   _Bool x1560 = xed_decoded_inst_is_broadcast(x1559);
-   return Val_bool(x1560);
+   const xed_decoded_inst_t* x1561 = CTYPES_ADDR_OF_FATPTR(x1560);
+   _Bool x1562 = xed_decoded_inst_is_broadcast(x1561);
+   return Val_bool(x1562);
 }
-value stub__326_xed_decoded_inst_is_broadcast_instruction(value x1561)
+value stub__328_xed_decoded_inst_is_broadcast_instruction(value x1563)
 {
-   const xed_decoded_inst_t* x1562 = CTYPES_ADDR_OF_FATPTR(x1561);
-   _Bool x1563 = xed_decoded_inst_is_broadcast_instruction(x1562);
-   return Val_bool(x1563);
+   const xed_decoded_inst_t* x1564 = CTYPES_ADDR_OF_FATPTR(x1563);
+   _Bool x1565 = xed_decoded_inst_is_broadcast_instruction(x1564);
+   return Val_bool(x1565);
 }
-value stub__327_xed_decoded_inst_is_prefetch(value x1564)
+value stub__329_xed_decoded_inst_is_prefetch(value x1566)
 {
-   const xed_decoded_inst_t* x1565 = CTYPES_ADDR_OF_FATPTR(x1564);
-   _Bool x1566 = xed_decoded_inst_is_prefetch(x1565);
-   return Val_bool(x1566);
+   const xed_decoded_inst_t* x1567 = CTYPES_ADDR_OF_FATPTR(x1566);
+   _Bool x1568 = xed_decoded_inst_is_prefetch(x1567);
+   return Val_bool(x1568);
 }
-value stub__328_xed_decoded_inst_is_xacquire(value x1567)
+value stub__330_xed_decoded_inst_is_xacquire(value x1569)
 {
-   const xed_decoded_inst_t* x1568 = CTYPES_ADDR_OF_FATPTR(x1567);
-   uint32_t x1569 = xed_decoded_inst_is_xacquire(x1568);
-   return integers_copy_uint32(x1569);
+   const xed_decoded_inst_t* x1570 = CTYPES_ADDR_OF_FATPTR(x1569);
+   uint32_t x1571 = xed_decoded_inst_is_xacquire(x1570);
+   return integers_copy_uint32(x1571);
 }
-value stub__329_xed_decoded_inst_is_xrelease(value x1570)
+value stub__331_xed_decoded_inst_is_xrelease(value x1572)
 {
-   const xed_decoded_inst_t* x1571 = CTYPES_ADDR_OF_FATPTR(x1570);
-   uint32_t x1572 = xed_decoded_inst_is_xrelease(x1571);
-   return integers_copy_uint32(x1572);
+   const xed_decoded_inst_t* x1573 = CTYPES_ADDR_OF_FATPTR(x1572);
+   uint32_t x1574 = xed_decoded_inst_is_xrelease(x1573);
+   return integers_copy_uint32(x1574);
 }
-value stub__330_xed_decoded_inst_masked_vector_operation(value x1573)
+value stub__332_xed_decoded_inst_masked_vector_operation(value x1575)
 {
-   xed_decoded_inst_t* x1574 = CTYPES_ADDR_OF_FATPTR(x1573);
-   _Bool x1575 = xed_decoded_inst_masked_vector_operation(x1574);
-   return Val_bool(x1575);
+   xed_decoded_inst_t* x1576 = CTYPES_ADDR_OF_FATPTR(x1575);
+   _Bool x1577 = xed_decoded_inst_masked_vector_operation(x1576);
+   return Val_bool(x1577);
 }
-value stub__331_xed_decoded_inst_masking(value x1576)
+value stub__333_xed_decoded_inst_masking(value x1578)
 {
-   const xed_decoded_inst_t* x1577 = CTYPES_ADDR_OF_FATPTR(x1576);
-   _Bool x1578 = xed_decoded_inst_masking(x1577);
-   return Val_bool(x1578);
+   const xed_decoded_inst_t* x1579 = CTYPES_ADDR_OF_FATPTR(x1578);
+   _Bool x1580 = xed_decoded_inst_masking(x1579);
+   return Val_bool(x1580);
 }
-value stub__332_xed_decoded_inst_mem_read(value x1580, value x1579)
+value stub__334_xed_decoded_inst_mem_read(value x1582, value x1581)
 {
-   const xed_decoded_inst_t* x1581 = CTYPES_ADDR_OF_FATPTR(x1580);
-   int x1582 = Long_val(x1579);
-   _Bool x1585 = xed_decoded_inst_mem_read(x1581, x1582);
-   return Val_bool(x1585);
+   const xed_decoded_inst_t* x1583 = CTYPES_ADDR_OF_FATPTR(x1582);
+   int x1584 = Long_val(x1581);
+   _Bool x1587 = xed_decoded_inst_mem_read(x1583, x1584);
+   return Val_bool(x1587);
 }
-value stub__333_xed_decoded_inst_mem_written(value x1587, value x1586)
+value stub__335_xed_decoded_inst_mem_written(value x1589, value x1588)
 {
-   const xed_decoded_inst_t* x1588 = CTYPES_ADDR_OF_FATPTR(x1587);
-   int x1589 = Long_val(x1586);
-   _Bool x1592 = xed_decoded_inst_mem_written(x1588, x1589);
-   return Val_bool(x1592);
+   const xed_decoded_inst_t* x1590 = CTYPES_ADDR_OF_FATPTR(x1589);
+   int x1591 = Long_val(x1588);
+   _Bool x1594 = xed_decoded_inst_mem_written(x1590, x1591);
+   return Val_bool(x1594);
 }
-value stub__334_xed_decoded_inst_mem_written_only(value x1594, value x1593)
+value stub__336_xed_decoded_inst_mem_written_only(value x1596, value x1595)
 {
-   const xed_decoded_inst_t* x1595 = CTYPES_ADDR_OF_FATPTR(x1594);
-   int x1596 = Long_val(x1593);
-   _Bool x1599 = xed_decoded_inst_mem_written_only(x1595, x1596);
-   return Val_bool(x1599);
+   const xed_decoded_inst_t* x1597 = CTYPES_ADDR_OF_FATPTR(x1596);
+   int x1598 = Long_val(x1595);
+   _Bool x1601 = xed_decoded_inst_mem_written_only(x1597, x1598);
+   return Val_bool(x1601);
 }
-value stub__335_xed_decoded_inst_merging(value x1600)
+value stub__337_xed_decoded_inst_merging(value x1602)
 {
-   const xed_decoded_inst_t* x1601 = CTYPES_ADDR_OF_FATPTR(x1600);
-   _Bool x1602 = xed_decoded_inst_merging(x1601);
-   return Val_bool(x1602);
+   const xed_decoded_inst_t* x1603 = CTYPES_ADDR_OF_FATPTR(x1602);
+   _Bool x1604 = xed_decoded_inst_merging(x1603);
+   return Val_bool(x1604);
 }
-value stub__336_xed_decoded_inst_noperands(value x1603)
+value stub__338_xed_decoded_inst_noperands(value x1605)
 {
-   const xed_decoded_inst_t* x1604 = CTYPES_ADDR_OF_FATPTR(x1603);
-   int x1605 = xed_decoded_inst_noperands(x1604);
-   return Val_long(x1605);
+   const xed_decoded_inst_t* x1606 = CTYPES_ADDR_OF_FATPTR(x1605);
+   int x1607 = xed_decoded_inst_noperands(x1606);
+   return Val_long(x1607);
 }
-value stub__337_xed_decoded_inst_number_of_memory_operands(value x1606)
+value stub__339_xed_decoded_inst_number_of_memory_operands(value x1608)
 {
-   const xed_decoded_inst_t* x1607 = CTYPES_ADDR_OF_FATPTR(x1606);
-   int x1608 = xed_decoded_inst_number_of_memory_operands(x1607);
-   return Val_long(x1608);
+   const xed_decoded_inst_t* x1609 = CTYPES_ADDR_OF_FATPTR(x1608);
+   int x1610 = xed_decoded_inst_number_of_memory_operands(x1609);
+   return Val_long(x1610);
 }
-value stub__338_xed_decoded_inst_operand_action(value x1610, value x1609)
+value stub__340_xed_decoded_inst_operand_action(value x1612, value x1611)
 {
-   const xed_decoded_inst_t* x1611 = CTYPES_ADDR_OF_FATPTR(x1610);
-   int x1612 = Long_val(x1609);
-   int x1615 = xed_decoded_inst_operand_action(x1611, x1612);
-   return Val_long(x1615);
+   const xed_decoded_inst_t* x1613 = CTYPES_ADDR_OF_FATPTR(x1612);
+   int x1614 = Long_val(x1611);
+   int x1617 = xed_decoded_inst_operand_action(x1613, x1614);
+   return Val_long(x1617);
 }
-value stub__339_xed_decoded_inst_operand_element_size_bits(value x1617,
-                                                           value x1616)
+value stub__341_xed_decoded_inst_operand_element_size_bits(value x1619,
+                                                           value x1618)
 {
-   const xed_decoded_inst_t* x1618 = CTYPES_ADDR_OF_FATPTR(x1617);
-   int x1619 = Long_val(x1616);
-   int x1622 = xed_decoded_inst_operand_element_size_bits(x1618, x1619);
-   return Val_long(x1622);
+   const xed_decoded_inst_t* x1620 = CTYPES_ADDR_OF_FATPTR(x1619);
+   int x1621 = Long_val(x1618);
+   int x1624 = xed_decoded_inst_operand_element_size_bits(x1620, x1621);
+   return Val_long(x1624);
 }
-value stub__340_xed_decoded_inst_operand_element_type(value x1624,
-                                                      value x1623)
+value stub__342_xed_decoded_inst_operand_element_type(value x1626,
+                                                      value x1625)
 {
-   const xed_decoded_inst_t* x1625 = CTYPES_ADDR_OF_FATPTR(x1624);
-   int x1626 = Long_val(x1623);
-   int x1629 = xed_decoded_inst_operand_element_type(x1625, x1626);
-   return Val_long(x1629);
+   const xed_decoded_inst_t* x1627 = CTYPES_ADDR_OF_FATPTR(x1626);
+   int x1628 = Long_val(x1625);
+   int x1631 = xed_decoded_inst_operand_element_type(x1627, x1628);
+   return Val_long(x1631);
 }
-value stub__341_xed_decoded_inst_operand_elements(value x1631, value x1630)
+value stub__343_xed_decoded_inst_operand_elements(value x1633, value x1632)
 {
-   const xed_decoded_inst_t* x1632 = CTYPES_ADDR_OF_FATPTR(x1631);
-   int x1633 = Long_val(x1630);
-   int x1636 = xed_decoded_inst_operand_elements(x1632, x1633);
-   return Val_long(x1636);
+   const xed_decoded_inst_t* x1634 = CTYPES_ADDR_OF_FATPTR(x1633);
+   int x1635 = Long_val(x1632);
+   int x1638 = xed_decoded_inst_operand_elements(x1634, x1635);
+   return Val_long(x1638);
 }
-value stub__342_xed_decoded_inst_operand_length(value x1638, value x1637)
+value stub__344_xed_decoded_inst_operand_length(value x1640, value x1639)
 {
-   const xed_decoded_inst_t* x1639 = CTYPES_ADDR_OF_FATPTR(x1638);
-   int x1640 = Long_val(x1637);
-   int x1643 = xed_decoded_inst_operand_length(x1639, x1640);
-   return Val_long(x1643);
+   const xed_decoded_inst_t* x1641 = CTYPES_ADDR_OF_FATPTR(x1640);
+   int x1642 = Long_val(x1639);
+   int x1645 = xed_decoded_inst_operand_length(x1641, x1642);
+   return Val_long(x1645);
 }
-value stub__343_xed_decoded_inst_operand_length_bits(value x1645,
-                                                     value x1644)
+value stub__345_xed_decoded_inst_operand_length_bits(value x1647,
+                                                     value x1646)
 {
-   const xed_decoded_inst_t* x1646 = CTYPES_ADDR_OF_FATPTR(x1645);
-   int x1647 = Long_val(x1644);
-   int x1650 = xed_decoded_inst_operand_length_bits(x1646, x1647);
-   return Val_long(x1650);
+   const xed_decoded_inst_t* x1648 = CTYPES_ADDR_OF_FATPTR(x1647);
+   int x1649 = Long_val(x1646);
+   int x1652 = xed_decoded_inst_operand_length_bits(x1648, x1649);
+   return Val_long(x1652);
 }
-value stub__344_xed_decoded_inst_operands(value x1651)
+value stub__346_xed_decoded_inst_operands(value x1653)
 {
-   xed_decoded_inst_t* x1652 = CTYPES_ADDR_OF_FATPTR(x1651);
-   xed_operand_values_t* x1653 = xed_decoded_inst_operands(x1652);
-   return CTYPES_FROM_PTR(x1653);
+   xed_decoded_inst_t* x1654 = CTYPES_ADDR_OF_FATPTR(x1653);
+   xed_operand_values_t* x1655 = xed_decoded_inst_operands(x1654);
+   return CTYPES_FROM_PTR(x1655);
 }
-value stub__345_xed_decoded_inst_operands_const(value x1654)
+value stub__347_xed_decoded_inst_operands_const(value x1656)
 {
-   const xed_decoded_inst_t* x1655 = CTYPES_ADDR_OF_FATPTR(x1654);
-   const xed_operand_values_t* x1656 =
-   xed_decoded_inst_operands_const(x1655);
-   return CTYPES_FROM_PTR(x1656);
+   const xed_decoded_inst_t* x1657 = CTYPES_ADDR_OF_FATPTR(x1656);
+   const xed_operand_values_t* x1658 =
+   xed_decoded_inst_operands_const(x1657);
+   return CTYPES_FROM_PTR(x1658);
 }
-value stub__346_xed_decoded_inst_set_branch_displacement(value x1659,
-                                                         value x1658,
-                                                         value x1657)
+value stub__348_xed_decoded_inst_set_branch_displacement(value x1661,
+                                                         value x1660,
+                                                         value x1659)
 {
-   xed_decoded_inst_t* x1660 = CTYPES_ADDR_OF_FATPTR(x1659);
-   int32_t x1661 = Int32_val(x1658);
-   int x1664 = Long_val(x1657);
-   xed_decoded_inst_set_branch_displacement(x1660, x1661, x1664);
+   xed_decoded_inst_t* x1662 = CTYPES_ADDR_OF_FATPTR(x1661);
+   int32_t x1663 = Int32_val(x1660);
+   int x1666 = Long_val(x1659);
+   xed_decoded_inst_set_branch_displacement(x1662, x1663, x1666);
    return Val_unit;
 }
-value stub__347_xed_decoded_inst_set_branch_displacement_bits(value x1670,
-                                                              value x1669,
-                                                              value x1668)
+value stub__349_xed_decoded_inst_set_branch_displacement_bits(value x1672,
+                                                              value x1671,
+                                                              value x1670)
 {
-   xed_decoded_inst_t* x1671 = CTYPES_ADDR_OF_FATPTR(x1670);
-   int32_t x1672 = Int32_val(x1669);
-   int x1675 = Long_val(x1668);
-   xed_decoded_inst_set_branch_displacement_bits(x1671, x1672, x1675);
+   xed_decoded_inst_t* x1673 = CTYPES_ADDR_OF_FATPTR(x1672);
+   int32_t x1674 = Int32_val(x1671);
+   int x1677 = Long_val(x1670);
+   xed_decoded_inst_set_branch_displacement_bits(x1673, x1674, x1677);
    return Val_unit;
 }
-value stub__348_xed_decoded_inst_set_immediate_signed(value x1681,
-                                                      value x1680,
-                                                      value x1679)
+value stub__350_xed_decoded_inst_set_immediate_signed(value x1683,
+                                                      value x1682,
+                                                      value x1681)
 {
-   xed_decoded_inst_t* x1682 = CTYPES_ADDR_OF_FATPTR(x1681);
-   int32_t x1683 = Int32_val(x1680);
-   int x1686 = Long_val(x1679);
-   xed_decoded_inst_set_immediate_signed(x1682, x1683, x1686);
+   xed_decoded_inst_t* x1684 = CTYPES_ADDR_OF_FATPTR(x1683);
+   int32_t x1685 = Int32_val(x1682);
+   int x1688 = Long_val(x1681);
+   xed_decoded_inst_set_immediate_signed(x1684, x1685, x1688);
    return Val_unit;
 }
-value stub__349_xed_decoded_inst_set_immediate_signed_bits(value x1692,
-                                                           value x1691,
-                                                           value x1690)
+value stub__351_xed_decoded_inst_set_immediate_signed_bits(value x1694,
+                                                           value x1693,
+                                                           value x1692)
 {
-   xed_decoded_inst_t* x1693 = CTYPES_ADDR_OF_FATPTR(x1692);
-   int32_t x1694 = Int32_val(x1691);
-   int x1697 = Long_val(x1690);
-   xed_decoded_inst_set_immediate_signed_bits(x1693, x1694, x1697);
+   xed_decoded_inst_t* x1695 = CTYPES_ADDR_OF_FATPTR(x1694);
+   int32_t x1696 = Int32_val(x1693);
+   int x1699 = Long_val(x1692);
+   xed_decoded_inst_set_immediate_signed_bits(x1695, x1696, x1699);
    return Val_unit;
 }
-value stub__350_xed_decoded_inst_set_immediate_unsigned(value x1703,
-                                                        value x1702,
-                                                        value x1701)
+value stub__352_xed_decoded_inst_set_immediate_unsigned(value x1705,
+                                                        value x1704,
+                                                        value x1703)
 {
-   xed_decoded_inst_t* x1704 = CTYPES_ADDR_OF_FATPTR(x1703);
-   uint64_t x1705 = Uint64_val(x1702);
-   int x1708 = Long_val(x1701);
-   xed_decoded_inst_set_immediate_unsigned(x1704, x1705, x1708);
+   xed_decoded_inst_t* x1706 = CTYPES_ADDR_OF_FATPTR(x1705);
+   uint64_t x1707 = Uint64_val(x1704);
+   int x1710 = Long_val(x1703);
+   xed_decoded_inst_set_immediate_unsigned(x1706, x1707, x1710);
    return Val_unit;
 }
-value stub__351_xed_decoded_inst_set_immediate_unsigned_bits(value x1714,
-                                                             value x1713,
-                                                             value x1712)
+value stub__353_xed_decoded_inst_set_immediate_unsigned_bits(value x1716,
+                                                             value x1715,
+                                                             value x1714)
 {
-   xed_decoded_inst_t* x1715 = CTYPES_ADDR_OF_FATPTR(x1714);
-   uint64_t x1716 = Uint64_val(x1713);
-   int x1719 = Long_val(x1712);
-   xed_decoded_inst_set_immediate_unsigned_bits(x1715, x1716, x1719);
+   xed_decoded_inst_t* x1717 = CTYPES_ADDR_OF_FATPTR(x1716);
+   uint64_t x1718 = Uint64_val(x1715);
+   int x1721 = Long_val(x1714);
+   xed_decoded_inst_set_immediate_unsigned_bits(x1717, x1718, x1721);
    return Val_unit;
 }
-value stub__352_xed_decoded_inst_set_input_chip(value x1724, value x1723)
+value stub__354_xed_decoded_inst_set_input_chip(value x1726, value x1725)
 {
-   xed_decoded_inst_t* x1725 = CTYPES_ADDR_OF_FATPTR(x1724);
-   int x1726 = Long_val(x1723);
-   xed_decoded_inst_set_input_chip(x1725, x1726);
+   xed_decoded_inst_t* x1727 = CTYPES_ADDR_OF_FATPTR(x1726);
+   int x1728 = Long_val(x1725);
+   xed_decoded_inst_set_input_chip(x1727, x1728);
    return Val_unit;
 }
-value stub__353_xed_decoded_inst_set_memory_displacement(value x1732,
-                                                         value x1731,
-                                                         value x1730)
+value stub__355_xed_decoded_inst_set_memory_displacement(value x1734,
+                                                         value x1733,
+                                                         value x1732)
 {
-   xed_decoded_inst_t* x1733 = CTYPES_ADDR_OF_FATPTR(x1732);
-   int64_t x1734 = Int64_val(x1731);
-   int x1737 = Long_val(x1730);
-   xed_decoded_inst_set_memory_displacement(x1733, x1734, x1737);
+   xed_decoded_inst_t* x1735 = CTYPES_ADDR_OF_FATPTR(x1734);
+   int64_t x1736 = Int64_val(x1733);
+   int x1739 = Long_val(x1732);
+   xed_decoded_inst_set_memory_displacement(x1735, x1736, x1739);
    return Val_unit;
 }
-value stub__354_xed_decoded_inst_set_memory_displacement_bits(value x1743,
-                                                              value x1742,
-                                                              value x1741)
+value stub__356_xed_decoded_inst_set_memory_displacement_bits(value x1745,
+                                                              value x1744,
+                                                              value x1743)
 {
-   xed_decoded_inst_t* x1744 = CTYPES_ADDR_OF_FATPTR(x1743);
-   int64_t x1745 = Int64_val(x1742);
-   int x1748 = Long_val(x1741);
-   xed_decoded_inst_set_memory_displacement_bits(x1744, x1745, x1748);
+   xed_decoded_inst_t* x1746 = CTYPES_ADDR_OF_FATPTR(x1745);
+   int64_t x1747 = Int64_val(x1744);
+   int x1750 = Long_val(x1743);
+   xed_decoded_inst_set_memory_displacement_bits(x1746, x1747, x1750);
    return Val_unit;
 }
-value stub__355_xed_decoded_inst_set_mode(value x1754, value x1753,
-                                          value x1752)
+value stub__357_xed_decoded_inst_set_mode(value x1756, value x1755,
+                                          value x1754)
 {
-   xed_decoded_inst_t* x1755 = CTYPES_ADDR_OF_FATPTR(x1754);
-   int x1756 = Long_val(x1753);
-   int x1759 = Long_val(x1752);
-   xed_decoded_inst_set_mode(x1755, x1756, x1759);
+   xed_decoded_inst_t* x1757 = CTYPES_ADDR_OF_FATPTR(x1756);
+   int x1758 = Long_val(x1755);
+   int x1761 = Long_val(x1754);
+   xed_decoded_inst_set_mode(x1757, x1758, x1761);
    return Val_unit;
 }
-value stub__356_xed_decoded_inst_set_scale(value x1764, value x1763)
+value stub__358_xed_decoded_inst_set_scale(value x1766, value x1765)
 {
-   xed_decoded_inst_t* x1765 = CTYPES_ADDR_OF_FATPTR(x1764);
-   int x1766 = Long_val(x1763);
-   xed_decoded_inst_set_scale(x1765, x1766);
+   xed_decoded_inst_t* x1767 = CTYPES_ADDR_OF_FATPTR(x1766);
+   int x1768 = Long_val(x1765);
+   xed_decoded_inst_set_scale(x1767, x1768);
    return Val_unit;
 }
-value stub__357_xed_decoded_inst_set_user_data(value x1771, value x1770)
+value stub__359_xed_decoded_inst_set_user_data(value x1773, value x1772)
 {
-   xed_decoded_inst_t* x1772 = CTYPES_ADDR_OF_FATPTR(x1771);
-   uint64_t x1773 = Uint64_val(x1770);
-   xed_decoded_inst_set_user_data(x1772, x1773);
+   xed_decoded_inst_t* x1774 = CTYPES_ADDR_OF_FATPTR(x1773);
+   uint64_t x1775 = Uint64_val(x1772);
+   xed_decoded_inst_set_user_data(x1774, x1775);
    return Val_unit;
 }
-value stub__358_xed_decoded_inst_uses_embedded_broadcast(value x1777)
+value stub__360_xed_decoded_inst_uses_embedded_broadcast(value x1779)
 {
-   const xed_decoded_inst_t* x1778 = CTYPES_ADDR_OF_FATPTR(x1777);
-   _Bool x1779 = xed_decoded_inst_uses_embedded_broadcast(x1778);
-   return Val_bool(x1779);
+   const xed_decoded_inst_t* x1780 = CTYPES_ADDR_OF_FATPTR(x1779);
+   _Bool x1781 = xed_decoded_inst_uses_embedded_broadcast(x1780);
+   return Val_bool(x1781);
 }
-value stub__359_xed_decoded_inst_uses_rflags(value x1780)
+value stub__361_xed_decoded_inst_uses_rflags(value x1782)
 {
-   const xed_decoded_inst_t* x1781 = CTYPES_ADDR_OF_FATPTR(x1780);
-   _Bool x1782 = xed_decoded_inst_uses_rflags(x1781);
-   return Val_bool(x1782);
+   const xed_decoded_inst_t* x1783 = CTYPES_ADDR_OF_FATPTR(x1782);
+   _Bool x1784 = xed_decoded_inst_uses_rflags(x1783);
+   return Val_bool(x1784);
 }
-value stub__360_xed_decoded_inst_valid(value x1783)
+value stub__362_xed_decoded_inst_valid(value x1785)
 {
-   const xed_decoded_inst_t* x1784 = CTYPES_ADDR_OF_FATPTR(x1783);
-   _Bool x1785 = xed_decoded_inst_valid(x1784);
-   return Val_bool(x1785);
+   const xed_decoded_inst_t* x1786 = CTYPES_ADDR_OF_FATPTR(x1785);
+   _Bool x1787 = xed_decoded_inst_valid(x1786);
+   return Val_bool(x1787);
 }
-value stub__361_xed_decoded_inst_valid_for_chip(value x1787, value x1786)
+value stub__363_xed_decoded_inst_valid_for_chip(value x1789, value x1788)
 {
-   const xed_decoded_inst_t* x1788 = CTYPES_ADDR_OF_FATPTR(x1787);
-   int x1789 = Long_val(x1786);
-   _Bool x1792 = xed_decoded_inst_valid_for_chip(x1788, x1789);
-   return Val_bool(x1792);
+   const xed_decoded_inst_t* x1790 = CTYPES_ADDR_OF_FATPTR(x1789);
+   int x1791 = Long_val(x1788);
+   _Bool x1794 = xed_decoded_inst_valid_for_chip(x1790, x1791);
+   return Val_bool(x1794);
 }
-value stub__362_xed_decoded_inst_vector_length_bits(value x1793)
+value stub__364_xed_decoded_inst_vector_length_bits(value x1795)
 {
-   const xed_decoded_inst_t* x1794 = CTYPES_ADDR_OF_FATPTR(x1793);
-   int x1795 = xed_decoded_inst_vector_length_bits(x1794);
-   return Val_long(x1795);
+   const xed_decoded_inst_t* x1796 = CTYPES_ADDR_OF_FATPTR(x1795);
+   int x1797 = xed_decoded_inst_vector_length_bits(x1796);
+   return Val_long(x1797);
 }
-value stub__363_xed_decoded_inst_zero(value x1796)
+value stub__365_xed_decoded_inst_zero(value x1798)
 {
-   xed_decoded_inst_t* x1797 = CTYPES_ADDR_OF_FATPTR(x1796);
-   xed_decoded_inst_zero(x1797);
+   xed_decoded_inst_t* x1799 = CTYPES_ADDR_OF_FATPTR(x1798);
+   xed_decoded_inst_zero(x1799);
    return Val_unit;
 }
-value stub__364_xed_decoded_inst_zero_keep_mode(value x1799)
+value stub__366_xed_decoded_inst_zero_keep_mode(value x1801)
 {
-   xed_decoded_inst_t* x1800 = CTYPES_ADDR_OF_FATPTR(x1799);
-   xed_decoded_inst_zero_keep_mode(x1800);
+   xed_decoded_inst_t* x1802 = CTYPES_ADDR_OF_FATPTR(x1801);
+   xed_decoded_inst_zero_keep_mode(x1802);
    return Val_unit;
 }
-value stub__365_xed_decoded_inst_zero_keep_mode_from_operands(value x1803,
-                                                              value x1802)
+value stub__367_xed_decoded_inst_zero_keep_mode_from_operands(value x1805,
+                                                              value x1804)
 {
-   xed_decoded_inst_t* x1804 = CTYPES_ADDR_OF_FATPTR(x1803);
-   const xed_operand_values_t* x1805 = CTYPES_ADDR_OF_FATPTR(x1802);
-   xed_decoded_inst_zero_keep_mode_from_operands(x1804, x1805);
+   xed_decoded_inst_t* x1806 = CTYPES_ADDR_OF_FATPTR(x1805);
+   const xed_operand_values_t* x1807 = CTYPES_ADDR_OF_FATPTR(x1804);
+   xed_decoded_inst_zero_keep_mode_from_operands(x1806, x1807);
    return Val_unit;
 }
-value stub__366_xed_decoded_inst_zero_set_mode(value x1808, value x1807)
+value stub__368_xed_decoded_inst_zero_set_mode(value x1810, value x1809)
 {
-   xed_decoded_inst_t* x1809 = CTYPES_ADDR_OF_FATPTR(x1808);
-   const xed_state_t* x1810 = CTYPES_ADDR_OF_FATPTR(x1807);
-   xed_decoded_inst_zero_set_mode(x1809, x1810);
+   xed_decoded_inst_t* x1811 = CTYPES_ADDR_OF_FATPTR(x1810);
+   const xed_state_t* x1812 = CTYPES_ADDR_OF_FATPTR(x1809);
+   xed_decoded_inst_zero_set_mode(x1811, x1812);
    return Val_unit;
 }
-value stub__367_xed_decoded_inst_zeroing(value x1812)
+value stub__369_xed_decoded_inst_zeroing(value x1814)
 {
-   const xed_decoded_inst_t* x1813 = CTYPES_ADDR_OF_FATPTR(x1812);
-   _Bool x1814 = xed_decoded_inst_zeroing(x1813);
-   return Val_bool(x1814);
+   const xed_decoded_inst_t* x1815 = CTYPES_ADDR_OF_FATPTR(x1814);
+   _Bool x1816 = xed_decoded_inst_zeroing(x1815);
+   return Val_bool(x1816);
 }
-value stub__368_xed_encoder_request_clear_rep(value x1815)
+value stub__370_xed_encoder_request_clear_rep(value x1817)
 {
-   xed_encoder_request_t* x1816 = CTYPES_ADDR_OF_FATPTR(x1815);
-   xed_encoder_request_clear_rep(x1816);
+   xed_encoder_request_t* x1818 = CTYPES_ADDR_OF_FATPTR(x1817);
+   xed_encoder_request_clear_rep(x1818);
    return Val_unit;
 }
-value stub__369_xed_encoder_request_get_iclass(value x1818)
+value stub__371_xed_encoder_request_get_iclass(value x1820)
 {
-   const xed_encoder_request_t* x1819 = CTYPES_ADDR_OF_FATPTR(x1818);
-   int x1820 = xed_encoder_request_get_iclass(x1819);
-   return Val_long(x1820);
+   const xed_encoder_request_t* x1821 = CTYPES_ADDR_OF_FATPTR(x1820);
+   int x1822 = xed_encoder_request_get_iclass(x1821);
+   return Val_long(x1822);
 }
-value stub__370_xed_encoder_request_get_operand_order(value x1822,
-                                                      value x1821)
+value stub__372_xed_encoder_request_get_operand_order(value x1824,
+                                                      value x1823)
 {
-   xed_encoder_request_t* x1823 = CTYPES_ADDR_OF_FATPTR(x1822);
-   int x1824 = Long_val(x1821);
-   int x1827 = xed_encoder_request_get_operand_order(x1823, x1824);
-   return Val_long(x1827);
+   xed_encoder_request_t* x1825 = CTYPES_ADDR_OF_FATPTR(x1824);
+   int x1826 = Long_val(x1823);
+   int x1829 = xed_encoder_request_get_operand_order(x1825, x1826);
+   return Val_long(x1829);
 }
-value stub__371_xed_encoder_request_operand_order_entries(value x1828)
+value stub__373_xed_encoder_request_operand_order_entries(value x1830)
 {
-   xed_encoder_request_t* x1829 = CTYPES_ADDR_OF_FATPTR(x1828);
-   int x1830 = xed_encoder_request_operand_order_entries(x1829);
-   return Val_long(x1830);
+   xed_encoder_request_t* x1831 = CTYPES_ADDR_OF_FATPTR(x1830);
+   int x1832 = xed_encoder_request_operand_order_entries(x1831);
+   return Val_long(x1832);
 }
-value stub__372_xed_encoder_request_operands(value x1831)
+value stub__374_xed_encoder_request_operands(value x1833)
 {
-   xed_encoder_request_t* x1832 = CTYPES_ADDR_OF_FATPTR(x1831);
-   xed_operand_values_t* x1833 = xed_encoder_request_operands(x1832);
-   return CTYPES_FROM_PTR(x1833);
+   xed_encoder_request_t* x1834 = CTYPES_ADDR_OF_FATPTR(x1833);
+   xed_operand_values_t* x1835 = xed_encoder_request_operands(x1834);
+   return CTYPES_FROM_PTR(x1835);
 }
-value stub__373_xed_encoder_request_operands_const(value x1834)
+value stub__375_xed_encoder_request_operands_const(value x1836)
 {
-   const xed_encoder_request_t* x1835 = CTYPES_ADDR_OF_FATPTR(x1834);
-   const xed_operand_values_t* x1836 =
-   xed_encoder_request_operands_const(x1835);
-   return CTYPES_FROM_PTR(x1836);
+   const xed_encoder_request_t* x1837 = CTYPES_ADDR_OF_FATPTR(x1836);
+   const xed_operand_values_t* x1838 =
+   xed_encoder_request_operands_const(x1837);
+   return CTYPES_FROM_PTR(x1838);
 }
-value stub__374_xed_encoder_request_set_agen(value x1837)
+value stub__376_xed_encoder_request_set_agen(value x1839)
 {
-   xed_encoder_request_t* x1838 = CTYPES_ADDR_OF_FATPTR(x1837);
-   xed_encoder_request_set_agen(x1838);
+   xed_encoder_request_t* x1840 = CTYPES_ADDR_OF_FATPTR(x1839);
+   xed_encoder_request_set_agen(x1840);
    return Val_unit;
 }
-value stub__375_xed_encoder_request_set_base0(value x1841, value x1840)
+value stub__377_xed_encoder_request_set_base0(value x1843, value x1842)
 {
-   xed_encoder_request_t* x1842 = CTYPES_ADDR_OF_FATPTR(x1841);
-   int x1843 = Long_val(x1840);
-   xed_encoder_request_set_base0(x1842, x1843);
+   xed_encoder_request_t* x1844 = CTYPES_ADDR_OF_FATPTR(x1843);
+   int x1845 = Long_val(x1842);
+   xed_encoder_request_set_base0(x1844, x1845);
    return Val_unit;
 }
-value stub__376_xed_encoder_request_set_base1(value x1848, value x1847)
+value stub__378_xed_encoder_request_set_base1(value x1850, value x1849)
 {
-   xed_encoder_request_t* x1849 = CTYPES_ADDR_OF_FATPTR(x1848);
-   int x1850 = Long_val(x1847);
-   xed_encoder_request_set_base1(x1849, x1850);
+   xed_encoder_request_t* x1851 = CTYPES_ADDR_OF_FATPTR(x1850);
+   int x1852 = Long_val(x1849);
+   xed_encoder_request_set_base1(x1851, x1852);
    return Val_unit;
 }
-value stub__377_xed_encoder_request_set_branch_displacement(value x1856,
-                                                            value x1855,
-                                                            value x1854)
+value stub__379_xed_encoder_request_set_branch_displacement(value x1858,
+                                                            value x1857,
+                                                            value x1856)
 {
-   xed_encoder_request_t* x1857 = CTYPES_ADDR_OF_FATPTR(x1856);
-   int32_t x1858 = Int32_val(x1855);
-   int x1861 = Long_val(x1854);
-   xed_encoder_request_set_branch_displacement(x1857, x1858, x1861);
+   xed_encoder_request_t* x1859 = CTYPES_ADDR_OF_FATPTR(x1858);
+   int32_t x1860 = Int32_val(x1857);
+   int x1863 = Long_val(x1856);
+   xed_encoder_request_set_branch_displacement(x1859, x1860, x1863);
    return Val_unit;
 }
-value stub__378_xed_encoder_request_set_effective_address_size(value x1866,
-                                                               value x1865)
+value stub__380_xed_encoder_request_set_effective_address_size(value x1868,
+                                                               value x1867)
 {
-   xed_encoder_request_t* x1867 = CTYPES_ADDR_OF_FATPTR(x1866);
-   int x1868 = Long_val(x1865);
-   xed_encoder_request_set_effective_address_size(x1867, x1868);
+   xed_encoder_request_t* x1869 = CTYPES_ADDR_OF_FATPTR(x1868);
+   int x1870 = Long_val(x1867);
+   xed_encoder_request_set_effective_address_size(x1869, x1870);
    return Val_unit;
 }
-value stub__379_xed_encoder_request_set_effective_operand_width(value x1873,
-                                                                value x1872)
+value stub__381_xed_encoder_request_set_effective_operand_width(value x1875,
+                                                                value x1874)
 {
-   xed_encoder_request_t* x1874 = CTYPES_ADDR_OF_FATPTR(x1873);
-   int x1875 = Long_val(x1872);
-   xed_encoder_request_set_effective_operand_width(x1874, x1875);
+   xed_encoder_request_t* x1876 = CTYPES_ADDR_OF_FATPTR(x1875);
+   int x1877 = Long_val(x1874);
+   xed_encoder_request_set_effective_operand_width(x1876, x1877);
    return Val_unit;
 }
-value stub__380_xed_encoder_request_set_iclass(value x1880, value x1879)
+value stub__382_xed_encoder_request_set_iclass(value x1882, value x1881)
 {
-   xed_encoder_request_t* x1881 = CTYPES_ADDR_OF_FATPTR(x1880);
-   int x1882 = Long_val(x1879);
-   xed_encoder_request_set_iclass(x1881, x1882);
+   xed_encoder_request_t* x1883 = CTYPES_ADDR_OF_FATPTR(x1882);
+   int x1884 = Long_val(x1881);
+   xed_encoder_request_set_iclass(x1883, x1884);
    return Val_unit;
 }
-value stub__381_xed_encoder_request_set_index(value x1887, value x1886)
+value stub__383_xed_encoder_request_set_index(value x1889, value x1888)
 {
-   xed_encoder_request_t* x1888 = CTYPES_ADDR_OF_FATPTR(x1887);
-   int x1889 = Long_val(x1886);
-   xed_encoder_request_set_index(x1888, x1889);
+   xed_encoder_request_t* x1890 = CTYPES_ADDR_OF_FATPTR(x1889);
+   int x1891 = Long_val(x1888);
+   xed_encoder_request_set_index(x1890, x1891);
    return Val_unit;
 }
-value stub__382_xed_encoder_request_set_mem0(value x1893)
+value stub__384_xed_encoder_request_set_mem0(value x1895)
 {
-   xed_encoder_request_t* x1894 = CTYPES_ADDR_OF_FATPTR(x1893);
-   xed_encoder_request_set_mem0(x1894);
+   xed_encoder_request_t* x1896 = CTYPES_ADDR_OF_FATPTR(x1895);
+   xed_encoder_request_set_mem0(x1896);
    return Val_unit;
 }
-value stub__383_xed_encoder_request_set_mem1(value x1896)
+value stub__385_xed_encoder_request_set_mem1(value x1898)
 {
-   xed_encoder_request_t* x1897 = CTYPES_ADDR_OF_FATPTR(x1896);
-   xed_encoder_request_set_mem1(x1897);
+   xed_encoder_request_t* x1899 = CTYPES_ADDR_OF_FATPTR(x1898);
+   xed_encoder_request_set_mem1(x1899);
    return Val_unit;
 }
-value stub__384_xed_encoder_request_set_memory_displacement(value x1901,
-                                                            value x1900,
-                                                            value x1899)
+value stub__386_xed_encoder_request_set_memory_displacement(value x1903,
+                                                            value x1902,
+                                                            value x1901)
 {
-   xed_encoder_request_t* x1902 = CTYPES_ADDR_OF_FATPTR(x1901);
-   int64_t x1903 = Int64_val(x1900);
-   int x1906 = Long_val(x1899);
-   xed_encoder_request_set_memory_displacement(x1902, x1903, x1906);
+   xed_encoder_request_t* x1904 = CTYPES_ADDR_OF_FATPTR(x1903);
+   int64_t x1905 = Int64_val(x1902);
+   int x1908 = Long_val(x1901);
+   xed_encoder_request_set_memory_displacement(x1904, x1905, x1908);
    return Val_unit;
 }
-value stub__385_xed_encoder_request_set_memory_operand_length(value x1911,
-                                                              value x1910)
+value stub__387_xed_encoder_request_set_memory_operand_length(value x1913,
+                                                              value x1912)
 {
-   xed_encoder_request_t* x1912 = CTYPES_ADDR_OF_FATPTR(x1911);
-   int x1913 = Long_val(x1910);
-   xed_encoder_request_set_memory_operand_length(x1912, x1913);
+   xed_encoder_request_t* x1914 = CTYPES_ADDR_OF_FATPTR(x1913);
+   int x1915 = Long_val(x1912);
+   xed_encoder_request_set_memory_operand_length(x1914, x1915);
    return Val_unit;
 }
-value stub__386_xed_encoder_request_set_operand_order(value x1919,
-                                                      value x1918,
-                                                      value x1917)
+value stub__388_xed_encoder_request_set_operand_order(value x1921,
+                                                      value x1920,
+                                                      value x1919)
 {
-   xed_encoder_request_t* x1920 = CTYPES_ADDR_OF_FATPTR(x1919);
-   int x1921 = Long_val(x1918);
-   int x1924 = Long_val(x1917);
-   xed_encoder_request_set_operand_order(x1920, x1921, x1924);
+   xed_encoder_request_t* x1922 = CTYPES_ADDR_OF_FATPTR(x1921);
+   int x1923 = Long_val(x1920);
+   int x1926 = Long_val(x1919);
+   xed_encoder_request_set_operand_order(x1922, x1923, x1926);
    return Val_unit;
 }
-value stub__387_xed_encoder_request_set_ptr(value x1928)
+value stub__389_xed_encoder_request_set_ptr(value x1930)
 {
-   xed_encoder_request_t* x1929 = CTYPES_ADDR_OF_FATPTR(x1928);
-   xed_encoder_request_set_ptr(x1929);
+   xed_encoder_request_t* x1931 = CTYPES_ADDR_OF_FATPTR(x1930);
+   xed_encoder_request_set_ptr(x1931);
    return Val_unit;
 }
-value stub__388_xed_encoder_request_set_reg(value x1933, value x1932,
-                                            value x1931)
+value stub__390_xed_encoder_request_set_reg(value x1935, value x1934,
+                                            value x1933)
 {
-   xed_encoder_request_t* x1934 = CTYPES_ADDR_OF_FATPTR(x1933);
-   int x1935 = Long_val(x1932);
-   int x1938 = Long_val(x1931);
-   xed_encoder_request_set_reg(x1934, x1935, x1938);
+   xed_encoder_request_t* x1936 = CTYPES_ADDR_OF_FATPTR(x1935);
+   int x1937 = Long_val(x1934);
+   int x1940 = Long_val(x1933);
+   xed_encoder_request_set_reg(x1936, x1937, x1940);
    return Val_unit;
 }
-value stub__389_xed_encoder_request_set_relbr(value x1942)
+value stub__391_xed_encoder_request_set_relbr(value x1944)
 {
-   xed_encoder_request_t* x1943 = CTYPES_ADDR_OF_FATPTR(x1942);
-   xed_encoder_request_set_relbr(x1943);
+   xed_encoder_request_t* x1945 = CTYPES_ADDR_OF_FATPTR(x1944);
+   xed_encoder_request_set_relbr(x1945);
    return Val_unit;
 }
-value stub__390_xed_encoder_request_set_rep(value x1945)
+value stub__392_xed_encoder_request_set_rep(value x1947)
 {
-   xed_encoder_request_t* x1946 = CTYPES_ADDR_OF_FATPTR(x1945);
-   xed_encoder_request_set_rep(x1946);
+   xed_encoder_request_t* x1948 = CTYPES_ADDR_OF_FATPTR(x1947);
+   xed_encoder_request_set_rep(x1948);
    return Val_unit;
 }
-value stub__391_xed_encoder_request_set_repne(value x1948)
+value stub__393_xed_encoder_request_set_repne(value x1950)
 {
-   xed_encoder_request_t* x1949 = CTYPES_ADDR_OF_FATPTR(x1948);
-   xed_encoder_request_set_repne(x1949);
+   xed_encoder_request_t* x1951 = CTYPES_ADDR_OF_FATPTR(x1950);
+   xed_encoder_request_set_repne(x1951);
    return Val_unit;
 }
-value stub__392_xed_encoder_request_set_scale(value x1952, value x1951)
+value stub__394_xed_encoder_request_set_scale(value x1954, value x1953)
 {
-   xed_encoder_request_t* x1953 = CTYPES_ADDR_OF_FATPTR(x1952);
-   int x1954 = Long_val(x1951);
-   xed_encoder_request_set_scale(x1953, x1954);
+   xed_encoder_request_t* x1955 = CTYPES_ADDR_OF_FATPTR(x1954);
+   int x1956 = Long_val(x1953);
+   xed_encoder_request_set_scale(x1955, x1956);
    return Val_unit;
 }
-value stub__393_xed_encoder_request_set_seg0(value x1959, value x1958)
+value stub__395_xed_encoder_request_set_seg0(value x1961, value x1960)
 {
-   xed_encoder_request_t* x1960 = CTYPES_ADDR_OF_FATPTR(x1959);
-   int x1961 = Long_val(x1958);
-   xed_encoder_request_set_seg0(x1960, x1961);
+   xed_encoder_request_t* x1962 = CTYPES_ADDR_OF_FATPTR(x1961);
+   int x1963 = Long_val(x1960);
+   xed_encoder_request_set_seg0(x1962, x1963);
    return Val_unit;
 }
-value stub__394_xed_encoder_request_set_seg1(value x1966, value x1965)
+value stub__396_xed_encoder_request_set_seg1(value x1968, value x1967)
 {
-   xed_encoder_request_t* x1967 = CTYPES_ADDR_OF_FATPTR(x1966);
-   int x1968 = Long_val(x1965);
-   xed_encoder_request_set_seg1(x1967, x1968);
+   xed_encoder_request_t* x1969 = CTYPES_ADDR_OF_FATPTR(x1968);
+   int x1970 = Long_val(x1967);
+   xed_encoder_request_set_seg1(x1969, x1970);
    return Val_unit;
 }
-value stub__395_xed_encoder_request_set_simm(value x1974, value x1973,
-                                             value x1972)
+value stub__397_xed_encoder_request_set_simm(value x1976, value x1975,
+                                             value x1974)
 {
-   xed_encoder_request_t* x1975 = CTYPES_ADDR_OF_FATPTR(x1974);
-   int32_t x1976 = Int32_val(x1973);
-   int x1979 = Long_val(x1972);
-   xed_encoder_request_set_simm(x1975, x1976, x1979);
+   xed_encoder_request_t* x1977 = CTYPES_ADDR_OF_FATPTR(x1976);
+   int32_t x1978 = Int32_val(x1975);
+   int x1981 = Long_val(x1974);
+   xed_encoder_request_set_simm(x1977, x1978, x1981);
    return Val_unit;
 }
-value stub__396_xed_encoder_request_set_uimm0(value x1985, value x1984,
-                                              value x1983)
+value stub__398_xed_encoder_request_set_uimm0(value x1987, value x1986,
+                                              value x1985)
 {
-   xed_encoder_request_t* x1986 = CTYPES_ADDR_OF_FATPTR(x1985);
-   uint64_t x1987 = Uint64_val(x1984);
-   int x1990 = Long_val(x1983);
-   xed_encoder_request_set_uimm0(x1986, x1987, x1990);
+   xed_encoder_request_t* x1988 = CTYPES_ADDR_OF_FATPTR(x1987);
+   uint64_t x1989 = Uint64_val(x1986);
+   int x1992 = Long_val(x1985);
+   xed_encoder_request_set_uimm0(x1988, x1989, x1992);
    return Val_unit;
 }
-value stub__397_xed_encoder_request_set_uimm0_bits(value x1996, value x1995,
-                                                   value x1994)
+value stub__399_xed_encoder_request_set_uimm0_bits(value x1998, value x1997,
+                                                   value x1996)
 {
-   xed_encoder_request_t* x1997 = CTYPES_ADDR_OF_FATPTR(x1996);
-   uint64_t x1998 = Uint64_val(x1995);
-   int x2001 = Long_val(x1994);
-   xed_encoder_request_set_uimm0_bits(x1997, x1998, x2001);
+   xed_encoder_request_t* x1999 = CTYPES_ADDR_OF_FATPTR(x1998);
+   uint64_t x2000 = Uint64_val(x1997);
+   int x2003 = Long_val(x1996);
+   xed_encoder_request_set_uimm0_bits(x1999, x2000, x2003);
    return Val_unit;
 }
-value stub__398_xed_encoder_request_set_uimm1(value x2006, value x2005)
+value stub__400_xed_encoder_request_set_uimm1(value x2008, value x2007)
 {
-   xed_encoder_request_t* x2007 = CTYPES_ADDR_OF_FATPTR(x2006);
-   int x2008 = Int_val(x2005);
-   xed_encoder_request_set_uimm1(x2007, (char)x2008);
+   xed_encoder_request_t* x2009 = CTYPES_ADDR_OF_FATPTR(x2008);
+   int x2010 = Int_val(x2007);
+   xed_encoder_request_set_uimm1(x2009, (char)x2010);
    return Val_unit;
 }
-value stub__399_xed_encoder_request_zero(value x2012)
+value stub__401_xed_encoder_request_zero(value x2014)
 {
-   xed_encoder_request_t* x2013 = CTYPES_ADDR_OF_FATPTR(x2012);
-   xed_encoder_request_zero(x2013);
+   xed_encoder_request_t* x2015 = CTYPES_ADDR_OF_FATPTR(x2014);
+   xed_encoder_request_zero(x2015);
    return Val_unit;
 }
-value stub__400_xed_encoder_request_zero_operand_order(value x2015)
+value stub__402_xed_encoder_request_zero_operand_order(value x2017)
 {
-   xed_encoder_request_t* x2016 = CTYPES_ADDR_OF_FATPTR(x2015);
-   xed_encoder_request_zero_operand_order(x2016);
+   xed_encoder_request_t* x2018 = CTYPES_ADDR_OF_FATPTR(x2017);
+   xed_encoder_request_zero_operand_order(x2018);
    return Val_unit;
 }
-value stub__401_xed_encoder_request_zero_set_mode(value x2019, value x2018)
+value stub__403_xed_encoder_request_zero_set_mode(value x2021, value x2020)
 {
-   xed_encoder_request_t* x2020 = CTYPES_ADDR_OF_FATPTR(x2019);
-   const xed_state_t* x2021 = CTYPES_ADDR_OF_FATPTR(x2018);
-   xed_encoder_request_zero_set_mode(x2020, x2021);
+   xed_encoder_request_t* x2022 = CTYPES_ADDR_OF_FATPTR(x2021);
+   const xed_state_t* x2023 = CTYPES_ADDR_OF_FATPTR(x2020);
+   xed_encoder_request_zero_set_mode(x2022, x2023);
    return Val_unit;
 }
-value stub__402_xed_error_enum_t2str(value x2023)
+value stub__404_xed_error_enum_t2str(value x2025)
 {
-   int x2024 = Long_val(x2023);
-   char* x2027 = xed_error_enum_t2str(x2024);
-   return CTYPES_FROM_PTR(x2027);
+   int x2026 = Long_val(x2025);
+   char* x2029 = xed_error_enum_t2str(x2026);
+   return CTYPES_FROM_PTR(x2029);
 }
-value stub__403_xed_exception_enum_t2str(value x2028)
+value stub__405_xed_exception_enum_t2str(value x2030)
 {
-   int x2029 = Long_val(x2028);
-   char* x2032 = xed_exception_enum_t2str(x2029);
-   return CTYPES_FROM_PTR(x2032);
+   int x2031 = Long_val(x2030);
+   char* x2034 = xed_exception_enum_t2str(x2031);
+   return CTYPES_FROM_PTR(x2034);
 }
-value stub__404_xed_extension_enum_t2str(value x2033)
+value stub__406_xed_extension_enum_t2str(value x2035)
 {
-   int x2034 = Long_val(x2033);
-   char* x2037 = xed_extension_enum_t2str(x2034);
-   return CTYPES_FROM_PTR(x2037);
+   int x2036 = Long_val(x2035);
+   char* x2039 = xed_extension_enum_t2str(x2036);
+   return CTYPES_FROM_PTR(x2039);
 }
-value stub__405_xed_flag_action_action_invalid(value x2038)
+value stub__407_xed_flag_action_action_invalid(value x2040)
 {
-   int x2039 = Long_val(x2038);
-   _Bool x2042 = xed_flag_action_action_invalid(x2039);
-   return Val_bool(x2042);
+   int x2041 = Long_val(x2040);
+   _Bool x2044 = xed_flag_action_action_invalid(x2041);
+   return Val_bool(x2044);
 }
-value stub__406_xed_flag_action_enum_t2str(value x2043)
+value stub__408_xed_flag_action_enum_t2str(value x2045)
 {
-   int x2044 = Long_val(x2043);
-   char* x2047 = xed_flag_action_enum_t2str(x2044);
-   return CTYPES_FROM_PTR(x2047);
+   int x2046 = Long_val(x2045);
+   char* x2049 = xed_flag_action_enum_t2str(x2046);
+   return CTYPES_FROM_PTR(x2049);
 }
-value stub__407_xed_flag_action_get_action(value x2049, value x2048)
+value stub__409_xed_flag_action_get_action(value x2051, value x2050)
 {
-   const xed_flag_action_t* x2050 = CTYPES_ADDR_OF_FATPTR(x2049);
-   int x2051 = Long_val(x2048);
-   int x2054 = xed_flag_action_get_action(x2050, x2051);
-   return Val_long(x2054);
+   const xed_flag_action_t* x2052 = CTYPES_ADDR_OF_FATPTR(x2051);
+   int x2053 = Long_val(x2050);
+   int x2056 = xed_flag_action_get_action(x2052, x2053);
+   return Val_long(x2056);
 }
-value stub__408_xed_flag_action_get_flag_name(value x2055)
+value stub__410_xed_flag_action_get_flag_name(value x2057)
 {
-   const xed_flag_action_t* x2056 = CTYPES_ADDR_OF_FATPTR(x2055);
-   int x2057 = xed_flag_action_get_flag_name(x2056);
-   return Val_long(x2057);
+   const xed_flag_action_t* x2058 = CTYPES_ADDR_OF_FATPTR(x2057);
+   int x2059 = xed_flag_action_get_flag_name(x2058);
+   return Val_long(x2059);
 }
-value stub__409_xed_flag_action_print(value x2060, value x2059, value x2058)
+value stub__411_xed_flag_action_print(value x2062, value x2061, value x2060)
 {
-   const xed_flag_action_t* x2061 = CTYPES_ADDR_OF_FATPTR(x2060);
-   char* x2062 = CTYPES_PTR_OF_OCAML_STRING(x2059);
-   int x2063 = Long_val(x2058);
-   int x2066 = xed_flag_action_print(x2061, x2062, x2063);
-   return Val_long(x2066);
+   const xed_flag_action_t* x2063 = CTYPES_ADDR_OF_FATPTR(x2062);
+   char* x2064 = CTYPES_PTR_OF_OCAML_STRING(x2061);
+   int x2065 = Long_val(x2060);
+   int x2068 = xed_flag_action_print(x2063, x2064, x2065);
+   return Val_long(x2068);
 }
-value stub__410_xed_flag_action_read_action(value x2067)
+value stub__412_xed_flag_action_read_action(value x2069)
 {
-   int x2068 = Long_val(x2067);
-   _Bool x2071 = xed_flag_action_read_action(x2068);
-   return Val_bool(x2071);
+   int x2070 = Long_val(x2069);
+   _Bool x2073 = xed_flag_action_read_action(x2070);
+   return Val_bool(x2073);
 }
-value stub__411_xed_flag_action_read_flag(value x2072)
+value stub__413_xed_flag_action_read_flag(value x2074)
 {
-   const xed_flag_action_t* x2073 = CTYPES_ADDR_OF_FATPTR(x2072);
-   _Bool x2074 = xed_flag_action_read_flag(x2073);
-   return Val_bool(x2074);
+   const xed_flag_action_t* x2075 = CTYPES_ADDR_OF_FATPTR(x2074);
+   _Bool x2076 = xed_flag_action_read_flag(x2075);
+   return Val_bool(x2076);
 }
-value stub__412_xed_flag_action_write_action(value x2075)
+value stub__414_xed_flag_action_write_action(value x2077)
 {
-   int x2076 = Long_val(x2075);
-   _Bool x2079 = xed_flag_action_write_action(x2076);
-   return Val_bool(x2079);
+   int x2078 = Long_val(x2077);
+   _Bool x2081 = xed_flag_action_write_action(x2078);
+   return Val_bool(x2081);
 }
-value stub__413_xed_flag_action_writes_flag(value x2080)
+value stub__415_xed_flag_action_writes_flag(value x2082)
 {
-   const xed_flag_action_t* x2081 = CTYPES_ADDR_OF_FATPTR(x2080);
-   _Bool x2082 = xed_flag_action_writes_flag(x2081);
-   return Val_bool(x2082);
+   const xed_flag_action_t* x2083 = CTYPES_ADDR_OF_FATPTR(x2082);
+   _Bool x2084 = xed_flag_action_writes_flag(x2083);
+   return Val_bool(x2084);
 }
-value stub__414_xed_flag_enum_t2str(value x2083)
+value stub__416_xed_flag_enum_t2str(value x2085)
 {
-   int x2084 = Long_val(x2083);
-   char* x2087 = xed_flag_enum_t2str(x2084);
-   return CTYPES_FROM_PTR(x2087);
+   int x2086 = Long_val(x2085);
+   char* x2089 = xed_flag_enum_t2str(x2086);
+   return CTYPES_FROM_PTR(x2089);
 }
-value stub__415_xed_flag_set_is_subset_of(value x2089, value x2088)
+value stub__417_xed_flag_set_is_subset_of(value x2091, value x2090)
 {
-   const xed_flag_set_t* x2090 = CTYPES_ADDR_OF_FATPTR(x2089);
-   const xed_flag_set_t* x2091 = CTYPES_ADDR_OF_FATPTR(x2088);
-   _Bool x2092 = xed_flag_set_is_subset_of(x2090, x2091);
-   return Val_bool(x2092);
+   const xed_flag_set_t* x2092 = CTYPES_ADDR_OF_FATPTR(x2091);
+   const xed_flag_set_t* x2093 = CTYPES_ADDR_OF_FATPTR(x2090);
+   _Bool x2094 = xed_flag_set_is_subset_of(x2092, x2093);
+   return Val_bool(x2094);
 }
-value stub__416_xed_flag_set_mask(value x2093)
+value stub__418_xed_flag_set_mask(value x2095)
 {
-   const xed_flag_set_t* x2094 = CTYPES_ADDR_OF_FATPTR(x2093);
-   int x2095 = xed_flag_set_mask(x2094);
-   return Val_long(x2095);
+   const xed_flag_set_t* x2096 = CTYPES_ADDR_OF_FATPTR(x2095);
+   int x2097 = xed_flag_set_mask(x2096);
+   return Val_long(x2097);
 }
-value stub__417_xed_flag_set_print(value x2098, value x2097, value x2096)
+value stub__419_xed_flag_set_print(value x2100, value x2099, value x2098)
 {
-   const xed_flag_set_t* x2099 = CTYPES_ADDR_OF_FATPTR(x2098);
-   char* x2100 = CTYPES_PTR_OF_OCAML_STRING(x2097);
-   int x2101 = Long_val(x2096);
-   int x2104 = xed_flag_set_print(x2099, x2100, x2101);
-   return Val_long(x2104);
+   const xed_flag_set_t* x2101 = CTYPES_ADDR_OF_FATPTR(x2100);
+   char* x2102 = CTYPES_PTR_OF_OCAML_STRING(x2099);
+   int x2103 = Long_val(x2098);
+   int x2106 = xed_flag_set_print(x2101, x2102, x2103);
+   return Val_long(x2106);
 }
-value stub__418_xed_get_chip_features(value x2106, value x2105)
+value stub__420_xed_get_chip_features(value x2108, value x2107)
 {
-   xed_chip_features_t* x2107 = CTYPES_ADDR_OF_FATPTR(x2106);
-   int x2108 = Long_val(x2105);
-   xed_get_chip_features(x2107, x2108);
+   xed_chip_features_t* x2109 = CTYPES_ADDR_OF_FATPTR(x2108);
+   int x2110 = Long_val(x2107);
+   xed_get_chip_features(x2109, x2110);
    return Val_unit;
 }
-value stub__419_xed_get_copyright(value x2112)
+value stub__421_xed_get_copyright(value x2114)
 {
-   char* x2113 = xed_get_copyright();
-   return CTYPES_FROM_PTR(x2113);
+   char* x2115 = xed_get_copyright();
+   return CTYPES_FROM_PTR(x2115);
 }
-value stub__420_xed_get_cpuid_bit_for_isa_set(value x2115, value x2114)
+value stub__422_xed_get_cpuid_bit_for_isa_set(value x2117, value x2116)
 {
-   int x2116 = Long_val(x2115);
-   int x2119 = Long_val(x2114);
-   int x2122 = xed_get_cpuid_bit_for_isa_set(x2116, x2119);
-   return Val_long(x2122);
+   int x2118 = Long_val(x2117);
+   int x2121 = Long_val(x2116);
+   int x2124 = xed_get_cpuid_bit_for_isa_set(x2118, x2121);
+   return Val_long(x2124);
 }
-value stub__421_xed_get_largest_enclosing_register(value x2123)
+value stub__423_xed_get_largest_enclosing_register(value x2125)
 {
-   int x2124 = Long_val(x2123);
-   int x2127 = xed_get_largest_enclosing_register(x2124);
-   return Val_long(x2127);
+   int x2126 = Long_val(x2125);
+   int x2129 = xed_get_largest_enclosing_register(x2126);
+   return Val_long(x2129);
 }
-value stub__422_xed_get_largest_enclosing_register32(value x2128)
+value stub__424_xed_get_largest_enclosing_register32(value x2130)
 {
-   int x2129 = Long_val(x2128);
-   int x2132 = xed_get_largest_enclosing_register32(x2129);
-   return Val_long(x2132);
+   int x2131 = Long_val(x2130);
+   int x2134 = xed_get_largest_enclosing_register32(x2131);
+   return Val_long(x2134);
 }
-value stub__423_xed_get_register_width_bits(value x2133)
+value stub__425_xed_get_register_width_bits(value x2135)
 {
-   int x2134 = Long_val(x2133);
-   uint32_t x2137 = xed_get_register_width_bits(x2134);
-   return integers_copy_uint32(x2137);
+   int x2136 = Long_val(x2135);
+   uint32_t x2139 = xed_get_register_width_bits(x2136);
+   return integers_copy_uint32(x2139);
 }
-value stub__424_xed_get_register_width_bits64(value x2138)
+value stub__426_xed_get_register_width_bits64(value x2140)
 {
-   int x2139 = Long_val(x2138);
-   uint32_t x2142 = xed_get_register_width_bits64(x2139);
-   return integers_copy_uint32(x2142);
+   int x2141 = Long_val(x2140);
+   uint32_t x2144 = xed_get_register_width_bits64(x2141);
+   return integers_copy_uint32(x2144);
 }
-value stub__425_xed_get_version(value x2143)
+value stub__427_xed_get_version(value x2145)
 {
-   char* x2144 = xed_get_version();
-   return CTYPES_FROM_PTR(x2144);
+   char* x2146 = xed_get_version();
+   return CTYPES_FROM_PTR(x2146);
 }
-value stub__426_xed_gpr_reg_class(value x2145)
+value stub__428_xed_gpr_reg_class(value x2147)
 {
-   int x2146 = Long_val(x2145);
-   int x2149 = xed_gpr_reg_class(x2146);
-   return Val_long(x2149);
+   int x2148 = Long_val(x2147);
+   int x2151 = xed_gpr_reg_class(x2148);
+   return Val_long(x2151);
 }
-value stub__427_xed_iclass_enum_t2str(value x2150)
+value stub__429_xed_iclass_enum_t2str(value x2152)
 {
-   int x2151 = Long_val(x2150);
-   char* x2154 = xed_iclass_enum_t2str(x2151);
-   return CTYPES_FROM_PTR(x2154);
+   int x2153 = Long_val(x2152);
+   char* x2156 = xed_iclass_enum_t2str(x2153);
+   return CTYPES_FROM_PTR(x2156);
 }
-value stub__428_xed_iform_enum_t2str(value x2155)
+value stub__430_xed_iform_enum_t2str(value x2157)
 {
-   int x2156 = Long_val(x2155);
-   char* x2159 = xed_iform_enum_t2str(x2156);
-   return CTYPES_FROM_PTR(x2159);
+   int x2158 = Long_val(x2157);
+   char* x2161 = xed_iform_enum_t2str(x2158);
+   return CTYPES_FROM_PTR(x2161);
 }
-value stub__429_xed_iform_first_per_iclass(value x2160)
+value stub__431_xed_iform_first_per_iclass(value x2162)
 {
-   int x2161 = Long_val(x2160);
-   uint32_t x2164 = xed_iform_first_per_iclass(x2161);
-   return integers_copy_uint32(x2164);
+   int x2163 = Long_val(x2162);
+   uint32_t x2166 = xed_iform_first_per_iclass(x2163);
+   return integers_copy_uint32(x2166);
 }
-value stub__430_xed_iform_max_per_iclass(value x2165)
+value stub__432_xed_iform_max_per_iclass(value x2167)
 {
-   int x2166 = Long_val(x2165);
-   uint32_t x2169 = xed_iform_max_per_iclass(x2166);
-   return integers_copy_uint32(x2169);
+   int x2168 = Long_val(x2167);
+   uint32_t x2171 = xed_iform_max_per_iclass(x2168);
+   return integers_copy_uint32(x2171);
 }
-value stub__431_xed_iform_to_category(value x2170)
+value stub__433_xed_iform_to_category(value x2172)
 {
-   int x2171 = Long_val(x2170);
-   int x2174 = xed_iform_to_category(x2171);
-   return Val_long(x2174);
+   int x2173 = Long_val(x2172);
+   int x2176 = xed_iform_to_category(x2173);
+   return Val_long(x2176);
 }
-value stub__432_xed_iform_to_extension(value x2175)
+value stub__434_xed_iform_to_extension(value x2177)
 {
-   int x2176 = Long_val(x2175);
-   int x2179 = xed_iform_to_extension(x2176);
-   return Val_long(x2179);
+   int x2178 = Long_val(x2177);
+   int x2181 = xed_iform_to_extension(x2178);
+   return Val_long(x2181);
 }
-value stub__433_xed_iform_to_iclass(value x2180)
+value stub__435_xed_iform_to_iclass(value x2182)
 {
-   int x2181 = Long_val(x2180);
-   int x2184 = xed_iform_to_iclass(x2181);
-   return Val_long(x2184);
+   int x2183 = Long_val(x2182);
+   int x2186 = xed_iform_to_iclass(x2183);
+   return Val_long(x2186);
 }
-value stub__434_xed_iform_to_iclass_string_att(value x2185)
+value stub__436_xed_iform_to_iclass_string_att(value x2187)
 {
-   int x2186 = Long_val(x2185);
-   char* x2189 = xed_iform_to_iclass_string_att(x2186);
-   return CTYPES_FROM_PTR(x2189);
+   int x2188 = Long_val(x2187);
+   char* x2191 = xed_iform_to_iclass_string_att(x2188);
+   return CTYPES_FROM_PTR(x2191);
 }
-value stub__435_xed_iform_to_iclass_string_intel(value x2190)
+value stub__437_xed_iform_to_iclass_string_intel(value x2192)
 {
-   int x2191 = Long_val(x2190);
-   char* x2194 = xed_iform_to_iclass_string_intel(x2191);
-   return CTYPES_FROM_PTR(x2194);
+   int x2193 = Long_val(x2192);
+   char* x2196 = xed_iform_to_iclass_string_intel(x2193);
+   return CTYPES_FROM_PTR(x2196);
 }
-value stub__436_xed_iform_to_isa_set(value x2195)
+value stub__438_xed_iform_to_isa_set(value x2197)
 {
-   int x2196 = Long_val(x2195);
-   int x2199 = xed_iform_to_isa_set(x2196);
-   return Val_long(x2199);
+   int x2198 = Long_val(x2197);
+   int x2201 = xed_iform_to_isa_set(x2198);
+   return Val_long(x2201);
 }
-value stub__437_xed_ild_decode(value x2202, value x2201, value x2200)
+value stub__439_xed_ild_decode(value x2204, value x2203, value x2202)
 {
-   xed_decoded_inst_t* x2203 = CTYPES_ADDR_OF_FATPTR(x2202);
-   char* x2204 = CTYPES_PTR_OF_OCAML_STRING(x2201);
-   int x2205 = Long_val(x2200);
-   int x2208 = xed_ild_decode(x2203, x2204, x2205);
-   return Val_long(x2208);
+   xed_decoded_inst_t* x2205 = CTYPES_ADDR_OF_FATPTR(x2204);
+   char* x2206 = CTYPES_PTR_OF_OCAML_STRING(x2203);
+   int x2207 = Long_val(x2202);
+   int x2210 = xed_ild_decode(x2205, x2206, x2207);
+   return Val_long(x2210);
 }
-value stub__438_xed_inst_category(value x2209)
+value stub__440_xed_inst_category(value x2211)
 {
-   const xed_inst_t* x2210 = CTYPES_ADDR_OF_FATPTR(x2209);
-   int x2211 = xed_inst_category(x2210);
-   return Val_long(x2211);
+   const xed_inst_t* x2212 = CTYPES_ADDR_OF_FATPTR(x2211);
+   int x2213 = xed_inst_category(x2212);
+   return Val_long(x2213);
 }
-value stub__439_xed_inst_cpl(value x2212)
+value stub__441_xed_inst_cpl(value x2214)
 {
-   const xed_inst_t* x2213 = CTYPES_ADDR_OF_FATPTR(x2212);
-   int x2214 = xed_inst_cpl(x2213);
-   return Val_long(x2214);
+   const xed_inst_t* x2215 = CTYPES_ADDR_OF_FATPTR(x2214);
+   int x2216 = xed_inst_cpl(x2215);
+   return Val_long(x2216);
 }
-value stub__440_xed_inst_exception(value x2215)
+value stub__442_xed_inst_exception(value x2217)
 {
-   const xed_inst_t* x2216 = CTYPES_ADDR_OF_FATPTR(x2215);
-   int x2217 = xed_inst_exception(x2216);
-   return Val_long(x2217);
+   const xed_inst_t* x2218 = CTYPES_ADDR_OF_FATPTR(x2217);
+   int x2219 = xed_inst_exception(x2218);
+   return Val_long(x2219);
 }
-value stub__441_xed_inst_extension(value x2218)
+value stub__443_xed_inst_extension(value x2220)
 {
-   const xed_inst_t* x2219 = CTYPES_ADDR_OF_FATPTR(x2218);
-   int x2220 = xed_inst_extension(x2219);
-   return Val_long(x2220);
+   const xed_inst_t* x2221 = CTYPES_ADDR_OF_FATPTR(x2220);
+   int x2222 = xed_inst_extension(x2221);
+   return Val_long(x2222);
 }
-value stub__442_xed_inst_flag_info_index(value x2221)
+value stub__444_xed_inst_flag_info_index(value x2223)
 {
-   const xed_inst_t* x2222 = CTYPES_ADDR_OF_FATPTR(x2221);
-   uint32_t x2223 = xed_inst_flag_info_index(x2222);
-   return integers_copy_uint32(x2223);
+   const xed_inst_t* x2224 = CTYPES_ADDR_OF_FATPTR(x2223);
+   uint32_t x2225 = xed_inst_flag_info_index(x2224);
+   return integers_copy_uint32(x2225);
 }
-value stub__443_xed_inst_get_attribute(value x2225, value x2224)
+value stub__445_xed_inst_get_attribute(value x2227, value x2226)
 {
-   const xed_inst_t* x2226 = CTYPES_ADDR_OF_FATPTR(x2225);
-   int x2227 = Long_val(x2224);
-   uint32_t x2230 = xed_inst_get_attribute(x2226, x2227);
-   return integers_copy_uint32(x2230);
+   const xed_inst_t* x2228 = CTYPES_ADDR_OF_FATPTR(x2227);
+   int x2229 = Long_val(x2226);
+   uint32_t x2232 = xed_inst_get_attribute(x2228, x2229);
+   return integers_copy_uint32(x2232);
 }
-value stub__444_xed_inst_iclass(value x2231)
+value stub__446_xed_inst_iclass(value x2233)
 {
-   const xed_inst_t* x2232 = CTYPES_ADDR_OF_FATPTR(x2231);
-   int x2233 = xed_inst_iclass(x2232);
-   return Val_long(x2233);
+   const xed_inst_t* x2234 = CTYPES_ADDR_OF_FATPTR(x2233);
+   int x2235 = xed_inst_iclass(x2234);
+   return Val_long(x2235);
 }
-value stub__445_xed_inst_iform_enum(value x2234)
+value stub__447_xed_inst_iform_enum(value x2236)
 {
-   const xed_inst_t* x2235 = CTYPES_ADDR_OF_FATPTR(x2234);
-   int x2236 = xed_inst_iform_enum(x2235);
-   return Val_long(x2236);
+   const xed_inst_t* x2237 = CTYPES_ADDR_OF_FATPTR(x2236);
+   int x2238 = xed_inst_iform_enum(x2237);
+   return Val_long(x2238);
 }
-value stub__446_xed_inst_isa_set(value x2237)
+value stub__448_xed_inst_isa_set(value x2239)
 {
-   const xed_inst_t* x2238 = CTYPES_ADDR_OF_FATPTR(x2237);
-   int x2239 = xed_inst_isa_set(x2238);
-   return Val_long(x2239);
+   const xed_inst_t* x2240 = CTYPES_ADDR_OF_FATPTR(x2239);
+   int x2241 = xed_inst_isa_set(x2240);
+   return Val_long(x2241);
 }
-value stub__447_xed_inst_noperands(value x2240)
+value stub__449_xed_inst_noperands(value x2242)
 {
-   const xed_inst_t* x2241 = CTYPES_ADDR_OF_FATPTR(x2240);
-   int x2242 = xed_inst_noperands(x2241);
-   return Val_long(x2242);
+   const xed_inst_t* x2243 = CTYPES_ADDR_OF_FATPTR(x2242);
+   int x2244 = xed_inst_noperands(x2243);
+   return Val_long(x2244);
 }
-value stub__448_xed_inst_operand(value x2244, value x2243)
+value stub__450_xed_inst_operand(value x2246, value x2245)
 {
-   const xed_inst_t* x2245 = CTYPES_ADDR_OF_FATPTR(x2244);
-   int x2246 = Long_val(x2243);
-   const xed_operand_t* x2249 = xed_inst_operand(x2245, x2246);
-   return CTYPES_FROM_PTR(x2249);
+   const xed_inst_t* x2247 = CTYPES_ADDR_OF_FATPTR(x2246);
+   int x2248 = Long_val(x2245);
+   const xed_operand_t* x2251 = xed_inst_operand(x2247, x2248);
+   return CTYPES_FROM_PTR(x2251);
 }
-value stub__449_xed_isa_set_enum_t2str(value x2250)
+value stub__451_xed_isa_set_enum_t2str(value x2252)
 {
-   int x2251 = Long_val(x2250);
-   char* x2254 = xed_isa_set_enum_t2str(x2251);
-   return CTYPES_FROM_PTR(x2254);
+   int x2253 = Long_val(x2252);
+   char* x2256 = xed_isa_set_enum_t2str(x2253);
+   return CTYPES_FROM_PTR(x2256);
 }
-value stub__450_xed_machine_mode_enum_t2str(value x2255)
+value stub__452_xed_machine_mode_enum_t2str(value x2257)
 {
-   int x2256 = Long_val(x2255);
-   char* x2259 = xed_machine_mode_enum_t2str(x2256);
-   return CTYPES_FROM_PTR(x2259);
+   int x2258 = Long_val(x2257);
+   char* x2261 = xed_machine_mode_enum_t2str(x2258);
+   return CTYPES_FROM_PTR(x2261);
 }
-value stub__451_xed_modify_chip_features(value x2262, value x2261,
-                                         value x2260)
+value stub__453_xed_modify_chip_features(value x2264, value x2263,
+                                         value x2262)
 {
-   xed_chip_features_t* x2263 = CTYPES_ADDR_OF_FATPTR(x2262);
-   int x2264 = Long_val(x2261);
-   _Bool x2267 = Bool_val(x2260);
-   xed_modify_chip_features(x2263, x2264, x2267);
+   xed_chip_features_t* x2265 = CTYPES_ADDR_OF_FATPTR(x2264);
+   int x2266 = Long_val(x2263);
+   _Bool x2269 = Bool_val(x2262);
+   xed_modify_chip_features(x2265, x2266, x2269);
    return Val_unit;
 }
-value stub__452_xed_nonterminal_enum_t2str(value x2271)
+value stub__454_xed_nonterminal_enum_t2str(value x2273)
 {
-   int x2272 = Long_val(x2271);
-   char* x2275 = xed_nonterminal_enum_t2str(x2272);
-   return CTYPES_FROM_PTR(x2275);
+   int x2274 = Long_val(x2273);
+   char* x2277 = xed_nonterminal_enum_t2str(x2274);
+   return CTYPES_FROM_PTR(x2277);
 }
-value stub__453_xed_norep_map(value x2276)
+value stub__455_xed_norep_map(value x2278)
 {
-   int x2277 = Long_val(x2276);
-   int x2280 = xed_norep_map(x2277);
-   return Val_long(x2280);
+   int x2279 = Long_val(x2278);
+   int x2282 = xed_norep_map(x2279);
+   return Val_long(x2282);
 }
-value stub__454_xed_operand_action_conditional_read(value x2281)
+value stub__456_xed_operand_action_conditional_read(value x2283)
 {
-   int x2282 = Long_val(x2281);
-   int x2285 = xed_operand_action_conditional_read(x2282);
-   return Val_long(x2285);
+   int x2284 = Long_val(x2283);
+   int x2287 = xed_operand_action_conditional_read(x2284);
+   return Val_long(x2287);
 }
-value stub__455_xed_operand_action_conditional_write(value x2286)
+value stub__457_xed_operand_action_conditional_write(value x2288)
 {
-   int x2287 = Long_val(x2286);
-   int x2290 = xed_operand_action_conditional_write(x2287);
-   return Val_long(x2290);
+   int x2289 = Long_val(x2288);
+   int x2292 = xed_operand_action_conditional_write(x2289);
+   return Val_long(x2292);
 }
-value stub__456_xed_operand_action_enum_t2str(value x2291)
+value stub__458_xed_operand_action_enum_t2str(value x2293)
 {
-   int x2292 = Long_val(x2291);
-   char* x2295 = xed_operand_action_enum_t2str(x2292);
-   return CTYPES_FROM_PTR(x2295);
+   int x2294 = Long_val(x2293);
+   char* x2297 = xed_operand_action_enum_t2str(x2294);
+   return CTYPES_FROM_PTR(x2297);
 }
-value stub__457_xed_operand_action_read(value x2296)
+value stub__459_xed_operand_action_read(value x2298)
 {
-   int x2297 = Long_val(x2296);
-   int x2300 = xed_operand_action_read(x2297);
-   return Val_long(x2300);
+   int x2299 = Long_val(x2298);
+   int x2302 = xed_operand_action_read(x2299);
+   return Val_long(x2302);
 }
-value stub__458_xed_operand_action_read_and_written(value x2301)
+value stub__460_xed_operand_action_read_and_written(value x2303)
 {
-   int x2302 = Long_val(x2301);
-   int x2305 = xed_operand_action_read_and_written(x2302);
-   return Val_long(x2305);
+   int x2304 = Long_val(x2303);
+   int x2307 = xed_operand_action_read_and_written(x2304);
+   return Val_long(x2307);
 }
-value stub__459_xed_operand_action_read_only(value x2306)
+value stub__461_xed_operand_action_read_only(value x2308)
 {
-   int x2307 = Long_val(x2306);
-   int x2310 = xed_operand_action_read_only(x2307);
-   return Val_long(x2310);
+   int x2309 = Long_val(x2308);
+   int x2312 = xed_operand_action_read_only(x2309);
+   return Val_long(x2312);
 }
-value stub__460_xed_operand_action_written(value x2311)
+value stub__462_xed_operand_action_written(value x2313)
 {
-   int x2312 = Long_val(x2311);
-   int x2315 = xed_operand_action_written(x2312);
-   return Val_long(x2315);
+   int x2314 = Long_val(x2313);
+   int x2317 = xed_operand_action_written(x2314);
+   return Val_long(x2317);
 }
-value stub__461_xed_operand_action_written_only(value x2316)
+value stub__463_xed_operand_action_written_only(value x2318)
 {
-   int x2317 = Long_val(x2316);
-   int x2320 = xed_operand_action_written_only(x2317);
-   return Val_long(x2320);
+   int x2319 = Long_val(x2318);
+   int x2322 = xed_operand_action_written_only(x2319);
+   return Val_long(x2322);
 }
-value stub__462_xed_operand_conditional_read(value x2321)
+value stub__464_xed_operand_conditional_read(value x2323)
 {
-   const xed_operand_t* x2322 = CTYPES_ADDR_OF_FATPTR(x2321);
-   int x2323 = xed_operand_conditional_read(x2322);
-   return Val_long(x2323);
+   const xed_operand_t* x2324 = CTYPES_ADDR_OF_FATPTR(x2323);
+   int x2325 = xed_operand_conditional_read(x2324);
+   return Val_long(x2325);
 }
-value stub__463_xed_operand_conditional_write(value x2324)
+value stub__465_xed_operand_conditional_write(value x2326)
 {
-   const xed_operand_t* x2325 = CTYPES_ADDR_OF_FATPTR(x2324);
-   int x2326 = xed_operand_conditional_write(x2325);
-   return Val_long(x2326);
+   const xed_operand_t* x2327 = CTYPES_ADDR_OF_FATPTR(x2326);
+   int x2328 = xed_operand_conditional_write(x2327);
+   return Val_long(x2328);
 }
-value stub__464_xed_operand_convert_enum_t2str(value x2327)
+value stub__466_xed_operand_convert_enum_t2str(value x2329)
 {
-   int x2328 = Long_val(x2327);
-   char* x2331 = xed_operand_convert_enum_t2str(x2328);
-   return CTYPES_FROM_PTR(x2331);
+   int x2330 = Long_val(x2329);
+   char* x2333 = xed_operand_convert_enum_t2str(x2330);
+   return CTYPES_FROM_PTR(x2333);
 }
-value stub__465_xed_operand_element_type_enum_t2str(value x2332)
+value stub__467_xed_operand_element_type_enum_t2str(value x2334)
 {
-   int x2333 = Long_val(x2332);
-   char* x2336 = xed_operand_element_type_enum_t2str(x2333);
-   return CTYPES_FROM_PTR(x2336);
+   int x2335 = Long_val(x2334);
+   char* x2338 = xed_operand_element_type_enum_t2str(x2335);
+   return CTYPES_FROM_PTR(x2338);
 }
-value stub__466_xed_operand_element_xtype_enum_t2str(value x2337)
+value stub__468_xed_operand_element_xtype_enum_t2str(value x2339)
 {
-   int x2338 = Long_val(x2337);
-   char* x2341 = xed_operand_element_xtype_enum_t2str(x2338);
-   return CTYPES_FROM_PTR(x2341);
+   int x2340 = Long_val(x2339);
+   char* x2343 = xed_operand_element_xtype_enum_t2str(x2340);
+   return CTYPES_FROM_PTR(x2343);
 }
-value stub__467_xed_operand_enum_t2str(value x2342)
+value stub__469_xed_operand_enum_t2str(value x2344)
 {
-   int x2343 = Long_val(x2342);
-   char* x2346 = xed_operand_enum_t2str(x2343);
-   return CTYPES_FROM_PTR(x2346);
+   int x2345 = Long_val(x2344);
+   char* x2348 = xed_operand_enum_t2str(x2345);
+   return CTYPES_FROM_PTR(x2348);
 }
-value stub__468_xed_operand_imm(value x2347)
+value stub__470_xed_operand_imm(value x2349)
 {
-   const xed_operand_t* x2348 = CTYPES_ADDR_OF_FATPTR(x2347);
-   uint32_t x2349 = xed_operand_imm(x2348);
-   return integers_copy_uint32(x2349);
+   const xed_operand_t* x2350 = CTYPES_ADDR_OF_FATPTR(x2349);
+   uint32_t x2351 = xed_operand_imm(x2350);
+   return integers_copy_uint32(x2351);
 }
-value stub__469_xed_operand_is_memory_addressing_register(value x2350)
+value stub__471_xed_operand_is_memory_addressing_register(value x2352)
 {
-   int x2351 = Long_val(x2350);
-   int x2354 = xed_operand_is_memory_addressing_register(x2351);
-   return Val_long(x2354);
+   int x2353 = Long_val(x2352);
+   int x2356 = xed_operand_is_memory_addressing_register(x2353);
+   return Val_long(x2356);
 }
-value stub__470_xed_operand_is_register(value x2355)
+value stub__472_xed_operand_is_register(value x2357)
 {
-   int x2356 = Long_val(x2355);
-   int x2359 = xed_operand_is_register(x2356);
-   return Val_long(x2359);
+   int x2358 = Long_val(x2357);
+   int x2361 = xed_operand_is_register(x2358);
+   return Val_long(x2361);
 }
-value stub__471_xed_operand_name(value x2360)
+value stub__473_xed_operand_name(value x2362)
 {
-   const xed_operand_t* x2361 = CTYPES_ADDR_OF_FATPTR(x2360);
-   int x2362 = xed_operand_name(x2361);
-   return Val_long(x2362);
+   const xed_operand_t* x2363 = CTYPES_ADDR_OF_FATPTR(x2362);
+   int x2364 = xed_operand_name(x2363);
+   return Val_long(x2364);
 }
-value stub__472_xed_operand_nonterminal_name(value x2363)
+value stub__474_xed_operand_nonterminal_name(value x2365)
 {
-   const xed_operand_t* x2364 = CTYPES_ADDR_OF_FATPTR(x2363);
-   int x2365 = xed_operand_nonterminal_name(x2364);
-   return Val_long(x2365);
+   const xed_operand_t* x2366 = CTYPES_ADDR_OF_FATPTR(x2365);
+   int x2367 = xed_operand_nonterminal_name(x2366);
+   return Val_long(x2367);
 }
-value stub__473_xed_operand_operand_visibility(value x2366)
+value stub__475_xed_operand_operand_visibility(value x2368)
 {
-   const xed_operand_t* x2367 = CTYPES_ADDR_OF_FATPTR(x2366);
-   int x2368 = xed_operand_operand_visibility(x2367);
-   return Val_long(x2368);
+   const xed_operand_t* x2369 = CTYPES_ADDR_OF_FATPTR(x2368);
+   int x2370 = xed_operand_operand_visibility(x2369);
+   return Val_long(x2370);
 }
-value stub__474_xed_operand_print(value x2371, value x2370, value x2369)
+value stub__476_xed_operand_print(value x2373, value x2372, value x2371)
 {
-   const xed_operand_t* x2372 = CTYPES_ADDR_OF_FATPTR(x2371);
-   char* x2373 = CTYPES_PTR_OF_OCAML_STRING(x2370);
-   int x2374 = Long_val(x2369);
-   xed_operand_print(x2372, x2373, x2374);
+   const xed_operand_t* x2374 = CTYPES_ADDR_OF_FATPTR(x2373);
+   char* x2375 = CTYPES_PTR_OF_OCAML_STRING(x2372);
+   int x2376 = Long_val(x2371);
+   xed_operand_print(x2374, x2375, x2376);
    return Val_unit;
 }
-value stub__475_xed_operand_read(value x2378)
+value stub__477_xed_operand_read(value x2380)
 {
-   const xed_operand_t* x2379 = CTYPES_ADDR_OF_FATPTR(x2378);
-   int x2380 = xed_operand_read(x2379);
-   return Val_long(x2380);
+   const xed_operand_t* x2381 = CTYPES_ADDR_OF_FATPTR(x2380);
+   int x2382 = xed_operand_read(x2381);
+   return Val_long(x2382);
 }
-value stub__476_xed_operand_read_and_written(value x2381)
+value stub__478_xed_operand_read_and_written(value x2383)
 {
-   const xed_operand_t* x2382 = CTYPES_ADDR_OF_FATPTR(x2381);
-   int x2383 = xed_operand_read_and_written(x2382);
-   return Val_long(x2383);
+   const xed_operand_t* x2384 = CTYPES_ADDR_OF_FATPTR(x2383);
+   int x2385 = xed_operand_read_and_written(x2384);
+   return Val_long(x2385);
 }
-value stub__477_xed_operand_read_only(value x2384)
+value stub__479_xed_operand_read_only(value x2386)
 {
-   const xed_operand_t* x2385 = CTYPES_ADDR_OF_FATPTR(x2384);
-   int x2386 = xed_operand_read_only(x2385);
-   return Val_long(x2386);
+   const xed_operand_t* x2387 = CTYPES_ADDR_OF_FATPTR(x2386);
+   int x2388 = xed_operand_read_only(x2387);
+   return Val_long(x2388);
 }
-value stub__478_xed_operand_reg(value x2387)
+value stub__480_xed_operand_reg(value x2389)
 {
-   const xed_operand_t* x2388 = CTYPES_ADDR_OF_FATPTR(x2387);
-   int x2389 = xed_operand_reg(x2388);
-   return Val_long(x2389);
+   const xed_operand_t* x2390 = CTYPES_ADDR_OF_FATPTR(x2389);
+   int x2391 = xed_operand_reg(x2390);
+   return Val_long(x2391);
 }
-value stub__479_xed_operand_rw(value x2390)
+value stub__481_xed_operand_rw(value x2392)
 {
-   const xed_operand_t* x2391 = CTYPES_ADDR_OF_FATPTR(x2390);
-   int x2392 = xed_operand_rw(x2391);
-   return Val_long(x2392);
+   const xed_operand_t* x2393 = CTYPES_ADDR_OF_FATPTR(x2392);
+   int x2394 = xed_operand_rw(x2393);
+   return Val_long(x2394);
 }
-value stub__480_xed_operand_template_is_register(value x2393)
+value stub__482_xed_operand_template_is_register(value x2395)
 {
-   const xed_operand_t* x2394 = CTYPES_ADDR_OF_FATPTR(x2393);
-   int x2395 = xed_operand_template_is_register(x2394);
-   return Val_long(x2395);
+   const xed_operand_t* x2396 = CTYPES_ADDR_OF_FATPTR(x2395);
+   int x2397 = xed_operand_template_is_register(x2396);
+   return Val_long(x2397);
 }
-value stub__481_xed_operand_type(value x2396)
+value stub__483_xed_operand_type(value x2398)
 {
-   const xed_operand_t* x2397 = CTYPES_ADDR_OF_FATPTR(x2396);
-   int x2398 = xed_operand_type(x2397);
-   return Val_long(x2398);
+   const xed_operand_t* x2399 = CTYPES_ADDR_OF_FATPTR(x2398);
+   int x2400 = xed_operand_type(x2399);
+   return Val_long(x2400);
 }
-value stub__482_xed_operand_type_enum_t2str(value x2399)
+value stub__484_xed_operand_type_enum_t2str(value x2401)
 {
-   int x2400 = Long_val(x2399);
-   char* x2403 = xed_operand_type_enum_t2str(x2400);
-   return CTYPES_FROM_PTR(x2403);
+   int x2402 = Long_val(x2401);
+   char* x2405 = xed_operand_type_enum_t2str(x2402);
+   return CTYPES_FROM_PTR(x2405);
 }
-value stub__483_xed_operand_values_accesses_memory(value x2404)
+value stub__485_xed_operand_values_accesses_memory(value x2406)
 {
-   const xed_operand_values_t* x2405 = CTYPES_ADDR_OF_FATPTR(x2404);
-   _Bool x2406 = xed_operand_values_accesses_memory(x2405);
-   return Val_bool(x2406);
+   const xed_operand_values_t* x2407 = CTYPES_ADDR_OF_FATPTR(x2406);
+   _Bool x2408 = xed_operand_values_accesses_memory(x2407);
+   return Val_bool(x2408);
 }
-value stub__484_xed_operand_values_branch_not_taken_hint(value x2407)
+value stub__486_xed_operand_values_branch_not_taken_hint(value x2409)
 {
-   const xed_operand_values_t* x2408 = CTYPES_ADDR_OF_FATPTR(x2407);
-   _Bool x2409 = xed_operand_values_branch_not_taken_hint(x2408);
-   return Val_bool(x2409);
+   const xed_operand_values_t* x2410 = CTYPES_ADDR_OF_FATPTR(x2409);
+   _Bool x2411 = xed_operand_values_branch_not_taken_hint(x2410);
+   return Val_bool(x2411);
 }
-value stub__485_xed_operand_values_branch_taken_hint(value x2410)
+value stub__487_xed_operand_values_branch_taken_hint(value x2412)
 {
-   const xed_operand_values_t* x2411 = CTYPES_ADDR_OF_FATPTR(x2410);
-   _Bool x2412 = xed_operand_values_branch_taken_hint(x2411);
-   return Val_bool(x2412);
+   const xed_operand_values_t* x2413 = CTYPES_ADDR_OF_FATPTR(x2412);
+   _Bool x2414 = xed_operand_values_branch_taken_hint(x2413);
+   return Val_bool(x2414);
 }
-value stub__486_xed_operand_values_clear_rep(value x2413)
+value stub__488_xed_operand_values_clear_rep(value x2415)
 {
-   xed_operand_values_t* x2414 = CTYPES_ADDR_OF_FATPTR(x2413);
-   xed_operand_values_clear_rep(x2414);
+   xed_operand_values_t* x2416 = CTYPES_ADDR_OF_FATPTR(x2415);
+   xed_operand_values_clear_rep(x2416);
    return Val_unit;
 }
-value stub__487_xed_operand_values_dump(value x2418, value x2417,
-                                        value x2416)
+value stub__489_xed_operand_values_dump(value x2420, value x2419,
+                                        value x2418)
 {
-   const xed_operand_values_t* x2419 = CTYPES_ADDR_OF_FATPTR(x2418);
-   char* x2420 = CTYPES_PTR_OF_OCAML_STRING(x2417);
-   int x2421 = Long_val(x2416);
-   xed_operand_values_dump(x2419, x2420, x2421);
+   const xed_operand_values_t* x2421 = CTYPES_ADDR_OF_FATPTR(x2420);
+   char* x2422 = CTYPES_PTR_OF_OCAML_STRING(x2419);
+   int x2423 = Long_val(x2418);
+   xed_operand_values_dump(x2421, x2422, x2423);
    return Val_unit;
 }
-value stub__488_xed_operand_values_get_atomic(value x2425)
+value stub__490_xed_operand_values_get_atomic(value x2427)
 {
-   const xed_operand_values_t* x2426 = CTYPES_ADDR_OF_FATPTR(x2425);
-   _Bool x2427 = xed_operand_values_get_atomic(x2426);
-   return Val_bool(x2427);
+   const xed_operand_values_t* x2428 = CTYPES_ADDR_OF_FATPTR(x2427);
+   _Bool x2429 = xed_operand_values_get_atomic(x2428);
+   return Val_bool(x2429);
 }
-value stub__489_xed_operand_values_get_base_reg(value x2429, value x2428)
+value stub__491_xed_operand_values_get_base_reg(value x2431, value x2430)
 {
-   const xed_operand_values_t* x2430 = CTYPES_ADDR_OF_FATPTR(x2429);
-   int x2431 = Long_val(x2428);
-   int x2434 = xed_operand_values_get_base_reg(x2430, x2431);
-   return Val_long(x2434);
+   const xed_operand_values_t* x2432 = CTYPES_ADDR_OF_FATPTR(x2431);
+   int x2433 = Long_val(x2430);
+   int x2436 = xed_operand_values_get_base_reg(x2432, x2433);
+   return Val_long(x2436);
 }
-value stub__490_xed_operand_values_get_branch_displacement_byte(value x2436,
-                                                                value x2435)
+value stub__492_xed_operand_values_get_branch_displacement_byte(value x2438,
+                                                                value x2437)
 {
-   const xed_operand_values_t* x2437 = CTYPES_ADDR_OF_FATPTR(x2436);
-   int x2438 = Long_val(x2435);
-   char x2441 =
-   xed_operand_values_get_branch_displacement_byte(x2437, x2438);
-   return Ctypes_val_char(x2441);
+   const xed_operand_values_t* x2439 = CTYPES_ADDR_OF_FATPTR(x2438);
+   int x2440 = Long_val(x2437);
+   char x2443 =
+   xed_operand_values_get_branch_displacement_byte(x2439, x2440);
+   return Ctypes_val_char(x2443);
 }
-value stub__491_xed_operand_values_get_branch_displacement_int32(value x2442)
+value stub__493_xed_operand_values_get_branch_displacement_int32(value x2444)
 {
-   const xed_operand_values_t* x2443 = CTYPES_ADDR_OF_FATPTR(x2442);
-   int32_t x2444 = xed_operand_values_get_branch_displacement_int32(x2443);
-   return caml_copy_int32(x2444);
+   const xed_operand_values_t* x2445 = CTYPES_ADDR_OF_FATPTR(x2444);
+   int32_t x2446 = xed_operand_values_get_branch_displacement_int32(x2445);
+   return caml_copy_int32(x2446);
 }
-value stub__492_xed_operand_values_get_branch_displacement_length(value x2445)
+value stub__494_xed_operand_values_get_branch_displacement_length(value x2447)
 {
-   const xed_operand_values_t* x2446 = CTYPES_ADDR_OF_FATPTR(x2445);
-   uint32_t x2447 = xed_operand_values_get_branch_displacement_length(x2446);
-   return integers_copy_uint32(x2447);
+   const xed_operand_values_t* x2448 = CTYPES_ADDR_OF_FATPTR(x2447);
+   uint32_t x2449 = xed_operand_values_get_branch_displacement_length(x2448);
+   return integers_copy_uint32(x2449);
 }
-value stub__493_xed_operand_values_get_branch_displacement_length_bits
-     (value x2448)
+value stub__495_xed_operand_values_get_branch_displacement_length_bits
+     (value x2450)
 {
-   const xed_operand_values_t* x2449 = CTYPES_ADDR_OF_FATPTR(x2448);
-   uint32_t x2450 =
-   xed_operand_values_get_branch_displacement_length_bits(x2449);
-   return integers_copy_uint32(x2450);
+   const xed_operand_values_t* x2451 = CTYPES_ADDR_OF_FATPTR(x2450);
+   uint32_t x2452 =
+   xed_operand_values_get_branch_displacement_length_bits(x2451);
+   return integers_copy_uint32(x2452);
 }
-value stub__494_xed_operand_values_get_displacement_for_memop(value x2451)
+value stub__496_xed_operand_values_get_displacement_for_memop(value x2453)
 {
-   const xed_operand_values_t* x2452 = CTYPES_ADDR_OF_FATPTR(x2451);
-   _Bool x2453 = xed_operand_values_get_displacement_for_memop(x2452);
-   return Val_bool(x2453);
+   const xed_operand_values_t* x2454 = CTYPES_ADDR_OF_FATPTR(x2453);
+   _Bool x2455 = xed_operand_values_get_displacement_for_memop(x2454);
+   return Val_bool(x2455);
 }
-value stub__495_xed_operand_values_get_effective_address_width(value x2454)
+value stub__497_xed_operand_values_get_effective_address_width(value x2456)
 {
-   const xed_operand_values_t* x2455 = CTYPES_ADDR_OF_FATPTR(x2454);
-   uint32_t x2456 = xed_operand_values_get_effective_address_width(x2455);
-   return integers_copy_uint32(x2456);
+   const xed_operand_values_t* x2457 = CTYPES_ADDR_OF_FATPTR(x2456);
+   uint32_t x2458 = xed_operand_values_get_effective_address_width(x2457);
+   return integers_copy_uint32(x2458);
 }
-value stub__496_xed_operand_values_get_effective_operand_width(value x2457)
+value stub__498_xed_operand_values_get_effective_operand_width(value x2459)
 {
-   const xed_operand_values_t* x2458 = CTYPES_ADDR_OF_FATPTR(x2457);
-   uint32_t x2459 = xed_operand_values_get_effective_operand_width(x2458);
-   return integers_copy_uint32(x2459);
+   const xed_operand_values_t* x2460 = CTYPES_ADDR_OF_FATPTR(x2459);
+   uint32_t x2461 = xed_operand_values_get_effective_operand_width(x2460);
+   return integers_copy_uint32(x2461);
 }
-value stub__497_xed_operand_values_get_iclass(value x2460)
+value stub__499_xed_operand_values_get_iclass(value x2462)
 {
-   const xed_operand_values_t* x2461 = CTYPES_ADDR_OF_FATPTR(x2460);
-   int x2462 = xed_operand_values_get_iclass(x2461);
-   return Val_long(x2462);
+   const xed_operand_values_t* x2463 = CTYPES_ADDR_OF_FATPTR(x2462);
+   int x2464 = xed_operand_values_get_iclass(x2463);
+   return Val_long(x2464);
 }
-value stub__498_xed_operand_values_get_immediate_byte(value x2464,
-                                                      value x2463)
+value stub__500_xed_operand_values_get_immediate_byte(value x2466,
+                                                      value x2465)
 {
-   const xed_operand_values_t* x2465 = CTYPES_ADDR_OF_FATPTR(x2464);
-   int x2466 = Long_val(x2463);
-   char x2469 = xed_operand_values_get_immediate_byte(x2465, x2466);
-   return Ctypes_val_char(x2469);
+   const xed_operand_values_t* x2467 = CTYPES_ADDR_OF_FATPTR(x2466);
+   int x2468 = Long_val(x2465);
+   char x2471 = xed_operand_values_get_immediate_byte(x2467, x2468);
+   return Ctypes_val_char(x2471);
 }
-value stub__499_xed_operand_values_get_immediate_int64(value x2470)
+value stub__501_xed_operand_values_get_immediate_int64(value x2472)
 {
-   const xed_operand_values_t* x2471 = CTYPES_ADDR_OF_FATPTR(x2470);
-   int64_t x2472 = xed_operand_values_get_immediate_int64(x2471);
-   return caml_copy_int64(x2472);
+   const xed_operand_values_t* x2473 = CTYPES_ADDR_OF_FATPTR(x2472);
+   int64_t x2474 = xed_operand_values_get_immediate_int64(x2473);
+   return caml_copy_int64(x2474);
 }
-value stub__500_xed_operand_values_get_immediate_is_signed(value x2473)
+value stub__502_xed_operand_values_get_immediate_is_signed(value x2475)
 {
-   const xed_operand_values_t* x2474 = CTYPES_ADDR_OF_FATPTR(x2473);
-   int x2475 = xed_operand_values_get_immediate_is_signed(x2474);
-   return Val_long(x2475);
+   const xed_operand_values_t* x2476 = CTYPES_ADDR_OF_FATPTR(x2475);
+   int x2477 = xed_operand_values_get_immediate_is_signed(x2476);
+   return Val_long(x2477);
 }
-value stub__501_xed_operand_values_get_immediate_uint64(value x2476)
+value stub__503_xed_operand_values_get_immediate_uint64(value x2478)
 {
-   const xed_operand_values_t* x2477 = CTYPES_ADDR_OF_FATPTR(x2476);
-   uint64_t x2478 = xed_operand_values_get_immediate_uint64(x2477);
-   return integers_copy_uint64(x2478);
+   const xed_operand_values_t* x2479 = CTYPES_ADDR_OF_FATPTR(x2478);
+   uint64_t x2480 = xed_operand_values_get_immediate_uint64(x2479);
+   return integers_copy_uint64(x2480);
 }
-value stub__502_xed_operand_values_get_index_reg(value x2480, value x2479)
+value stub__504_xed_operand_values_get_index_reg(value x2482, value x2481)
 {
-   const xed_operand_values_t* x2481 = CTYPES_ADDR_OF_FATPTR(x2480);
-   int x2482 = Long_val(x2479);
-   int x2485 = xed_operand_values_get_index_reg(x2481, x2482);
-   return Val_long(x2485);
+   const xed_operand_values_t* x2483 = CTYPES_ADDR_OF_FATPTR(x2482);
+   int x2484 = Long_val(x2481);
+   int x2487 = xed_operand_values_get_index_reg(x2483, x2484);
+   return Val_long(x2487);
 }
-value stub__503_xed_operand_values_get_long_mode(value x2486)
+value stub__505_xed_operand_values_get_long_mode(value x2488)
 {
-   const xed_operand_values_t* x2487 = CTYPES_ADDR_OF_FATPTR(x2486);
-   _Bool x2488 = xed_operand_values_get_long_mode(x2487);
-   return Val_bool(x2488);
+   const xed_operand_values_t* x2489 = CTYPES_ADDR_OF_FATPTR(x2488);
+   _Bool x2490 = xed_operand_values_get_long_mode(x2489);
+   return Val_bool(x2490);
 }
-value stub__504_xed_operand_values_get_memory_displacement_byte(value x2490,
-                                                                value x2489)
+value stub__506_xed_operand_values_get_memory_displacement_byte(value x2492,
+                                                                value x2491)
 {
-   const xed_operand_values_t* x2491 = CTYPES_ADDR_OF_FATPTR(x2490);
-   int x2492 = Long_val(x2489);
-   char x2495 =
-   xed_operand_values_get_memory_displacement_byte(x2491, x2492);
-   return Ctypes_val_char(x2495);
+   const xed_operand_values_t* x2493 = CTYPES_ADDR_OF_FATPTR(x2492);
+   int x2494 = Long_val(x2491);
+   char x2497 =
+   xed_operand_values_get_memory_displacement_byte(x2493, x2494);
+   return Ctypes_val_char(x2497);
 }
-value stub__505_xed_operand_values_get_memory_displacement_int64(value x2496)
+value stub__507_xed_operand_values_get_memory_displacement_int64(value x2498)
 {
-   const xed_operand_values_t* x2497 = CTYPES_ADDR_OF_FATPTR(x2496);
-   int64_t x2498 = xed_operand_values_get_memory_displacement_int64(x2497);
-   return caml_copy_int64(x2498);
+   const xed_operand_values_t* x2499 = CTYPES_ADDR_OF_FATPTR(x2498);
+   int64_t x2500 = xed_operand_values_get_memory_displacement_int64(x2499);
+   return caml_copy_int64(x2500);
 }
-value stub__506_xed_operand_values_get_memory_displacement_int64_raw(
-                                                                    value x2499)
+value stub__508_xed_operand_values_get_memory_displacement_int64_raw(
+                                                                    value x2501)
 {
-   const xed_operand_values_t* x2500 = CTYPES_ADDR_OF_FATPTR(x2499);
-   int64_t x2501 =
-   xed_operand_values_get_memory_displacement_int64_raw(x2500);
-   return caml_copy_int64(x2501);
+   const xed_operand_values_t* x2502 = CTYPES_ADDR_OF_FATPTR(x2501);
+   int64_t x2503 =
+   xed_operand_values_get_memory_displacement_int64_raw(x2502);
+   return caml_copy_int64(x2503);
 }
-value stub__507_xed_operand_values_get_memory_displacement_length(value x2502)
+value stub__509_xed_operand_values_get_memory_displacement_length(value x2504)
 {
-   const xed_operand_values_t* x2503 = CTYPES_ADDR_OF_FATPTR(x2502);
-   uint32_t x2504 = xed_operand_values_get_memory_displacement_length(x2503);
-   return integers_copy_uint32(x2504);
+   const xed_operand_values_t* x2505 = CTYPES_ADDR_OF_FATPTR(x2504);
+   uint32_t x2506 = xed_operand_values_get_memory_displacement_length(x2505);
+   return integers_copy_uint32(x2506);
 }
-value stub__508_xed_operand_values_get_memory_displacement_length_bits
-     (value x2505)
+value stub__510_xed_operand_values_get_memory_displacement_length_bits
+     (value x2507)
 {
-   const xed_operand_values_t* x2506 = CTYPES_ADDR_OF_FATPTR(x2505);
-   uint32_t x2507 =
-   xed_operand_values_get_memory_displacement_length_bits(x2506);
-   return integers_copy_uint32(x2507);
+   const xed_operand_values_t* x2508 = CTYPES_ADDR_OF_FATPTR(x2507);
+   uint32_t x2509 =
+   xed_operand_values_get_memory_displacement_length_bits(x2508);
+   return integers_copy_uint32(x2509);
 }
-value stub__509_xed_operand_values_get_memory_displacement_length_bits_raw
-     (value x2508)
+value stub__511_xed_operand_values_get_memory_displacement_length_bits_raw
+     (value x2510)
 {
-   const xed_operand_values_t* x2509 = CTYPES_ADDR_OF_FATPTR(x2508);
-   uint32_t x2510 =
-   xed_operand_values_get_memory_displacement_length_bits_raw(x2509);
-   return integers_copy_uint32(x2510);
+   const xed_operand_values_t* x2511 = CTYPES_ADDR_OF_FATPTR(x2510);
+   uint32_t x2512 =
+   xed_operand_values_get_memory_displacement_length_bits_raw(x2511);
+   return integers_copy_uint32(x2512);
 }
-value stub__510_xed_operand_values_get_memory_operand_length(value x2512,
-                                                             value x2511)
+value stub__512_xed_operand_values_get_memory_operand_length(value x2514,
+                                                             value x2513)
 {
-   const xed_operand_values_t* x2513 = CTYPES_ADDR_OF_FATPTR(x2512);
-   int x2514 = Long_val(x2511);
-   int x2517 = xed_operand_values_get_memory_operand_length(x2513, x2514);
-   return Val_long(x2517);
+   const xed_operand_values_t* x2515 = CTYPES_ADDR_OF_FATPTR(x2514);
+   int x2516 = Long_val(x2513);
+   int x2519 = xed_operand_values_get_memory_operand_length(x2515, x2516);
+   return Val_long(x2519);
 }
-value stub__511_xed_operand_values_get_real_mode(value x2518)
+value stub__513_xed_operand_values_get_real_mode(value x2520)
 {
-   const xed_operand_values_t* x2519 = CTYPES_ADDR_OF_FATPTR(x2518);
-   _Bool x2520 = xed_operand_values_get_real_mode(x2519);
-   return Val_bool(x2520);
+   const xed_operand_values_t* x2521 = CTYPES_ADDR_OF_FATPTR(x2520);
+   _Bool x2522 = xed_operand_values_get_real_mode(x2521);
+   return Val_bool(x2522);
 }
-value stub__512_xed_operand_values_get_scale(value x2521)
+value stub__514_xed_operand_values_get_scale(value x2523)
 {
-   const xed_operand_values_t* x2522 = CTYPES_ADDR_OF_FATPTR(x2521);
-   int x2523 = xed_operand_values_get_scale(x2522);
-   return Val_long(x2523);
+   const xed_operand_values_t* x2524 = CTYPES_ADDR_OF_FATPTR(x2523);
+   int x2525 = xed_operand_values_get_scale(x2524);
+   return Val_long(x2525);
 }
-value stub__513_xed_operand_values_get_second_immediate(value x2524)
+value stub__515_xed_operand_values_get_second_immediate(value x2526)
 {
-   const xed_operand_values_t* x2525 = CTYPES_ADDR_OF_FATPTR(x2524);
-   char x2526 = xed_operand_values_get_second_immediate(x2525);
-   return Ctypes_val_char(x2526);
+   const xed_operand_values_t* x2527 = CTYPES_ADDR_OF_FATPTR(x2526);
+   char x2528 = xed_operand_values_get_second_immediate(x2527);
+   return Ctypes_val_char(x2528);
 }
-value stub__514_xed_operand_values_get_seg_reg(value x2528, value x2527)
+value stub__516_xed_operand_values_get_seg_reg(value x2530, value x2529)
 {
-   const xed_operand_values_t* x2529 = CTYPES_ADDR_OF_FATPTR(x2528);
-   int x2530 = Long_val(x2527);
-   int x2533 = xed_operand_values_get_seg_reg(x2529, x2530);
-   return Val_long(x2533);
+   const xed_operand_values_t* x2531 = CTYPES_ADDR_OF_FATPTR(x2530);
+   int x2532 = Long_val(x2529);
+   int x2535 = xed_operand_values_get_seg_reg(x2531, x2532);
+   return Val_long(x2535);
 }
-value stub__515_xed_operand_values_get_stack_address_width(value x2534)
+value stub__517_xed_operand_values_get_stack_address_width(value x2536)
 {
-   const xed_operand_values_t* x2535 = CTYPES_ADDR_OF_FATPTR(x2534);
-   uint32_t x2536 = xed_operand_values_get_stack_address_width(x2535);
-   return integers_copy_uint32(x2536);
+   const xed_operand_values_t* x2537 = CTYPES_ADDR_OF_FATPTR(x2536);
+   uint32_t x2538 = xed_operand_values_get_stack_address_width(x2537);
+   return integers_copy_uint32(x2538);
 }
-value stub__516_xed_operand_values_has_66_prefix(value x2537)
+value stub__518_xed_operand_values_has_66_prefix(value x2539)
 {
-   const xed_operand_values_t* x2538 = CTYPES_ADDR_OF_FATPTR(x2537);
-   _Bool x2539 = xed_operand_values_has_66_prefix(x2538);
-   return Val_bool(x2539);
+   const xed_operand_values_t* x2540 = CTYPES_ADDR_OF_FATPTR(x2539);
+   _Bool x2541 = xed_operand_values_has_66_prefix(x2540);
+   return Val_bool(x2541);
 }
-value stub__517_xed_operand_values_has_address_size_prefix(value x2540)
+value stub__519_xed_operand_values_has_address_size_prefix(value x2542)
 {
-   const xed_operand_values_t* x2541 = CTYPES_ADDR_OF_FATPTR(x2540);
-   _Bool x2542 = xed_operand_values_has_address_size_prefix(x2541);
-   return Val_bool(x2542);
+   const xed_operand_values_t* x2543 = CTYPES_ADDR_OF_FATPTR(x2542);
+   _Bool x2544 = xed_operand_values_has_address_size_prefix(x2543);
+   return Val_bool(x2544);
 }
-value stub__518_xed_operand_values_has_branch_displacement(value x2543)
+value stub__520_xed_operand_values_has_branch_displacement(value x2545)
 {
-   const xed_operand_values_t* x2544 = CTYPES_ADDR_OF_FATPTR(x2543);
-   _Bool x2545 = xed_operand_values_has_branch_displacement(x2544);
-   return Val_bool(x2545);
+   const xed_operand_values_t* x2546 = CTYPES_ADDR_OF_FATPTR(x2545);
+   _Bool x2547 = xed_operand_values_has_branch_displacement(x2546);
+   return Val_bool(x2547);
 }
-value stub__519_xed_operand_values_has_displacement(value x2546)
+value stub__521_xed_operand_values_has_displacement(value x2548)
 {
-   const xed_operand_values_t* x2547 = CTYPES_ADDR_OF_FATPTR(x2546);
-   _Bool x2548 = xed_operand_values_has_displacement(x2547);
-   return Val_bool(x2548);
+   const xed_operand_values_t* x2549 = CTYPES_ADDR_OF_FATPTR(x2548);
+   _Bool x2550 = xed_operand_values_has_displacement(x2549);
+   return Val_bool(x2550);
 }
-value stub__520_xed_operand_values_has_immediate(value x2549)
+value stub__522_xed_operand_values_has_immediate(value x2551)
 {
-   const xed_operand_values_t* x2550 = CTYPES_ADDR_OF_FATPTR(x2549);
-   _Bool x2551 = xed_operand_values_has_immediate(x2550);
-   return Val_bool(x2551);
+   const xed_operand_values_t* x2552 = CTYPES_ADDR_OF_FATPTR(x2551);
+   _Bool x2553 = xed_operand_values_has_immediate(x2552);
+   return Val_bool(x2553);
 }
-value stub__521_xed_operand_values_has_lock_prefix(value x2552)
+value stub__523_xed_operand_values_has_lock_prefix(value x2554)
 {
-   const xed_operand_values_t* x2553 = CTYPES_ADDR_OF_FATPTR(x2552);
-   _Bool x2554 = xed_operand_values_has_lock_prefix(x2553);
-   return Val_bool(x2554);
+   const xed_operand_values_t* x2555 = CTYPES_ADDR_OF_FATPTR(x2554);
+   _Bool x2556 = xed_operand_values_has_lock_prefix(x2555);
+   return Val_bool(x2556);
 }
-value stub__522_xed_operand_values_has_memory_displacement(value x2555)
+value stub__524_xed_operand_values_has_memory_displacement(value x2557)
 {
-   const xed_operand_values_t* x2556 = CTYPES_ADDR_OF_FATPTR(x2555);
-   _Bool x2557 = xed_operand_values_has_memory_displacement(x2556);
-   return Val_bool(x2557);
+   const xed_operand_values_t* x2558 = CTYPES_ADDR_OF_FATPTR(x2557);
+   _Bool x2559 = xed_operand_values_has_memory_displacement(x2558);
+   return Val_bool(x2559);
 }
-value stub__523_xed_operand_values_has_modrm_byte(value x2558)
+value stub__525_xed_operand_values_has_modrm_byte(value x2560)
 {
-   const xed_operand_values_t* x2559 = CTYPES_ADDR_OF_FATPTR(x2558);
-   _Bool x2560 = xed_operand_values_has_modrm_byte(x2559);
-   return Val_bool(x2560);
+   const xed_operand_values_t* x2561 = CTYPES_ADDR_OF_FATPTR(x2560);
+   _Bool x2562 = xed_operand_values_has_modrm_byte(x2561);
+   return Val_bool(x2562);
 }
-value stub__524_xed_operand_values_has_operand_size_prefix(value x2561)
+value stub__526_xed_operand_values_has_operand_size_prefix(value x2563)
 {
-   const xed_operand_values_t* x2562 = CTYPES_ADDR_OF_FATPTR(x2561);
-   _Bool x2563 = xed_operand_values_has_operand_size_prefix(x2562);
-   return Val_bool(x2563);
+   const xed_operand_values_t* x2564 = CTYPES_ADDR_OF_FATPTR(x2563);
+   _Bool x2565 = xed_operand_values_has_operand_size_prefix(x2564);
+   return Val_bool(x2565);
 }
-value stub__525_xed_operand_values_has_real_rep(value x2564)
+value stub__527_xed_operand_values_has_real_rep(value x2566)
 {
-   const xed_operand_values_t* x2565 = CTYPES_ADDR_OF_FATPTR(x2564);
-   _Bool x2566 = xed_operand_values_has_real_rep(x2565);
-   return Val_bool(x2566);
+   const xed_operand_values_t* x2567 = CTYPES_ADDR_OF_FATPTR(x2566);
+   _Bool x2568 = xed_operand_values_has_real_rep(x2567);
+   return Val_bool(x2568);
 }
-value stub__526_xed_operand_values_has_rep_prefix(value x2567)
+value stub__528_xed_operand_values_has_rep_prefix(value x2569)
 {
-   const xed_operand_values_t* x2568 = CTYPES_ADDR_OF_FATPTR(x2567);
-   _Bool x2569 = xed_operand_values_has_rep_prefix(x2568);
-   return Val_bool(x2569);
+   const xed_operand_values_t* x2570 = CTYPES_ADDR_OF_FATPTR(x2569);
+   _Bool x2571 = xed_operand_values_has_rep_prefix(x2570);
+   return Val_bool(x2571);
 }
-value stub__527_xed_operand_values_has_repne_prefix(value x2570)
+value stub__529_xed_operand_values_has_repne_prefix(value x2572)
 {
-   const xed_operand_values_t* x2571 = CTYPES_ADDR_OF_FATPTR(x2570);
-   _Bool x2572 = xed_operand_values_has_repne_prefix(x2571);
-   return Val_bool(x2572);
+   const xed_operand_values_t* x2573 = CTYPES_ADDR_OF_FATPTR(x2572);
+   _Bool x2574 = xed_operand_values_has_repne_prefix(x2573);
+   return Val_bool(x2574);
 }
-value stub__528_xed_operand_values_has_rexw_prefix(value x2573)
+value stub__530_xed_operand_values_has_rexw_prefix(value x2575)
 {
-   const xed_operand_values_t* x2574 = CTYPES_ADDR_OF_FATPTR(x2573);
-   _Bool x2575 = xed_operand_values_has_rexw_prefix(x2574);
-   return Val_bool(x2575);
+   const xed_operand_values_t* x2576 = CTYPES_ADDR_OF_FATPTR(x2575);
+   _Bool x2577 = xed_operand_values_has_rexw_prefix(x2576);
+   return Val_bool(x2577);
 }
-value stub__529_xed_operand_values_has_segment_prefix(value x2576)
+value stub__531_xed_operand_values_has_segment_prefix(value x2578)
 {
-   const xed_operand_values_t* x2577 = CTYPES_ADDR_OF_FATPTR(x2576);
-   _Bool x2578 = xed_operand_values_has_segment_prefix(x2577);
-   return Val_bool(x2578);
+   const xed_operand_values_t* x2579 = CTYPES_ADDR_OF_FATPTR(x2578);
+   _Bool x2580 = xed_operand_values_has_segment_prefix(x2579);
+   return Val_bool(x2580);
 }
-value stub__530_xed_operand_values_has_sib_byte(value x2579)
+value stub__532_xed_operand_values_has_sib_byte(value x2581)
 {
-   const xed_operand_values_t* x2580 = CTYPES_ADDR_OF_FATPTR(x2579);
-   _Bool x2581 = xed_operand_values_has_sib_byte(x2580);
-   return Val_bool(x2581);
+   const xed_operand_values_t* x2582 = CTYPES_ADDR_OF_FATPTR(x2581);
+   _Bool x2583 = xed_operand_values_has_sib_byte(x2582);
+   return Val_bool(x2583);
 }
-value stub__531_xed_operand_values_init(value x2582)
+value stub__533_xed_operand_values_init(value x2584)
 {
-   xed_operand_values_t* x2583 = CTYPES_ADDR_OF_FATPTR(x2582);
-   xed_operand_values_init(x2583);
+   xed_operand_values_t* x2585 = CTYPES_ADDR_OF_FATPTR(x2584);
+   xed_operand_values_init(x2585);
    return Val_unit;
 }
-value stub__532_xed_operand_values_init_keep_mode(value x2586, value x2585)
+value stub__534_xed_operand_values_init_keep_mode(value x2588, value x2587)
 {
-   xed_operand_values_t* x2587 = CTYPES_ADDR_OF_FATPTR(x2586);
-   const xed_operand_values_t* x2588 = CTYPES_ADDR_OF_FATPTR(x2585);
-   xed_operand_values_init_keep_mode(x2587, x2588);
+   xed_operand_values_t* x2589 = CTYPES_ADDR_OF_FATPTR(x2588);
+   const xed_operand_values_t* x2590 = CTYPES_ADDR_OF_FATPTR(x2587);
+   xed_operand_values_init_keep_mode(x2589, x2590);
    return Val_unit;
 }
-value stub__533_xed_operand_values_init_set_mode(value x2591, value x2590)
+value stub__535_xed_operand_values_init_set_mode(value x2593, value x2592)
 {
-   xed_operand_values_t* x2592 = CTYPES_ADDR_OF_FATPTR(x2591);
-   const xed_state_t* x2593 = CTYPES_ADDR_OF_FATPTR(x2590);
-   xed_operand_values_init_set_mode(x2592, x2593);
+   xed_operand_values_t* x2594 = CTYPES_ADDR_OF_FATPTR(x2593);
+   const xed_state_t* x2595 = CTYPES_ADDR_OF_FATPTR(x2592);
+   xed_operand_values_init_set_mode(x2594, x2595);
    return Val_unit;
 }
-value stub__534_xed_operand_values_is_nop(value x2595)
+value stub__536_xed_operand_values_is_nop(value x2597)
 {
-   const xed_operand_values_t* x2596 = CTYPES_ADDR_OF_FATPTR(x2595);
-   _Bool x2597 = xed_operand_values_is_nop(x2596);
-   return Val_bool(x2597);
+   const xed_operand_values_t* x2598 = CTYPES_ADDR_OF_FATPTR(x2597);
+   _Bool x2599 = xed_operand_values_is_nop(x2598);
+   return Val_bool(x2599);
 }
-value stub__535_xed_operand_values_lockable(value x2598)
+value stub__537_xed_operand_values_lockable(value x2600)
 {
-   const xed_operand_values_t* x2599 = CTYPES_ADDR_OF_FATPTR(x2598);
-   _Bool x2600 = xed_operand_values_lockable(x2599);
-   return Val_bool(x2600);
+   const xed_operand_values_t* x2601 = CTYPES_ADDR_OF_FATPTR(x2600);
+   _Bool x2602 = xed_operand_values_lockable(x2601);
+   return Val_bool(x2602);
 }
-value stub__536_xed_operand_values_memop_without_modrm(value x2601)
+value stub__538_xed_operand_values_memop_without_modrm(value x2603)
 {
-   const xed_operand_values_t* x2602 = CTYPES_ADDR_OF_FATPTR(x2601);
-   _Bool x2603 = xed_operand_values_memop_without_modrm(x2602);
-   return Val_bool(x2603);
+   const xed_operand_values_t* x2604 = CTYPES_ADDR_OF_FATPTR(x2603);
+   _Bool x2605 = xed_operand_values_memop_without_modrm(x2604);
+   return Val_bool(x2605);
 }
-value stub__537_xed_operand_values_number_of_memory_operands(value x2604)
+value stub__539_xed_operand_values_number_of_memory_operands(value x2606)
 {
-   const xed_operand_values_t* x2605 = CTYPES_ADDR_OF_FATPTR(x2604);
-   int x2606 = xed_operand_values_number_of_memory_operands(x2605);
-   return Val_long(x2606);
+   const xed_operand_values_t* x2607 = CTYPES_ADDR_OF_FATPTR(x2606);
+   int x2608 = xed_operand_values_number_of_memory_operands(x2607);
+   return Val_long(x2608);
 }
-value stub__538_xed_operand_values_print_short(value x2609, value x2608,
-                                               value x2607)
+value stub__540_xed_operand_values_print_short(value x2611, value x2610,
+                                               value x2609)
 {
-   const xed_operand_values_t* x2610 = CTYPES_ADDR_OF_FATPTR(x2609);
-   char* x2611 = CTYPES_PTR_OF_OCAML_STRING(x2608);
-   int x2612 = Long_val(x2607);
-   xed_operand_values_print_short(x2610, x2611, x2612);
+   const xed_operand_values_t* x2612 = CTYPES_ADDR_OF_FATPTR(x2611);
+   char* x2613 = CTYPES_PTR_OF_OCAML_STRING(x2610);
+   int x2614 = Long_val(x2609);
+   xed_operand_values_print_short(x2612, x2613, x2614);
    return Val_unit;
 }
-value stub__539_xed_operand_values_segment_prefix(value x2616)
+value stub__541_xed_operand_values_segment_prefix(value x2618)
 {
-   const xed_operand_values_t* x2617 = CTYPES_ADDR_OF_FATPTR(x2616);
-   int x2618 = xed_operand_values_segment_prefix(x2617);
-   return Val_long(x2618);
+   const xed_operand_values_t* x2619 = CTYPES_ADDR_OF_FATPTR(x2618);
+   int x2620 = xed_operand_values_segment_prefix(x2619);
+   return Val_long(x2620);
 }
-value stub__540_xed_operand_values_set_base_reg(value x2621, value x2620,
-                                                value x2619)
+value stub__542_xed_operand_values_set_base_reg(value x2623, value x2622,
+                                                value x2621)
 {
-   xed_operand_values_t* x2622 = CTYPES_ADDR_OF_FATPTR(x2621);
-   int x2623 = Long_val(x2620);
-   int x2626 = Long_val(x2619);
-   xed_operand_values_set_base_reg(x2622, x2623, x2626);
+   xed_operand_values_t* x2624 = CTYPES_ADDR_OF_FATPTR(x2623);
+   int x2625 = Long_val(x2622);
+   int x2628 = Long_val(x2621);
+   xed_operand_values_set_base_reg(x2624, x2625, x2628);
    return Val_unit;
 }
-value stub__541_xed_operand_values_set_branch_displacement(value x2632,
-                                                           value x2631,
-                                                           value x2630)
+value stub__543_xed_operand_values_set_branch_displacement(value x2634,
+                                                           value x2633,
+                                                           value x2632)
 {
-   xed_operand_values_t* x2633 = CTYPES_ADDR_OF_FATPTR(x2632);
-   int32_t x2634 = Int32_val(x2631);
-   int x2637 = Long_val(x2630);
-   xed_operand_values_set_branch_displacement(x2633, x2634, x2637);
+   xed_operand_values_t* x2635 = CTYPES_ADDR_OF_FATPTR(x2634);
+   int32_t x2636 = Int32_val(x2633);
+   int x2639 = Long_val(x2632);
+   xed_operand_values_set_branch_displacement(x2635, x2636, x2639);
    return Val_unit;
 }
-value stub__542_xed_operand_values_set_branch_displacement_bits(value x2643,
-                                                                value x2642,
-                                                                value x2641)
+value stub__544_xed_operand_values_set_branch_displacement_bits(value x2645,
+                                                                value x2644,
+                                                                value x2643)
 {
-   xed_operand_values_t* x2644 = CTYPES_ADDR_OF_FATPTR(x2643);
-   int32_t x2645 = Int32_val(x2642);
-   int x2648 = Long_val(x2641);
-   xed_operand_values_set_branch_displacement_bits(x2644, x2645, x2648);
+   xed_operand_values_t* x2646 = CTYPES_ADDR_OF_FATPTR(x2645);
+   int32_t x2647 = Int32_val(x2644);
+   int x2650 = Long_val(x2643);
+   xed_operand_values_set_branch_displacement_bits(x2646, x2647, x2650);
    return Val_unit;
 }
-value stub__543_xed_operand_values_set_effective_address_width(value x2653,
-                                                               value x2652)
+value stub__545_xed_operand_values_set_effective_address_width(value x2655,
+                                                               value x2654)
 {
-   xed_operand_values_t* x2654 = CTYPES_ADDR_OF_FATPTR(x2653);
-   int x2655 = Long_val(x2652);
-   xed_operand_values_set_effective_address_width(x2654, x2655);
+   xed_operand_values_t* x2656 = CTYPES_ADDR_OF_FATPTR(x2655);
+   int x2657 = Long_val(x2654);
+   xed_operand_values_set_effective_address_width(x2656, x2657);
    return Val_unit;
 }
-value stub__544_xed_operand_values_set_effective_operand_width(value x2660,
-                                                               value x2659)
+value stub__546_xed_operand_values_set_effective_operand_width(value x2662,
+                                                               value x2661)
 {
-   xed_operand_values_t* x2661 = CTYPES_ADDR_OF_FATPTR(x2660);
-   int x2662 = Long_val(x2659);
-   xed_operand_values_set_effective_operand_width(x2661, x2662);
+   xed_operand_values_t* x2663 = CTYPES_ADDR_OF_FATPTR(x2662);
+   int x2664 = Long_val(x2661);
+   xed_operand_values_set_effective_operand_width(x2663, x2664);
    return Val_unit;
 }
-value stub__545_xed_operand_values_set_iclass(value x2667, value x2666)
+value stub__547_xed_operand_values_set_iclass(value x2669, value x2668)
 {
-   xed_operand_values_t* x2668 = CTYPES_ADDR_OF_FATPTR(x2667);
-   int x2669 = Long_val(x2666);
-   xed_operand_values_set_iclass(x2668, x2669);
+   xed_operand_values_t* x2670 = CTYPES_ADDR_OF_FATPTR(x2669);
+   int x2671 = Long_val(x2668);
+   xed_operand_values_set_iclass(x2670, x2671);
    return Val_unit;
 }
-value stub__546_xed_operand_values_set_immediate_signed(value x2675,
-                                                        value x2674,
-                                                        value x2673)
+value stub__548_xed_operand_values_set_immediate_signed(value x2677,
+                                                        value x2676,
+                                                        value x2675)
 {
-   xed_operand_values_t* x2676 = CTYPES_ADDR_OF_FATPTR(x2675);
-   int32_t x2677 = Int32_val(x2674);
-   int x2680 = Long_val(x2673);
-   xed_operand_values_set_immediate_signed(x2676, x2677, x2680);
+   xed_operand_values_t* x2678 = CTYPES_ADDR_OF_FATPTR(x2677);
+   int32_t x2679 = Int32_val(x2676);
+   int x2682 = Long_val(x2675);
+   xed_operand_values_set_immediate_signed(x2678, x2679, x2682);
    return Val_unit;
 }
-value stub__547_xed_operand_values_set_immediate_signed_bits(value x2686,
-                                                             value x2685,
-                                                             value x2684)
+value stub__549_xed_operand_values_set_immediate_signed_bits(value x2688,
+                                                             value x2687,
+                                                             value x2686)
 {
-   xed_operand_values_t* x2687 = CTYPES_ADDR_OF_FATPTR(x2686);
-   int32_t x2688 = Int32_val(x2685);
-   int x2691 = Long_val(x2684);
-   xed_operand_values_set_immediate_signed_bits(x2687, x2688, x2691);
+   xed_operand_values_t* x2689 = CTYPES_ADDR_OF_FATPTR(x2688);
+   int32_t x2690 = Int32_val(x2687);
+   int x2693 = Long_val(x2686);
+   xed_operand_values_set_immediate_signed_bits(x2689, x2690, x2693);
    return Val_unit;
 }
-value stub__548_xed_operand_values_set_immediate_unsigned(value x2697,
-                                                          value x2696,
-                                                          value x2695)
+value stub__550_xed_operand_values_set_immediate_unsigned(value x2699,
+                                                          value x2698,
+                                                          value x2697)
 {
-   xed_operand_values_t* x2698 = CTYPES_ADDR_OF_FATPTR(x2697);
-   uint64_t x2699 = Uint64_val(x2696);
-   int x2702 = Long_val(x2695);
-   xed_operand_values_set_immediate_unsigned(x2698, x2699, x2702);
+   xed_operand_values_t* x2700 = CTYPES_ADDR_OF_FATPTR(x2699);
+   uint64_t x2701 = Uint64_val(x2698);
+   int x2704 = Long_val(x2697);
+   xed_operand_values_set_immediate_unsigned(x2700, x2701, x2704);
    return Val_unit;
 }
-value stub__549_xed_operand_values_set_immediate_unsigned_bits(value x2708,
-                                                               value x2707,
-                                                               value x2706)
+value stub__551_xed_operand_values_set_immediate_unsigned_bits(value x2710,
+                                                               value x2709,
+                                                               value x2708)
 {
-   xed_operand_values_t* x2709 = CTYPES_ADDR_OF_FATPTR(x2708);
-   uint64_t x2710 = Uint64_val(x2707);
-   int x2713 = Long_val(x2706);
-   xed_operand_values_set_immediate_unsigned_bits(x2709, x2710, x2713);
+   xed_operand_values_t* x2711 = CTYPES_ADDR_OF_FATPTR(x2710);
+   uint64_t x2712 = Uint64_val(x2709);
+   int x2715 = Long_val(x2708);
+   xed_operand_values_set_immediate_unsigned_bits(x2711, x2712, x2715);
    return Val_unit;
 }
-value stub__550_xed_operand_values_set_index_reg(value x2719, value x2718,
-                                                 value x2717)
+value stub__552_xed_operand_values_set_index_reg(value x2721, value x2720,
+                                                 value x2719)
 {
-   xed_operand_values_t* x2720 = CTYPES_ADDR_OF_FATPTR(x2719);
-   int x2721 = Long_val(x2718);
-   int x2724 = Long_val(x2717);
-   xed_operand_values_set_index_reg(x2720, x2721, x2724);
+   xed_operand_values_t* x2722 = CTYPES_ADDR_OF_FATPTR(x2721);
+   int x2723 = Long_val(x2720);
+   int x2726 = Long_val(x2719);
+   xed_operand_values_set_index_reg(x2722, x2723, x2726);
    return Val_unit;
 }
-value stub__551_xed_operand_values_set_lock(value x2728)
+value stub__553_xed_operand_values_set_lock(value x2730)
 {
-   xed_operand_values_t* x2729 = CTYPES_ADDR_OF_FATPTR(x2728);
-   xed_operand_values_set_lock(x2729);
+   xed_operand_values_t* x2731 = CTYPES_ADDR_OF_FATPTR(x2730);
+   xed_operand_values_set_lock(x2731);
    return Val_unit;
 }
-value stub__552_xed_operand_values_set_memory_displacement(value x2733,
-                                                           value x2732,
-                                                           value x2731)
+value stub__554_xed_operand_values_set_memory_displacement(value x2735,
+                                                           value x2734,
+                                                           value x2733)
 {
-   xed_operand_values_t* x2734 = CTYPES_ADDR_OF_FATPTR(x2733);
-   int64_t x2735 = Int64_val(x2732);
-   int x2738 = Long_val(x2731);
-   xed_operand_values_set_memory_displacement(x2734, x2735, x2738);
+   xed_operand_values_t* x2736 = CTYPES_ADDR_OF_FATPTR(x2735);
+   int64_t x2737 = Int64_val(x2734);
+   int x2740 = Long_val(x2733);
+   xed_operand_values_set_memory_displacement(x2736, x2737, x2740);
    return Val_unit;
 }
-value stub__553_xed_operand_values_set_memory_displacement_bits(value x2744,
-                                                                value x2743,
-                                                                value x2742)
+value stub__555_xed_operand_values_set_memory_displacement_bits(value x2746,
+                                                                value x2745,
+                                                                value x2744)
 {
-   xed_operand_values_t* x2745 = CTYPES_ADDR_OF_FATPTR(x2744);
-   int64_t x2746 = Int64_val(x2743);
-   int x2749 = Long_val(x2742);
-   xed_operand_values_set_memory_displacement_bits(x2745, x2746, x2749);
+   xed_operand_values_t* x2747 = CTYPES_ADDR_OF_FATPTR(x2746);
+   int64_t x2748 = Int64_val(x2745);
+   int x2751 = Long_val(x2744);
+   xed_operand_values_set_memory_displacement_bits(x2747, x2748, x2751);
    return Val_unit;
 }
-value stub__554_xed_operand_values_set_memory_operand_length(value x2754,
-                                                             value x2753)
+value stub__556_xed_operand_values_set_memory_operand_length(value x2756,
+                                                             value x2755)
 {
-   xed_operand_values_t* x2755 = CTYPES_ADDR_OF_FATPTR(x2754);
-   int x2756 = Long_val(x2753);
-   xed_operand_values_set_memory_operand_length(x2755, x2756);
+   xed_operand_values_t* x2757 = CTYPES_ADDR_OF_FATPTR(x2756);
+   int x2758 = Long_val(x2755);
+   xed_operand_values_set_memory_operand_length(x2757, x2758);
    return Val_unit;
 }
-value stub__555_xed_operand_values_set_mode(value x2761, value x2760)
+value stub__557_xed_operand_values_set_mode(value x2763, value x2762)
 {
-   xed_operand_values_t* x2762 = CTYPES_ADDR_OF_FATPTR(x2761);
-   const xed_state_t* x2763 = CTYPES_ADDR_OF_FATPTR(x2760);
-   xed_operand_values_set_mode(x2762, x2763);
+   xed_operand_values_t* x2764 = CTYPES_ADDR_OF_FATPTR(x2763);
+   const xed_state_t* x2765 = CTYPES_ADDR_OF_FATPTR(x2762);
+   xed_operand_values_set_mode(x2764, x2765);
    return Val_unit;
 }
-value stub__556_xed_operand_values_set_operand_reg(value x2767, value x2766,
-                                                   value x2765)
+value stub__558_xed_operand_values_set_operand_reg(value x2769, value x2768,
+                                                   value x2767)
 {
-   xed_operand_values_t* x2768 = CTYPES_ADDR_OF_FATPTR(x2767);
-   int x2769 = Long_val(x2766);
-   int x2772 = Long_val(x2765);
-   xed_operand_values_set_operand_reg(x2768, x2769, x2772);
+   xed_operand_values_t* x2770 = CTYPES_ADDR_OF_FATPTR(x2769);
+   int x2771 = Long_val(x2768);
+   int x2774 = Long_val(x2767);
+   xed_operand_values_set_operand_reg(x2770, x2771, x2774);
    return Val_unit;
 }
-value stub__557_xed_operand_values_set_relbr(value x2776)
+value stub__559_xed_operand_values_set_relbr(value x2778)
 {
-   xed_operand_values_t* x2777 = CTYPES_ADDR_OF_FATPTR(x2776);
-   xed_operand_values_set_relbr(x2777);
+   xed_operand_values_t* x2779 = CTYPES_ADDR_OF_FATPTR(x2778);
+   xed_operand_values_set_relbr(x2779);
    return Val_unit;
 }
-value stub__558_xed_operand_values_set_scale(value x2781, value x2780,
-                                             value x2779)
+value stub__560_xed_operand_values_set_scale(value x2783, value x2782,
+                                             value x2781)
 {
-   xed_operand_values_t* x2782 = CTYPES_ADDR_OF_FATPTR(x2781);
-   int x2783 = Long_val(x2780);
-   int x2786 = Long_val(x2779);
-   xed_operand_values_set_scale(x2782, x2783, x2786);
+   xed_operand_values_t* x2784 = CTYPES_ADDR_OF_FATPTR(x2783);
+   int x2785 = Long_val(x2782);
+   int x2788 = Long_val(x2781);
+   xed_operand_values_set_scale(x2784, x2785, x2788);
    return Val_unit;
 }
-value stub__559_xed_operand_values_set_seg_reg(value x2792, value x2791,
-                                               value x2790)
+value stub__561_xed_operand_values_set_seg_reg(value x2794, value x2793,
+                                               value x2792)
 {
-   xed_operand_values_t* x2793 = CTYPES_ADDR_OF_FATPTR(x2792);
-   int x2794 = Long_val(x2791);
-   int x2797 = Long_val(x2790);
-   xed_operand_values_set_seg_reg(x2793, x2794, x2797);
+   xed_operand_values_t* x2795 = CTYPES_ADDR_OF_FATPTR(x2794);
+   int x2796 = Long_val(x2793);
+   int x2799 = Long_val(x2792);
+   xed_operand_values_set_seg_reg(x2795, x2796, x2799);
    return Val_unit;
 }
-value stub__560_xed_operand_values_using_default_segment(value x2802,
-                                                         value x2801)
+value stub__562_xed_operand_values_using_default_segment(value x2804,
+                                                         value x2803)
 {
-   const xed_operand_values_t* x2803 = CTYPES_ADDR_OF_FATPTR(x2802);
-   int x2804 = Long_val(x2801);
-   _Bool x2807 = xed_operand_values_using_default_segment(x2803, x2804);
-   return Val_bool(x2807);
+   const xed_operand_values_t* x2805 = CTYPES_ADDR_OF_FATPTR(x2804);
+   int x2806 = Long_val(x2803);
+   _Bool x2809 = xed_operand_values_using_default_segment(x2805, x2806);
+   return Val_bool(x2809);
 }
-value stub__561_xed_operand_values_zero_branch_displacement(value x2808)
+value stub__563_xed_operand_values_zero_branch_displacement(value x2810)
 {
-   xed_operand_values_t* x2809 = CTYPES_ADDR_OF_FATPTR(x2808);
-   xed_operand_values_zero_branch_displacement(x2809);
+   xed_operand_values_t* x2811 = CTYPES_ADDR_OF_FATPTR(x2810);
+   xed_operand_values_zero_branch_displacement(x2811);
    return Val_unit;
 }
-value stub__562_xed_operand_values_zero_immediate(value x2811)
+value stub__564_xed_operand_values_zero_immediate(value x2813)
 {
-   xed_operand_values_t* x2812 = CTYPES_ADDR_OF_FATPTR(x2811);
-   xed_operand_values_zero_immediate(x2812);
+   xed_operand_values_t* x2814 = CTYPES_ADDR_OF_FATPTR(x2813);
+   xed_operand_values_zero_immediate(x2814);
    return Val_unit;
 }
-value stub__563_xed_operand_values_zero_memory_displacement(value x2814)
+value stub__565_xed_operand_values_zero_memory_displacement(value x2816)
 {
-   xed_operand_values_t* x2815 = CTYPES_ADDR_OF_FATPTR(x2814);
-   xed_operand_values_zero_memory_displacement(x2815);
+   xed_operand_values_t* x2817 = CTYPES_ADDR_OF_FATPTR(x2816);
+   xed_operand_values_zero_memory_displacement(x2817);
    return Val_unit;
 }
-value stub__564_xed_operand_values_zero_segment_override(value x2817)
+value stub__566_xed_operand_values_zero_segment_override(value x2819)
 {
-   xed_operand_values_t* x2818 = CTYPES_ADDR_OF_FATPTR(x2817);
-   xed_operand_values_zero_segment_override(x2818);
+   xed_operand_values_t* x2820 = CTYPES_ADDR_OF_FATPTR(x2819);
+   xed_operand_values_zero_segment_override(x2820);
    return Val_unit;
 }
-value stub__565_xed_operand_visibility_enum_t2str(value x2820)
+value stub__567_xed_operand_visibility_enum_t2str(value x2822)
 {
-   int x2821 = Long_val(x2820);
-   char* x2824 = xed_operand_visibility_enum_t2str(x2821);
-   return CTYPES_FROM_PTR(x2824);
+   int x2823 = Long_val(x2822);
+   char* x2826 = xed_operand_visibility_enum_t2str(x2823);
+   return CTYPES_FROM_PTR(x2826);
 }
-value stub__566_xed_operand_width(value x2825)
+value stub__568_xed_operand_width(value x2827)
 {
-   const xed_operand_t* x2826 = CTYPES_ADDR_OF_FATPTR(x2825);
-   int x2827 = xed_operand_width(x2826);
-   return Val_long(x2827);
+   const xed_operand_t* x2828 = CTYPES_ADDR_OF_FATPTR(x2827);
+   int x2829 = xed_operand_width(x2828);
+   return Val_long(x2829);
 }
-value stub__567_xed_operand_width_bits(value x2829, value x2828)
+value stub__569_xed_operand_width_bits(value x2831, value x2830)
 {
-   const xed_operand_t* x2830 = CTYPES_ADDR_OF_FATPTR(x2829);
-   uint32_t x2831 = Uint32_val(x2828);
-   uint32_t x2834 = xed_operand_width_bits(x2830, x2831);
-   return integers_copy_uint32(x2834);
+   const xed_operand_t* x2832 = CTYPES_ADDR_OF_FATPTR(x2831);
+   uint32_t x2833 = Uint32_val(x2830);
+   uint32_t x2836 = xed_operand_width_bits(x2832, x2833);
+   return integers_copy_uint32(x2836);
 }
-value stub__568_xed_operand_width_enum_t2str(value x2835)
+value stub__570_xed_operand_width_enum_t2str(value x2837)
 {
-   int x2836 = Long_val(x2835);
-   char* x2839 = xed_operand_width_enum_t2str(x2836);
-   return CTYPES_FROM_PTR(x2839);
+   int x2838 = Long_val(x2837);
+   char* x2841 = xed_operand_width_enum_t2str(x2838);
+   return CTYPES_FROM_PTR(x2841);
 }
-value stub__569_xed_operand_written(value x2840)
+value stub__571_xed_operand_written(value x2842)
 {
-   const xed_operand_t* x2841 = CTYPES_ADDR_OF_FATPTR(x2840);
-   int x2842 = xed_operand_written(x2841);
-   return Val_long(x2842);
+   const xed_operand_t* x2843 = CTYPES_ADDR_OF_FATPTR(x2842);
+   int x2844 = xed_operand_written(x2843);
+   return Val_long(x2844);
 }
-value stub__570_xed_operand_written_only(value x2843)
+value stub__572_xed_operand_written_only(value x2845)
 {
-   const xed_operand_t* x2844 = CTYPES_ADDR_OF_FATPTR(x2843);
-   int x2845 = xed_operand_written_only(x2844);
-   return Val_long(x2845);
+   const xed_operand_t* x2846 = CTYPES_ADDR_OF_FATPTR(x2845);
+   int x2847 = xed_operand_written_only(x2846);
+   return Val_long(x2847);
 }
-value stub__571_xed_operand_xtype(value x2846)
+value stub__573_xed_operand_xtype(value x2848)
 {
-   const xed_operand_t* x2847 = CTYPES_ADDR_OF_FATPTR(x2846);
-   int x2848 = xed_operand_xtype(x2847);
-   return Val_long(x2848);
+   const xed_operand_t* x2849 = CTYPES_ADDR_OF_FATPTR(x2848);
+   int x2850 = xed_operand_xtype(x2849);
+   return Val_long(x2850);
 }
-value stub__572_xed_reg_class(value x2849)
+value stub__574_xed_reg_class(value x2851)
 {
-   int x2850 = Long_val(x2849);
-   int x2853 = xed_reg_class(x2850);
-   return Val_long(x2853);
+   int x2852 = Long_val(x2851);
+   int x2855 = xed_reg_class(x2852);
+   return Val_long(x2855);
 }
-value stub__573_xed_reg_class_enum_t2str(value x2854)
+value stub__575_xed_reg_class_enum_t2str(value x2856)
 {
-   int x2855 = Long_val(x2854);
-   char* x2858 = xed_reg_class_enum_t2str(x2855);
-   return CTYPES_FROM_PTR(x2858);
+   int x2857 = Long_val(x2856);
+   char* x2860 = xed_reg_class_enum_t2str(x2857);
+   return CTYPES_FROM_PTR(x2860);
 }
-value stub__574_xed_reg_enum_t2str(value x2859)
+value stub__576_xed_reg_enum_t2str(value x2861)
 {
-   int x2860 = Long_val(x2859);
-   char* x2863 = xed_reg_enum_t2str(x2860);
-   return CTYPES_FROM_PTR(x2863);
+   int x2862 = Long_val(x2861);
+   char* x2865 = xed_reg_enum_t2str(x2862);
+   return CTYPES_FROM_PTR(x2865);
 }
-value stub__575_xed_rep_map(value x2864)
+value stub__577_xed_rep_map(value x2866)
 {
-   int x2865 = Long_val(x2864);
-   int x2868 = xed_rep_map(x2865);
-   return Val_long(x2868);
+   int x2867 = Long_val(x2866);
+   int x2870 = xed_rep_map(x2867);
+   return Val_long(x2870);
 }
-value stub__576_xed_rep_remove(value x2869)
+value stub__578_xed_rep_remove(value x2871)
 {
-   int x2870 = Long_val(x2869);
-   int x2873 = xed_rep_remove(x2870);
-   return Val_long(x2873);
+   int x2872 = Long_val(x2871);
+   int x2875 = xed_rep_remove(x2872);
+   return Val_long(x2875);
 }
-value stub__577_xed_repe_map(value x2874)
+value stub__579_xed_repe_map(value x2876)
 {
-   int x2875 = Long_val(x2874);
-   int x2878 = xed_repe_map(x2875);
-   return Val_long(x2878);
+   int x2877 = Long_val(x2876);
+   int x2880 = xed_repe_map(x2877);
+   return Val_long(x2880);
 }
-value stub__578_xed_repne_map(value x2879)
+value stub__580_xed_repne_map(value x2881)
 {
-   int x2880 = Long_val(x2879);
-   int x2883 = xed_repne_map(x2880);
-   return Val_long(x2883);
+   int x2882 = Long_val(x2881);
+   int x2885 = xed_repne_map(x2882);
+   return Val_long(x2885);
 }
-value stub__579_xed_set_verbosity(value x2884)
+value stub__581_xed_set_verbosity(value x2886)
 {
-   int x2885 = Long_val(x2884);
-   xed_set_verbosity(x2885);
+   int x2887 = Long_val(x2886);
+   xed_set_verbosity(x2887);
    return Val_unit;
 }
-value stub__580_xed_simple_flag_get_flag_action(value x2890, value x2889)
+value stub__582_xed_simple_flag_get_flag_action(value x2892, value x2891)
 {
-   const xed_simple_flag_t* x2891 = CTYPES_ADDR_OF_FATPTR(x2890);
-   int x2892 = Long_val(x2889);
-   const xed_flag_action_t* x2895 =
-   xed_simple_flag_get_flag_action(x2891, x2892);
-   return CTYPES_FROM_PTR(x2895);
+   const xed_simple_flag_t* x2893 = CTYPES_ADDR_OF_FATPTR(x2892);
+   int x2894 = Long_val(x2891);
+   const xed_flag_action_t* x2897 =
+   xed_simple_flag_get_flag_action(x2893, x2894);
+   return CTYPES_FROM_PTR(x2897);
 }
-value stub__581_xed_simple_flag_get_may_write(value x2896)
+value stub__583_xed_simple_flag_get_may_write(value x2898)
 {
-   const xed_simple_flag_t* x2897 = CTYPES_ADDR_OF_FATPTR(x2896);
-   _Bool x2898 = xed_simple_flag_get_may_write(x2897);
-   return Val_bool(x2898);
+   const xed_simple_flag_t* x2899 = CTYPES_ADDR_OF_FATPTR(x2898);
+   _Bool x2900 = xed_simple_flag_get_may_write(x2899);
+   return Val_bool(x2900);
 }
-value stub__582_xed_simple_flag_get_must_write(value x2899)
+value stub__584_xed_simple_flag_get_must_write(value x2901)
 {
-   const xed_simple_flag_t* x2900 = CTYPES_ADDR_OF_FATPTR(x2899);
-   _Bool x2901 = xed_simple_flag_get_must_write(x2900);
-   return Val_bool(x2901);
+   const xed_simple_flag_t* x2902 = CTYPES_ADDR_OF_FATPTR(x2901);
+   _Bool x2903 = xed_simple_flag_get_must_write(x2902);
+   return Val_bool(x2903);
 }
-value stub__583_xed_simple_flag_get_nflags(value x2902)
+value stub__585_xed_simple_flag_get_nflags(value x2904)
 {
-   const xed_simple_flag_t* x2903 = CTYPES_ADDR_OF_FATPTR(x2902);
-   int x2904 = xed_simple_flag_get_nflags(x2903);
-   return Val_long(x2904);
+   const xed_simple_flag_t* x2905 = CTYPES_ADDR_OF_FATPTR(x2904);
+   int x2906 = xed_simple_flag_get_nflags(x2905);
+   return Val_long(x2906);
 }
-value stub__584_xed_simple_flag_get_read_flag_set(value x2905)
+value stub__586_xed_simple_flag_get_read_flag_set(value x2907)
 {
-   const xed_simple_flag_t* x2906 = CTYPES_ADDR_OF_FATPTR(x2905);
-   const xed_flag_set_t* x2907 = xed_simple_flag_get_read_flag_set(x2906);
-   return CTYPES_FROM_PTR(x2907);
+   const xed_simple_flag_t* x2908 = CTYPES_ADDR_OF_FATPTR(x2907);
+   const xed_flag_set_t* x2909 = xed_simple_flag_get_read_flag_set(x2908);
+   return CTYPES_FROM_PTR(x2909);
 }
-value stub__585_xed_simple_flag_get_undefined_flag_set(value x2908)
+value stub__587_xed_simple_flag_get_undefined_flag_set(value x2910)
 {
-   const xed_simple_flag_t* x2909 = CTYPES_ADDR_OF_FATPTR(x2908);
-   const xed_flag_set_t* x2910 =
-   xed_simple_flag_get_undefined_flag_set(x2909);
-   return CTYPES_FROM_PTR(x2910);
+   const xed_simple_flag_t* x2911 = CTYPES_ADDR_OF_FATPTR(x2910);
+   const xed_flag_set_t* x2912 =
+   xed_simple_flag_get_undefined_flag_set(x2911);
+   return CTYPES_FROM_PTR(x2912);
 }
-value stub__586_xed_simple_flag_get_written_flag_set(value x2911)
+value stub__588_xed_simple_flag_get_written_flag_set(value x2913)
 {
-   const xed_simple_flag_t* x2912 = CTYPES_ADDR_OF_FATPTR(x2911);
-   const xed_flag_set_t* x2913 = xed_simple_flag_get_written_flag_set(x2912);
-   return CTYPES_FROM_PTR(x2913);
+   const xed_simple_flag_t* x2914 = CTYPES_ADDR_OF_FATPTR(x2913);
+   const xed_flag_set_t* x2915 = xed_simple_flag_get_written_flag_set(x2914);
+   return CTYPES_FROM_PTR(x2915);
 }
-value stub__587_xed_simple_flag_print(value x2916, value x2915, value x2914)
+value stub__589_xed_simple_flag_print(value x2918, value x2917, value x2916)
 {
-   const xed_simple_flag_t* x2917 = CTYPES_ADDR_OF_FATPTR(x2916);
-   char* x2918 = CTYPES_PTR_OF_OCAML_STRING(x2915);
-   int x2919 = Long_val(x2914);
-   int x2922 = xed_simple_flag_print(x2917, x2918, x2919);
-   return Val_long(x2922);
+   const xed_simple_flag_t* x2919 = CTYPES_ADDR_OF_FATPTR(x2918);
+   char* x2920 = CTYPES_PTR_OF_OCAML_STRING(x2917);
+   int x2921 = Long_val(x2916);
+   int x2924 = xed_simple_flag_print(x2919, x2920, x2921);
+   return Val_long(x2924);
 }
-value stub__588_xed_simple_flag_reads_flags(value x2923)
+value stub__590_xed_simple_flag_reads_flags(value x2925)
 {
-   const xed_simple_flag_t* x2924 = CTYPES_ADDR_OF_FATPTR(x2923);
-   _Bool x2925 = xed_simple_flag_reads_flags(x2924);
-   return Val_bool(x2925);
+   const xed_simple_flag_t* x2926 = CTYPES_ADDR_OF_FATPTR(x2925);
+   _Bool x2927 = xed_simple_flag_reads_flags(x2926);
+   return Val_bool(x2927);
 }
-value stub__589_xed_simple_flag_writes_flags(value x2926)
+value stub__591_xed_simple_flag_writes_flags(value x2928)
 {
-   const xed_simple_flag_t* x2927 = CTYPES_ADDR_OF_FATPTR(x2926);
-   _Bool x2928 = xed_simple_flag_writes_flags(x2927);
-   return Val_bool(x2928);
+   const xed_simple_flag_t* x2929 = CTYPES_ADDR_OF_FATPTR(x2928);
+   _Bool x2930 = xed_simple_flag_writes_flags(x2929);
+   return Val_bool(x2930);
 }
-value stub__590_xed_state_get_address_width(value x2929)
+value stub__592_xed_state_get_address_width(value x2931)
 {
-   const xed_state_t* x2930 = CTYPES_ADDR_OF_FATPTR(x2929);
-   int x2931 = xed_state_get_address_width(x2930);
-   return Val_long(x2931);
+   const xed_state_t* x2932 = CTYPES_ADDR_OF_FATPTR(x2931);
+   int x2933 = xed_state_get_address_width(x2932);
+   return Val_long(x2933);
 }
-value stub__591_xed_state_get_machine_mode(value x2932)
+value stub__593_xed_state_get_machine_mode(value x2934)
 {
-   const xed_state_t* x2933 = CTYPES_ADDR_OF_FATPTR(x2932);
-   int x2934 = xed_state_get_machine_mode(x2933);
-   return Val_long(x2934);
+   const xed_state_t* x2935 = CTYPES_ADDR_OF_FATPTR(x2934);
+   int x2936 = xed_state_get_machine_mode(x2935);
+   return Val_long(x2936);
 }
-value stub__592_xed_state_get_stack_address_width(value x2935)
+value stub__594_xed_state_get_stack_address_width(value x2937)
 {
-   const xed_state_t* x2936 = CTYPES_ADDR_OF_FATPTR(x2935);
-   int x2937 = xed_state_get_stack_address_width(x2936);
-   return Val_long(x2937);
+   const xed_state_t* x2938 = CTYPES_ADDR_OF_FATPTR(x2937);
+   int x2939 = xed_state_get_stack_address_width(x2938);
+   return Val_long(x2939);
 }
-value stub__593_xed_state_init(value x2941, value x2940, value x2939,
-                               value x2938)
+value stub__595_xed_state_init(value x2943, value x2942, value x2941,
+                               value x2940)
 {
-   xed_state_t* x2942 = CTYPES_ADDR_OF_FATPTR(x2941);
-   int x2943 = Long_val(x2940);
-   int x2946 = Long_val(x2939);
-   int x2949 = Long_val(x2938);
-   xed_state_init(x2942, x2943, x2946, x2949);
+   xed_state_t* x2944 = CTYPES_ADDR_OF_FATPTR(x2943);
+   int x2945 = Long_val(x2942);
+   int x2948 = Long_val(x2941);
+   int x2951 = Long_val(x2940);
+   xed_state_init(x2944, x2945, x2948, x2951);
    return Val_unit;
 }
-value stub__594_xed_state_init2(value x2955, value x2954, value x2953)
+value stub__596_xed_state_init2(value x2957, value x2956, value x2955)
 {
-   xed_state_t* x2956 = CTYPES_ADDR_OF_FATPTR(x2955);
-   int x2957 = Long_val(x2954);
-   int x2960 = Long_val(x2953);
-   xed_state_init2(x2956, x2957, x2960);
+   xed_state_t* x2958 = CTYPES_ADDR_OF_FATPTR(x2957);
+   int x2959 = Long_val(x2956);
+   int x2962 = Long_val(x2955);
+   xed_state_init2(x2958, x2959, x2962);
    return Val_unit;
 }
-value stub__595_xed_state_long64_mode(value x2964)
+value stub__597_xed_state_long64_mode(value x2966)
 {
-   const xed_state_t* x2965 = CTYPES_ADDR_OF_FATPTR(x2964);
-   _Bool x2966 = xed_state_long64_mode(x2965);
-   return Val_bool(x2966);
+   const xed_state_t* x2967 = CTYPES_ADDR_OF_FATPTR(x2966);
+   _Bool x2968 = xed_state_long64_mode(x2967);
+   return Val_bool(x2968);
 }
-value stub__596_xed_state_mode_width_16(value x2967)
+value stub__598_xed_state_mode_width_16(value x2969)
 {
-   const xed_state_t* x2968 = CTYPES_ADDR_OF_FATPTR(x2967);
-   _Bool x2969 = xed_state_mode_width_16(x2968);
-   return Val_bool(x2969);
+   const xed_state_t* x2970 = CTYPES_ADDR_OF_FATPTR(x2969);
+   _Bool x2971 = xed_state_mode_width_16(x2970);
+   return Val_bool(x2971);
 }
-value stub__597_xed_state_mode_width_32(value x2970)
+value stub__599_xed_state_mode_width_32(value x2972)
 {
-   const xed_state_t* x2971 = CTYPES_ADDR_OF_FATPTR(x2970);
-   _Bool x2972 = xed_state_mode_width_32(x2971);
-   return Val_bool(x2972);
+   const xed_state_t* x2973 = CTYPES_ADDR_OF_FATPTR(x2972);
+   _Bool x2974 = xed_state_mode_width_32(x2973);
+   return Val_bool(x2974);
 }
-value stub__598_xed_state_print(value x2975, value x2974, value x2973)
+value stub__600_xed_state_print(value x2977, value x2976, value x2975)
 {
-   const xed_state_t* x2976 = CTYPES_ADDR_OF_FATPTR(x2975);
-   char* x2977 = CTYPES_PTR_OF_OCAML_STRING(x2974);
-   int x2978 = Long_val(x2973);
-   int x2981 = xed_state_print(x2976, x2977, x2978);
-   return Val_long(x2981);
+   const xed_state_t* x2978 = CTYPES_ADDR_OF_FATPTR(x2977);
+   char* x2979 = CTYPES_PTR_OF_OCAML_STRING(x2976);
+   int x2980 = Long_val(x2975);
+   int x2983 = xed_state_print(x2978, x2979, x2980);
+   return Val_long(x2983);
 }
-value stub__599_xed_state_real_mode(value x2982)
+value stub__601_xed_state_real_mode(value x2984)
 {
-   const xed_state_t* x2983 = CTYPES_ADDR_OF_FATPTR(x2982);
-   _Bool x2984 = xed_state_real_mode(x2983);
-   return Val_bool(x2984);
+   const xed_state_t* x2985 = CTYPES_ADDR_OF_FATPTR(x2984);
+   _Bool x2986 = xed_state_real_mode(x2985);
+   return Val_bool(x2986);
 }
-value stub__600_xed_state_set_machine_mode(value x2986, value x2985)
+value stub__602_xed_state_set_machine_mode(value x2988, value x2987)
 {
-   xed_state_t* x2987 = CTYPES_ADDR_OF_FATPTR(x2986);
-   int x2988 = Long_val(x2985);
-   xed_state_set_machine_mode(x2987, x2988);
+   xed_state_t* x2989 = CTYPES_ADDR_OF_FATPTR(x2988);
+   int x2990 = Long_val(x2987);
+   xed_state_set_machine_mode(x2989, x2990);
    return Val_unit;
 }
-value stub__601_xed_state_set_stack_address_width(value x2993, value x2992)
+value stub__603_xed_state_set_stack_address_width(value x2995, value x2994)
 {
-   xed_state_t* x2994 = CTYPES_ADDR_OF_FATPTR(x2993);
-   int x2995 = Long_val(x2992);
-   xed_state_set_stack_address_width(x2994, x2995);
+   xed_state_t* x2996 = CTYPES_ADDR_OF_FATPTR(x2995);
+   int x2997 = Long_val(x2994);
+   xed_state_set_stack_address_width(x2996, x2997);
    return Val_unit;
 }
-value stub__602_xed_state_zero(value x2999)
+value stub__604_xed_state_zero(value x3001)
 {
-   xed_state_t* x3000 = CTYPES_ADDR_OF_FATPTR(x2999);
-   xed_state_zero(x3000);
+   xed_state_t* x3002 = CTYPES_ADDR_OF_FATPTR(x3001);
+   xed_state_zero(x3002);
    return Val_unit;
 }
-value stub__603_xed_syntax_enum_t2str(value x3002)
+value stub__605_xed_syntax_enum_t2str(value x3004)
 {
-   int x3003 = Long_val(x3002);
-   char* x3006 = xed_syntax_enum_t2str(x3003);
-   return CTYPES_FROM_PTR(x3006);
+   int x3005 = Long_val(x3004);
+   char* x3008 = xed_syntax_enum_t2str(x3005);
+   return CTYPES_FROM_PTR(x3008);
 }
-value stub__604_xed_tables_init(value x3007)
+value stub__606_xed_tables_init(value x3009)
 {
    xed_tables_init();
    return Val_unit;

@@ -495,8 +495,6 @@ module Operand3 = struct
     Bindings.xed3_operand_get_modep5 (Obj.magic a0)
   let get_modep55c (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_modep55c (Obj.magic a0)
-  let get_modrm (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : int =
-    Bindings.xed3_operand_get_modrm (Obj.magic a0)
   let get_modrm_byte (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_modrm_byte (Obj.magic a0)
   let get_mpxmode (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : int =
@@ -784,9 +782,6 @@ module Operand3 = struct
   let set_modep55c (a0 : [<`M] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_modep55c (Obj.magic a0) a1
-  let set_modrm (a0 : [<`M] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
-    assert (a1 >= 0);
-    Bindings.xed3_operand_set_modrm (Obj.magic a0) a1
   let set_modrm_byte (a0 : [<`M] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_modrm_byte (Obj.magic a0) a1
@@ -1429,6 +1424,14 @@ let xed_get_version () : string =
   Bindings.xed_get_version ()
 let xed_get_copyright () : string =
   Bindings.xed_get_copyright ()
+let xed_classify_avx512 (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : bool =
+  Bindings.xed_classify_avx512 (Obj.magic a0)
+let xed_classify_avx512_maskop (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : bool =
+  Bindings.xed_classify_avx512_maskop (Obj.magic a0)
+let xed_classify_avx (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : bool =
+  Bindings.xed_classify_avx (Obj.magic a0)
+let xed_classify_sse (a0 : [<`C|`M] XedBindingsStructs.DecodedInst.t) : bool =
+  Bindings.xed_classify_sse (Obj.magic a0)
 let xed_rep_remove (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
   Bindings.xed_rep_remove a0
 let xed_repe_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
