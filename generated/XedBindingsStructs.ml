@@ -21,6 +21,13 @@ module DecodedInst = struct
   let pointer : [`M] t -> unit Ctypes.ptr = Obj.magic
   let const_pointer : [<`M|`C] t -> unit Ctypes.ptr = Obj.magic
 end
+module EncoderInstruction = struct
+  type _t
+  type +'a t = (_t, 'a) myptr
+  let allocate () : [`M] t = _allocate 272 |> Obj.magic
+  let pointer : [`M] t -> unit Ctypes.ptr = Obj.magic
+  let const_pointer : [<`M|`C] t -> unit Ctypes.ptr = Obj.magic
+end
 module EncoderRequest = struct
   type _t
   type +'a t = (_t, 'a) myptr

@@ -1,32 +1,16 @@
-type flag =
-  | INVALID | Of | Sf | Zf | Af | Pf | Cf | Df | Vif | Iopl | If | Ac | Vm | Rf
-  | Nt | Tf | Id | Vip | Fc0 | Fc1 | Fc2 | Fc3
-let flag_to_int : flag -> int = Obj.magic
-let flag_of_int : int -> flag = Obj.magic
-
-type iexception =
-  | INVALID | AVX512_E1 | AVX512_E10 | AVX512_E10NF | AVX512_E11 | AVX512_E11NF
-  | AVX512_E12 | AVX512_E12NP | AVX512_E1NF | AVX512_E2 | AVX512_E3
-  | AVX512_E3NF | AVX512_E4 | AVX512_E4NF | AVX512_E5 | AVX512_E5NF | AVX512_E6
-  | AVX512_E6NF | AVX512_E7NM | AVX512_E7NM128 | AVX512_E9NF | AVX512_K20
-  | AVX512_K21 | AVX_TYPE_1 | AVX_TYPE_11 | AVX_TYPE_12 | AVX_TYPE_2
-  | AVX_TYPE_2D | AVX_TYPE_3 | AVX_TYPE_4 | AVX_TYPE_4M | AVX_TYPE_5
-  | AVX_TYPE_5L | AVX_TYPE_6 | AVX_TYPE_7 | AVX_TYPE_8 | MMX_FP
-  | MMX_FP_16ALIGN | MMX_MEM | MMX_NOFP | MMX_NOFP2 | MMX_NOMEM | SSE_TYPE_1
-  | SSE_TYPE_2 | SSE_TYPE_2D | SSE_TYPE_3 | SSE_TYPE_4 | SSE_TYPE_4M
-  | SSE_TYPE_5 | SSE_TYPE_7
-let iexception_to_int : iexception -> int = Obj.magic
-let iexception_of_int : int -> iexception = Obj.magic
-
-type operand_convert =
-  | INVALID | ZEROSTR | SAESTR | ROUNDC | BCASTSTR
-let operand_convert_to_int : operand_convert -> int = Obj.magic
-let operand_convert_of_int : int -> operand_convert = Obj.magic
-
-type flag_action =
-  | INVALID | U | Tst | Mod | A0 | Pop | Ah | A1
-let flag_action_to_int : flag_action -> int = Obj.magic
-let flag_action_of_int : int -> flag_action = Obj.magic
+type address_width =
+  | INVALID | A16b | A32b | A64b
+let address_width_to_int = function
+  | INVALID -> 0
+  | A16b -> 2
+  | A32b -> 4
+  | A64b -> 8
+let address_width_of_int = function
+  | 0 -> INVALID
+  | 2 -> A16b
+  | 4 -> A32b
+  | 8 -> A64b
+  | _ -> failwith "address_width_of_int: no enum for given int"
 
 type attribute =
   | INVALID | AMDONLY | ATT_OPERAND_ORDER_EXCEPTION | BROADCAST_ENABLED
@@ -67,10 +51,40 @@ type category =
 let category_to_int : category -> int = Obj.magic
 let category_of_int : int -> category = Obj.magic
 
-type syntax =
-  | INVALID | XED | ATT | INTEL
-let syntax_to_int : syntax -> int = Obj.magic
-let syntax_of_int : int -> syntax = Obj.magic
+type chip =
+  | INVALID | I86 | I86FP | I186 | I186FP | I286REAL | I286 | I2186FP
+  | I386REAL | I386 | I386FP | I486REAL | I486 | PENTIUMREAL | PENTIUM | QUARK
+  | PENTIUMMMXREAL | PENTIUMMMX | ALLREAL | PENTIUMPRO | PENTIUM2 | PENTIUM3
+  | PENTIUM4 | P4PRESCOTT | P4PRESCOTT_NOLAHF | P4PRESCOTT_VTX | CORE2 | PENRYN
+  | PENRYN_E | NEHALEM | WESTMERE | BONNELL | SALTWELL | SILVERMONT | AMD
+  | GOLDMONT | SANDYBRIDGE | IVYBRIDGE | HASWELL | BROADWELL | SKYLAKE
+  | SKYLAKE_SERVER | KNL | KNM | CANNONLAKE | ICELAKE | FUTURE | ALL
+let chip_to_int : chip -> int = Obj.magic
+let chip_of_int : int -> chip = Obj.magic
+
+type cpuid_bit =
+  | INVALID | ADOXADCX | AES | AVX | AVX2 | AVX512BW | AVX512CD | AVX512DQ
+  | AVX512ER | AVX512F | AVX512IFMA | AVX512PF | AVX512VBMI | AVX512VL
+  | AVX512_4FMAPS | AVX512_4VNNIW | AVX512_BITALG | AVX512_VBMI2 | AVX512_VNNI
+  | AVX512_VPOPCNTDQ | BMI1 | BMI2 | CET | CLFLUSH | CLFLUSHOPT | CLWB
+  | CMPXCHG16B | F16C | FMA | FXSAVE | GFNI | INTEL64 | INTELPT | INVPCID
+  | LAHF | LZCNT | MONITOR | MOVEBE | MPX | OSPKU | OSXSAVE | PCLMULQDQ
+  | PCONFIG | PKU | POPCNT | PREFETCHW | PREFETCHWT1 | PTWRITE | RDP | RDRAND
+  | RDSEED | RDTSCP | RDWRFSGS | RTM | SGX | SHA | SMAP | SMX | SSE | SSE2
+  | SSE3 | SSE4 | SSE42 | SSSE3 | VAES | VMX | VPCLMULQDQ | XSAVE | XSAVEC
+  | XSAVEOPT | XSAVES
+let cpuid_bit_to_int : cpuid_bit -> int = Obj.magic
+let cpuid_bit_of_int : int -> cpuid_bit = Obj.magic
+
+type error =
+  | NONE | BUFFER_TOO_SHORT | GENERAL_ERROR | INVALID_FOR_CHIP | BAD_REGISTER
+  | BAD_LOCK_PREFIX | BAD_REP_PREFIX | BAD_LEGACY_PREFIX | BAD_REX_PREFIX
+  | BAD_EVEX_UBIT | BAD_MAP | BAD_EVEX_V_PRIME | BAD_EVEX_Z_NO_MASKING
+  | NO_OUTPUT_POINTER | NO_AGEN_CALL_BACK_REGISTERED | BAD_MEMOP_INDEX
+  | CALLBACK_PROBLEM | GATHER_REGS | INSTR_TOO_LONG | INVALID_MODE
+  | BAD_EVEX_LL
+let error_to_int : error -> int = Obj.magic
+let error_of_int : int -> error = Obj.magic
 
 type extension =
   | INVALID | AMD3DNOW | ADOX_ADCX | AES | AVX | AVX2 | AVX2GATHER | AVX512EVEX
@@ -83,79 +97,16 @@ type extension =
 let extension_to_int : extension -> int = Obj.magic
 let extension_of_int : int -> extension = Obj.magic
 
-type machine_mode =
-  | INVALID | LONG_64 | LONG_COMPAT_32 | LONG_COMPAT_16 | LEGACY_32 | LEGACY_16
-  | REAL_16
-let machine_mode_to_int : machine_mode -> int = Obj.magic
-let machine_mode_of_int : int -> machine_mode = Obj.magic
+type flag =
+  | INVALID | Of | Sf | Zf | Af | Pf | Cf | Df | Vif | Iopl | If | Ac | Vm | Rf
+  | Nt | Tf | Id | Vip | Fc0 | Fc1 | Fc2 | Fc3
+let flag_to_int : flag -> int = Obj.magic
+let flag_of_int : int -> flag = Obj.magic
 
-type nonterminal =
-  | INVALID | AR10 | AR11 | AR12 | AR13 | AR14 | AR15 | AR8 | AR9 | ARAX | ARBP
-  | ARBX | ARCX | ARDI | ARDX | ARSI | ARSP | ASZ_NONTERM | AVX512_ROUND
-  | AVX_INSTRUCTIONS | AVX_SPLITTER | BND_B | BND_B_CHECK | BND_R | BND_R_CHECK
-  | BRANCH_HINT | BRDISP32 | BRDISP8 | BRDISPZ | CR_B | CR_R | CR_WIDTH | DF64
-  | DR_B | DR_R | ESIZE_128_BITS | ESIZE_16_BITS | ESIZE_1_BITS | ESIZE_2_BITS
-  | ESIZE_32_BITS | ESIZE_4_BITS | ESIZE_64_BITS | ESIZE_8_BITS
-  | EVEX_INSTRUCTIONS | EVEX_SPLITTER | FINAL_DSEG | FINAL_DSEG1
-  | FINAL_DSEG1_MODE64 | FINAL_DSEG1_NOT64 | FINAL_DSEG_MODE64
-  | FINAL_DSEG_NOT64 | FINAL_ESEG | FINAL_ESEG1 | FINAL_SSEG | FINAL_SSEG0
-  | FINAL_SSEG1 | FINAL_SSEG_MODE64 | FINAL_SSEG_NOT64 | FIX_ROUND_LEN128
-  | FIX_ROUND_LEN512 | FORCE64 | GPR16_B | GPR16_R | GPR16_SB | GPR32_B
-  | GPR32_R | GPR32_SB | GPR32_X | GPR64_B | GPR64_R | GPR64_SB | GPR64_X
-  | GPR8_B | GPR8_R | GPR8_SB | GPRM_B | GPRM_R | GPRV_B | GPRV_R | GPRV_SB
-  | GPRY_B | GPRY_R | GPRZ_B | GPRZ_R | IGNORE66 | IMMUNE66 | IMMUNE66_LOOP64
-  | IMMUNE_REXW | INSTRUCTIONS | ISA | MASK1 | MASKNOT0 | MASK_B | MASK_N
-  | MASK_N32 | MASK_N64 | MASK_R | MEMDISP | MEMDISP16 | MEMDISP32 | MEMDISP8
-  | MEMDISPV | MMX_B | MMX_R | MODRM | MODRM16 | MODRM32 | MODRM64ALT32
-  | NELEM_EIGHTHMEM | NELEM_FULL | NELEM_FULLMEM | NELEM_GPR_READER
-  | NELEM_GPR_READER_BYTE | NELEM_GPR_READER_SUBDWORD | NELEM_GPR_READER_WORD
-  | NELEM_GPR_WRITER_LDOP | NELEM_GPR_WRITER_LDOP_D | NELEM_GPR_WRITER_LDOP_Q
-  | NELEM_GPR_WRITER_STORE | NELEM_GPR_WRITER_STORE_BYTE
-  | NELEM_GPR_WRITER_STORE_SUBDWORD | NELEM_GPR_WRITER_STORE_WORD | NELEM_GSCAT
-  | NELEM_HALF | NELEM_HALFMEM | NELEM_MEM128 | NELEM_MOVDDUP
-  | NELEM_QUARTERMEM | NELEM_SCALAR | NELEM_TUPLE1 | NELEM_TUPLE1_4X
-  | NELEM_TUPLE1_BYTE | NELEM_TUPLE1_SUBDWORD | NELEM_TUPLE1_WORD
-  | NELEM_TUPLE2 | NELEM_TUPLE4 | NELEM_TUPLE8 | OEAX | ONE | ORAX | ORBP
-  | ORDX | ORSP | OSZ_NONTERM | OVERRIDE_SEG0 | OVERRIDE_SEG1 | PREFIXES
-  | REFINING66 | REMOVE_SEGMENT | RFLAGS | RIP | RIPA | SAE | SEG | SEG_MOV
-  | SE_IMM8 | SIB | SIB_BASE0 | SIMM8 | SIMMZ | SRBP | SRSP | UIMM16 | UIMM32
-  | UIMM8 | UIMM8_1 | UIMMV | UISA_VMODRM_XMM | UISA_VMODRM_YMM
-  | UISA_VMODRM_ZMM | UISA_VSIB_BASE | UISA_VSIB_INDEX_XMM
-  | UISA_VSIB_INDEX_YMM | UISA_VSIB_INDEX_ZMM | UISA_VSIB_XMM | UISA_VSIB_YMM
-  | UISA_VSIB_ZMM | VGPR32_B | VGPR32_B_32 | VGPR32_B_64 | VGPR32_N
-  | VGPR32_N_32 | VGPR32_N_64 | VGPR32_R | VGPR32_R_32 | VGPR32_R_64 | VGPR64_B
-  | VGPR64_N | VGPR64_R | VGPRY_N | VMODRM_XMM | VMODRM_YMM | VSIB_BASE
-  | VSIB_INDEX_XMM | VSIB_INDEX_YMM | VSIB_XMM | VSIB_YMM | X87 | XMM_B
-  | XMM_B3 | XMM_B3_32 | XMM_B3_64 | XMM_B_32 | XMM_B_64 | XMM_N | XMM_N3
-  | XMM_N3_32 | XMM_N3_64 | XMM_N_32 | XMM_N_64 | XMM_R | XMM_R3 | XMM_R3_32
-  | XMM_R3_64 | XMM_R_32 | XMM_R_64 | XMM_SE | XMM_SE32 | XMM_SE64
-  | XOP_INSTRUCTIONS | YMM_B | YMM_B3 | YMM_B3_32 | YMM_B3_64 | YMM_B_32
-  | YMM_B_64 | YMM_N | YMM_N3 | YMM_N3_32 | YMM_N3_64 | YMM_N_32 | YMM_N_64
-  | YMM_R | YMM_R3 | YMM_R3_32 | YMM_R3_64 | YMM_R_32 | YMM_R_64 | YMM_SE
-  | YMM_SE32 | YMM_SE64 | ZMM_B3 | ZMM_B3_32 | ZMM_B3_64 | ZMM_N3 | ZMM_N3_32
-  | ZMM_N3_64 | ZMM_R3 | ZMM_R3_32 | ZMM_R3_64
-let nonterminal_to_int : nonterminal -> int = Obj.magic
-let nonterminal_of_int : int -> nonterminal = Obj.magic
-
-type operand_element_type =
-  | INVALID | UINT | INT | SINGLE | DOUBLE | LONGDOUBLE | LONGBCD | STRUCT
-  | VARIABLE | FLOAT16
-let operand_element_type_to_int : operand_element_type -> int = Obj.magic
-let operand_element_type_of_int : int -> operand_element_type = Obj.magic
-
-type address_width =
-  | INVALID | A16b | A32b | A64b
-let address_width_to_int = function
-  | INVALID -> 0
-  | A16b -> 2
-  | A32b -> 4
-  | A64b -> 8
-let address_width_of_int = function
-  | 0 -> INVALID
-  | 2 -> A16b
-  | 4 -> A32b
-  | 8 -> A64b
-  | _ -> failwith "address_width_of_int: no enum for given int"
+type flag_action =
+  | INVALID | U | Tst | Mod | A0 | Pop | Ah | A1
+let flag_action_to_int : flag_action -> int = Obj.magic
+let flag_action_of_int : int -> flag_action = Obj.magic
 
 type iclass =
   | INVALID | AAA | AAD | AAM | AAS | ADC | ADCX | ADC_LOCK | ADD | ADDPD
@@ -381,71 +332,19 @@ type iclass =
 let iclass_to_int : iclass -> int = Obj.magic
 let iclass_of_int : int -> iclass = Obj.magic
 
-type operand_action =
-  | INVALID | RW | R | W | RCW | CW | CRW | CR
-let operand_action_to_int : operand_action -> int = Obj.magic
-let operand_action_of_int : int -> operand_action = Obj.magic
-
-type error =
-  | NONE | BUFFER_TOO_SHORT | GENERAL_ERROR | INVALID_FOR_CHIP | BAD_REGISTER
-  | BAD_LOCK_PREFIX | BAD_REP_PREFIX | BAD_LEGACY_PREFIX | BAD_REX_PREFIX
-  | BAD_EVEX_UBIT | BAD_MAP | BAD_EVEX_V_PRIME | BAD_EVEX_Z_NO_MASKING
-  | NO_OUTPUT_POINTER | NO_AGEN_CALL_BACK_REGISTERED | BAD_MEMOP_INDEX
-  | CALLBACK_PROBLEM | GATHER_REGS | INSTR_TOO_LONG | INVALID_MODE
-  | BAD_EVEX_LL
-let error_to_int : error -> int = Obj.magic
-let error_of_int : int -> error = Obj.magic
-
-type operand_element_xtype =
-  | INVALID | B80 | F16 | F32 | F64 | F80 | I1 | I16 | I32 | I64 | I8 | INT
-  | STRUCT | U128 | U16 | U256 | U32 | U64 | U8 | UINT | VAR
-let operand_element_xtype_to_int : operand_element_xtype -> int = Obj.magic
-let operand_element_xtype_of_int : int -> operand_element_xtype = Obj.magic
-
-type cpuid_bit =
-  | INVALID | ADOXADCX | AES | AVX | AVX2 | AVX512BW | AVX512CD | AVX512DQ
-  | AVX512ER | AVX512F | AVX512IFMA | AVX512PF | AVX512VBMI | AVX512VL
-  | AVX512_4FMAPS | AVX512_4VNNIW | AVX512_BITALG | AVX512_VBMI2 | AVX512_VNNI
-  | AVX512_VPOPCNTDQ | BMI1 | BMI2 | CET | CLFLUSH | CLFLUSHOPT | CLWB
-  | CMPXCHG16B | F16C | FMA | FXSAVE | GFNI | INTEL64 | INTELPT | INVPCID
-  | LAHF | LZCNT | MONITOR | MOVEBE | MPX | OSPKU | OSXSAVE | PCLMULQDQ
-  | PCONFIG | PKU | POPCNT | PREFETCHW | PREFETCHWT1 | PTWRITE | RDP | RDRAND
-  | RDSEED | RDTSCP | RDWRFSGS | RTM | SGX | SHA | SMAP | SMX | SSE | SSE2
-  | SSE3 | SSE4 | SSE42 | SSSE3 | VAES | VMX | VPCLMULQDQ | XSAVE | XSAVEC
-  | XSAVEOPT | XSAVES
-let cpuid_bit_to_int : cpuid_bit -> int = Obj.magic
-let cpuid_bit_of_int : int -> cpuid_bit = Obj.magic
-
-type operand_type =
-  | INVALID | ERROR | IMM | IMM_CONST | NT_LOOKUP_FN | NT_LOOKUP_FN4 | REG
-let operand_type_to_int : operand_type -> int = Obj.magic
-let operand_type_of_int : int -> operand_type = Obj.magic
-
-type operand_visibility =
-  | INVALID | EXPLICIT | IMPLICIT | SUPPRESSED
-let operand_visibility_to_int : operand_visibility -> int = Obj.magic
-let operand_visibility_of_int : int -> operand_visibility = Obj.magic
-
-type operand =
-  | INVALID | AGEN | AMD3DNOW | ASZ | BASE0 | BASE1 | BCAST | BCRC
-  | BRDISP_WIDTH | CET | CHIP | DEFAULT_SEG | DF32 | DF64 | DISP | DISP_WIDTH
-  | DUMMY | EASZ | ELEMENT_SIZE | ENCODER_PREFERRED | EOSZ | ERROR | ESRC
-  | EVEXRR | FIRST_F2F3 | HAS_MODRM | HAS_SIB | HINT | ICLASS | ILD_F2 | ILD_F3
-  | ILD_SEG | IMM0 | IMM0SIGNED | IMM1 | IMM1_BYTES | IMM_WIDTH | INDEX
-  | LAST_F2F3 | LLRC | LOCK | LZCNT | MAP | MASK | MAX_BYTES | MEM0 | MEM1
-  | MEM_WIDTH | MOD | MODE | MODEP5 | MODEP55C | MODE_FIRST_PREFIX | MODRM_BYTE
-  | MPXMODE | NEEDREX | NEED_MEMDISP | NELEM | NOMINAL_OPCODE | NOREX
-  | NO_SCALE_DISP8 | NPREFIXES | NREXES | NSEG_PREFIXES | OSZ | OUTREG
-  | OUT_OF_BYTES | P4 | POS_DISP | POS_IMM | POS_IMM1 | POS_MODRM
-  | POS_NOMINAL_OPCODE | POS_SIB | PREFIX66 | PTR | REALMODE | REG | REG0
-  | REG1 | REG2 | REG3 | REG4 | REG5 | REG6 | REG7 | REG8 | RELBR | REP | REX
-  | REXB | REXR | REXRR | REXW | REXX | RM | ROUNDC | SAE | SCALE | SEG0 | SEG1
-  | SEG_OVD | SIB | SIBBASE | SIBINDEX | SIBSCALE | SKIP_OSZ | SMODE | SRM
-  | TYPE | TZCNT | UBIT | UIMM0 | UIMM1 | USING_DEFAULT_SEGMENT0
-  | USING_DEFAULT_SEGMENT1 | VEXDEST210 | VEXDEST3 | VEXDEST4 | VEXVALID
-  | VEX_C4 | VEX_PREFIX | VL | ZEROING
-let operand_to_int : operand -> int = Obj.magic
-let operand_of_int : int -> operand = Obj.magic
+type iexception =
+  | INVALID | AVX512_E1 | AVX512_E10 | AVX512_E10NF | AVX512_E11 | AVX512_E11NF
+  | AVX512_E12 | AVX512_E12NP | AVX512_E1NF | AVX512_E2 | AVX512_E3
+  | AVX512_E3NF | AVX512_E4 | AVX512_E4NF | AVX512_E5 | AVX512_E5NF | AVX512_E6
+  | AVX512_E6NF | AVX512_E7NM | AVX512_E7NM128 | AVX512_E9NF | AVX512_K20
+  | AVX512_K21 | AVX_TYPE_1 | AVX_TYPE_11 | AVX_TYPE_12 | AVX_TYPE_2
+  | AVX_TYPE_2D | AVX_TYPE_3 | AVX_TYPE_4 | AVX_TYPE_4M | AVX_TYPE_5
+  | AVX_TYPE_5L | AVX_TYPE_6 | AVX_TYPE_7 | AVX_TYPE_8 | MMX_FP
+  | MMX_FP_16ALIGN | MMX_MEM | MMX_NOFP | MMX_NOFP2 | MMX_NOMEM | SSE_TYPE_1
+  | SSE_TYPE_2 | SSE_TYPE_2D | SSE_TYPE_3 | SSE_TYPE_4 | SSE_TYPE_4M
+  | SSE_TYPE_5 | SSE_TYPE_7
+let iexception_to_int : iexception -> int = Obj.magic
+let iexception_of_int : int -> iexception = Obj.magic
 
 type iform =
   | INVALID | AAA | AAD_IMMb | AAM_IMMb | AAS | ADC_AL_IMMb | ADC_GPR8_GPR8_10
@@ -4199,23 +4098,154 @@ type iform =
 let iform_to_int : iform -> int = Obj.magic
 let iform_of_int : int -> iform = Obj.magic
 
-type reg_class =
-  | INVALID | BNDCFG | BNDSTAT | BOUND | CR | DR | FLAGS | GPR | GPR16 | GPR32
-  | GPR64 | GPR8 | IP | MASK | MMX | MSR | MXCSR | PSEUDO | PSEUDOX87 | SR
-  | TMP | X87 | XCR | XMM | YMM | ZMM
-let reg_class_to_int : reg_class -> int = Obj.magic
-let reg_class_of_int : int -> reg_class = Obj.magic
+type isa_set =
+  | INVALID | AMD3DNOW | ADOX_ADCX | AES | AMD | AVX | AVX2 | AVX2GATHER
+  | AVX512BW_128 | AVX512BW_128N | AVX512BW_256 | AVX512BW_512 | AVX512BW_KOP
+  | AVX512CD_128 | AVX512CD_256 | AVX512CD_512 | AVX512DQ_128 | AVX512DQ_128N
+  | AVX512DQ_256 | AVX512DQ_512 | AVX512DQ_KOP | AVX512DQ_SCALAR | AVX512ER_512
+  | AVX512ER_SCALAR | AVX512F_128 | AVX512F_128N | AVX512F_256 | AVX512F_512
+  | AVX512F_KOP | AVX512F_SCALAR | AVX512PF_512 | AVX512_4FMAPS_512
+  | AVX512_4FMAPS_SCALAR | AVX512_4VNNIW_512 | AVX512_BITALG_128
+  | AVX512_BITALG_256 | AVX512_BITALG_512 | AVX512_GFNI_128 | AVX512_GFNI_256
+  | AVX512_GFNI_512 | AVX512_IFMA_128 | AVX512_IFMA_256 | AVX512_IFMA_512
+  | AVX512_VAES_128 | AVX512_VAES_256 | AVX512_VAES_512 | AVX512_VBMI2_128
+  | AVX512_VBMI2_256 | AVX512_VBMI2_512 | AVX512_VBMI_128 | AVX512_VBMI_256
+  | AVX512_VBMI_512 | AVX512_VNNI_128 | AVX512_VNNI_256 | AVX512_VNNI_512
+  | AVX512_VPCLMULQDQ_128 | AVX512_VPCLMULQDQ_256 | AVX512_VPCLMULQDQ_512
+  | AVX512_VPOPCNTDQ_128 | AVX512_VPOPCNTDQ_256 | AVX512_VPOPCNTDQ_512 | AVXAES
+  | AVX_GFNI | BMI1 | BMI2 | CET | CLFLUSHOPT | CLFSH | CLWB | CLZERO | CMOV
+  | CMPXCHG16B | F16C | FAT_NOP | FCMOV | FMA | FMA4 | FXSAVE | FXSAVE64 | GFNI
+  | I186 | I286PROTECTED | I286REAL | I386 | I486 | I486REAL | I86 | INVPCID
+  | LAHF | LONGMODE | LZCNT | MONITOR | MOVBE | MPX | PAUSE | PCLMULQDQ
+  | PCONFIG | PENTIUMMMX | PENTIUMREAL | PKU | POPCNT | PPRO | PREFETCHW
+  | PREFETCHWT1 | PREFETCH_NOP | PT | RDPID | RDPMC | RDRAND | RDSEED | RDTSCP
+  | RDWRFSGS | RTM | SGX | SHA | SMAP | SMX | SSE | SSE2 | SSE2MMX | SSE3
+  | SSE3X87 | SSE4 | SSE42 | SSE4A | SSEMXCSR | SSE_PREFETCH | SSSE3 | SSSE3MMX
+  | SVM | TBM | VAES | VMFUNC | VPCLMULQDQ | VTX | X87 | XOP | XSAVE | XSAVEC
+  | XSAVEOPT | XSAVES
+let isa_set_to_int : isa_set -> int = Obj.magic
+let isa_set_of_int : int -> isa_set = Obj.magic
 
-type chip =
-  | INVALID | I86 | I86FP | I186 | I186FP | I286REAL | I286 | I2186FP
-  | I386REAL | I386 | I386FP | I486REAL | I486 | PENTIUMREAL | PENTIUM | QUARK
-  | PENTIUMMMXREAL | PENTIUMMMX | ALLREAL | PENTIUMPRO | PENTIUM2 | PENTIUM3
-  | PENTIUM4 | P4PRESCOTT | P4PRESCOTT_NOLAHF | P4PRESCOTT_VTX | CORE2 | PENRYN
-  | PENRYN_E | NEHALEM | WESTMERE | BONNELL | SALTWELL | SILVERMONT | AMD
-  | GOLDMONT | SANDYBRIDGE | IVYBRIDGE | HASWELL | BROADWELL | SKYLAKE
-  | SKYLAKE_SERVER | KNL | KNM | CANNONLAKE | ICELAKE | FUTURE | ALL
-let chip_to_int : chip -> int = Obj.magic
-let chip_of_int : int -> chip = Obj.magic
+type machine_mode =
+  | INVALID | LONG_64 | LONG_COMPAT_32 | LONG_COMPAT_16 | LEGACY_32 | LEGACY_16
+  | REAL_16
+let machine_mode_to_int : machine_mode -> int = Obj.magic
+let machine_mode_of_int : int -> machine_mode = Obj.magic
+
+type nonterminal =
+  | INVALID | AR10 | AR11 | AR12 | AR13 | AR14 | AR15 | AR8 | AR9 | ARAX | ARBP
+  | ARBX | ARCX | ARDI | ARDX | ARSI | ARSP | ASZ_NONTERM | AVX512_ROUND
+  | AVX_INSTRUCTIONS | AVX_SPLITTER | BND_B | BND_B_CHECK | BND_R | BND_R_CHECK
+  | BRANCH_HINT | BRDISP32 | BRDISP8 | BRDISPZ | CR_B | CR_R | CR_WIDTH | DF64
+  | DR_B | DR_R | ESIZE_128_BITS | ESIZE_16_BITS | ESIZE_1_BITS | ESIZE_2_BITS
+  | ESIZE_32_BITS | ESIZE_4_BITS | ESIZE_64_BITS | ESIZE_8_BITS
+  | EVEX_INSTRUCTIONS | EVEX_SPLITTER | FINAL_DSEG | FINAL_DSEG1
+  | FINAL_DSEG1_MODE64 | FINAL_DSEG1_NOT64 | FINAL_DSEG_MODE64
+  | FINAL_DSEG_NOT64 | FINAL_ESEG | FINAL_ESEG1 | FINAL_SSEG | FINAL_SSEG0
+  | FINAL_SSEG1 | FINAL_SSEG_MODE64 | FINAL_SSEG_NOT64 | FIX_ROUND_LEN128
+  | FIX_ROUND_LEN512 | FORCE64 | GPR16_B | GPR16_R | GPR16_SB | GPR32_B
+  | GPR32_R | GPR32_SB | GPR32_X | GPR64_B | GPR64_R | GPR64_SB | GPR64_X
+  | GPR8_B | GPR8_R | GPR8_SB | GPRM_B | GPRM_R | GPRV_B | GPRV_R | GPRV_SB
+  | GPRY_B | GPRY_R | GPRZ_B | GPRZ_R | IGNORE66 | IMMUNE66 | IMMUNE66_LOOP64
+  | IMMUNE_REXW | INSTRUCTIONS | ISA | MASK1 | MASKNOT0 | MASK_B | MASK_N
+  | MASK_N32 | MASK_N64 | MASK_R | MEMDISP | MEMDISP16 | MEMDISP32 | MEMDISP8
+  | MEMDISPV | MMX_B | MMX_R | MODRM | MODRM16 | MODRM32 | MODRM64ALT32
+  | NELEM_EIGHTHMEM | NELEM_FULL | NELEM_FULLMEM | NELEM_GPR_READER
+  | NELEM_GPR_READER_BYTE | NELEM_GPR_READER_SUBDWORD | NELEM_GPR_READER_WORD
+  | NELEM_GPR_WRITER_LDOP | NELEM_GPR_WRITER_LDOP_D | NELEM_GPR_WRITER_LDOP_Q
+  | NELEM_GPR_WRITER_STORE | NELEM_GPR_WRITER_STORE_BYTE
+  | NELEM_GPR_WRITER_STORE_SUBDWORD | NELEM_GPR_WRITER_STORE_WORD | NELEM_GSCAT
+  | NELEM_HALF | NELEM_HALFMEM | NELEM_MEM128 | NELEM_MOVDDUP
+  | NELEM_QUARTERMEM | NELEM_SCALAR | NELEM_TUPLE1 | NELEM_TUPLE1_4X
+  | NELEM_TUPLE1_BYTE | NELEM_TUPLE1_SUBDWORD | NELEM_TUPLE1_WORD
+  | NELEM_TUPLE2 | NELEM_TUPLE4 | NELEM_TUPLE8 | OEAX | ONE | ORAX | ORBP
+  | ORDX | ORSP | OSZ_NONTERM | OVERRIDE_SEG0 | OVERRIDE_SEG1 | PREFIXES
+  | REFINING66 | REMOVE_SEGMENT | RFLAGS | RIP | RIPA | SAE | SEG | SEG_MOV
+  | SE_IMM8 | SIB | SIB_BASE0 | SIMM8 | SIMMZ | SRBP | SRSP | UIMM16 | UIMM32
+  | UIMM8 | UIMM8_1 | UIMMV | UISA_VMODRM_XMM | UISA_VMODRM_YMM
+  | UISA_VMODRM_ZMM | UISA_VSIB_BASE | UISA_VSIB_INDEX_XMM
+  | UISA_VSIB_INDEX_YMM | UISA_VSIB_INDEX_ZMM | UISA_VSIB_XMM | UISA_VSIB_YMM
+  | UISA_VSIB_ZMM | VGPR32_B | VGPR32_B_32 | VGPR32_B_64 | VGPR32_N
+  | VGPR32_N_32 | VGPR32_N_64 | VGPR32_R | VGPR32_R_32 | VGPR32_R_64 | VGPR64_B
+  | VGPR64_N | VGPR64_R | VGPRY_N | VMODRM_XMM | VMODRM_YMM | VSIB_BASE
+  | VSIB_INDEX_XMM | VSIB_INDEX_YMM | VSIB_XMM | VSIB_YMM | X87 | XMM_B
+  | XMM_B3 | XMM_B3_32 | XMM_B3_64 | XMM_B_32 | XMM_B_64 | XMM_N | XMM_N3
+  | XMM_N3_32 | XMM_N3_64 | XMM_N_32 | XMM_N_64 | XMM_R | XMM_R3 | XMM_R3_32
+  | XMM_R3_64 | XMM_R_32 | XMM_R_64 | XMM_SE | XMM_SE32 | XMM_SE64
+  | XOP_INSTRUCTIONS | YMM_B | YMM_B3 | YMM_B3_32 | YMM_B3_64 | YMM_B_32
+  | YMM_B_64 | YMM_N | YMM_N3 | YMM_N3_32 | YMM_N3_64 | YMM_N_32 | YMM_N_64
+  | YMM_R | YMM_R3 | YMM_R3_32 | YMM_R3_64 | YMM_R_32 | YMM_R_64 | YMM_SE
+  | YMM_SE32 | YMM_SE64 | ZMM_B3 | ZMM_B3_32 | ZMM_B3_64 | ZMM_N3 | ZMM_N3_32
+  | ZMM_N3_64 | ZMM_R3 | ZMM_R3_32 | ZMM_R3_64
+let nonterminal_to_int : nonterminal -> int = Obj.magic
+let nonterminal_of_int : int -> nonterminal = Obj.magic
+
+type operand =
+  | INVALID | AGEN | AMD3DNOW | ASZ | BASE0 | BASE1 | BCAST | BCRC
+  | BRDISP_WIDTH | CET | CHIP | DEFAULT_SEG | DF32 | DF64 | DISP | DISP_WIDTH
+  | DUMMY | EASZ | ELEMENT_SIZE | ENCODER_PREFERRED | EOSZ | ERROR | ESRC
+  | EVEXRR | FIRST_F2F3 | HAS_MODRM | HAS_SIB | HINT | ICLASS | ILD_F2 | ILD_F3
+  | ILD_SEG | IMM0 | IMM0SIGNED | IMM1 | IMM1_BYTES | IMM_WIDTH | INDEX
+  | LAST_F2F3 | LLRC | LOCK | LZCNT | MAP | MASK | MAX_BYTES | MEM0 | MEM1
+  | MEM_WIDTH | MOD | MODE | MODEP5 | MODEP55C | MODE_FIRST_PREFIX | MODRM_BYTE
+  | MPXMODE | NEEDREX | NEED_MEMDISP | NELEM | NOMINAL_OPCODE | NOREX
+  | NO_SCALE_DISP8 | NPREFIXES | NREXES | NSEG_PREFIXES | OSZ | OUTREG
+  | OUT_OF_BYTES | P4 | POS_DISP | POS_IMM | POS_IMM1 | POS_MODRM
+  | POS_NOMINAL_OPCODE | POS_SIB | PREFIX66 | PTR | REALMODE | REG | REG0
+  | REG1 | REG2 | REG3 | REG4 | REG5 | REG6 | REG7 | REG8 | RELBR | REP | REX
+  | REXB | REXR | REXRR | REXW | REXX | RM | ROUNDC | SAE | SCALE | SEG0 | SEG1
+  | SEG_OVD | SIB | SIBBASE | SIBINDEX | SIBSCALE | SKIP_OSZ | SMODE | SRM
+  | TYPE | TZCNT | UBIT | UIMM0 | UIMM1 | USING_DEFAULT_SEGMENT0
+  | USING_DEFAULT_SEGMENT1 | VEXDEST210 | VEXDEST3 | VEXDEST4 | VEXVALID
+  | VEX_C4 | VEX_PREFIX | VL | ZEROING
+let operand_to_int : operand -> int = Obj.magic
+let operand_of_int : int -> operand = Obj.magic
+
+type operand_action =
+  | INVALID | RW | R | W | RCW | CW | CRW | CR
+let operand_action_to_int : operand_action -> int = Obj.magic
+let operand_action_of_int : int -> operand_action = Obj.magic
+
+type operand_convert =
+  | INVALID | ZEROSTR | SAESTR | ROUNDC | BCASTSTR
+let operand_convert_to_int : operand_convert -> int = Obj.magic
+let operand_convert_of_int : int -> operand_convert = Obj.magic
+
+type operand_element_type =
+  | INVALID | UINT | INT | SINGLE | DOUBLE | LONGDOUBLE | LONGBCD | STRUCT
+  | VARIABLE | FLOAT16
+let operand_element_type_to_int : operand_element_type -> int = Obj.magic
+let operand_element_type_of_int : int -> operand_element_type = Obj.magic
+
+type operand_element_xtype =
+  | INVALID | B80 | F16 | F32 | F64 | F80 | I1 | I16 | I32 | I64 | I8 | INT
+  | STRUCT | U128 | U16 | U256 | U32 | U64 | U8 | UINT | VAR
+let operand_element_xtype_to_int : operand_element_xtype -> int = Obj.magic
+let operand_element_xtype_of_int : int -> operand_element_xtype = Obj.magic
+
+type operand_type =
+  | INVALID | ERROR | IMM | IMM_CONST | NT_LOOKUP_FN | NT_LOOKUP_FN4 | REG
+let operand_type_to_int : operand_type -> int = Obj.magic
+let operand_type_of_int : int -> operand_type = Obj.magic
+
+type operand_visibility =
+  | INVALID | EXPLICIT | IMPLICIT | SUPPRESSED
+let operand_visibility_to_int : operand_visibility -> int = Obj.magic
+let operand_visibility_of_int : int -> operand_visibility = Obj.magic
+
+type operand_width =
+  | INVALID | ASZ | SSZ | PSEUDO | PSEUDOX87 | A16 | A32 | B | D | I8 | U8
+  | I16 | U16 | I32 | U32 | I64 | U64 | F16 | F32 | F64 | DQ | XUB | XUW | XUD
+  | XUQ | X128 | XB | XW | XD | XQ | MB | MW | MD | MQ | M64INT | M64REAL
+  | MEM108 | MEM14 | MEM16 | MEM16INT | MEM28 | MEM32INT | MEM32REAL | MEM80DEC
+  | MEM80REAL | F80 | MEM94 | MFPXENV | MXSAVE | MPREFETCH | P | P2 | PD | PS
+  | PI | Q | S | S64 | SD | SI | SS | V | Y | W | Z | SPW8 | SPW | SPW5 | SPW3
+  | SPW2 | I1 | I2 | I3 | I4 | I5 | I6 | I7 | VAR | BND32 | BND64 | QQ | YUB
+  | YUW | YUD | YUQ | Y128 | YB | YW | YD | YQ | YPS | YPD | VV | ZV | WRD
+  | MSKW | ZMSKW | ZF32 | ZF64 | ZB | ZW | ZD | ZQ | ZUB | ZUW | ZUD | ZUQ
+  | ZI8 | ZI16 | ZI32 | ZI64 | ZU8 | ZU16 | ZU32 | ZU64 | ZU128
+let operand_width_to_int : operand_width -> int = Obj.magic
+let operand_width_of_int : int -> operand_width = Obj.magic
 
 type reg =
   | INVALID | BNDCFGU | BNDSTATUS | BND0 | BND1 | BND2 | BND3 | CR0 | CR1 | CR2
@@ -4245,6 +4275,7 @@ type reg =
   | ZMM5 | ZMM6 | ZMM7 | ZMM8 | ZMM9 | ZMM10 | ZMM11 | ZMM12 | ZMM13 | ZMM14
   | ZMM15 | ZMM16 | ZMM17 | ZMM18 | ZMM19 | ZMM20 | ZMM21 | ZMM22 | ZMM23
   | ZMM24 | ZMM25 | ZMM26 | ZMM27 | ZMM28 | ZMM29 | ZMM30 | ZMM31
+let invalid_first = INVALID
 let bndcfg_first = BNDCFGU
 let bndcfg_last = BNDCFGU
 let bndstat_first = BNDSTATUS
@@ -4267,7 +4298,6 @@ let gpr8_first = AL
 let gpr8_last = R15B
 let gpr8h_first = AH
 let gpr8h_last = BH
-let invalid_first = INVALID
 let invalid_last = ERROR
 let ip_first = RIP
 let ip_last = IP
@@ -4300,45 +4330,15 @@ let zmm_last = ZMM31
 let reg_to_int : reg -> int = Obj.magic
 let reg_of_int : int -> reg = Obj.magic
 
-type isa_set =
-  | INVALID | AMD3DNOW | ADOX_ADCX | AES | AMD | AVX | AVX2 | AVX2GATHER
-  | AVX512BW_128 | AVX512BW_128N | AVX512BW_256 | AVX512BW_512 | AVX512BW_KOP
-  | AVX512CD_128 | AVX512CD_256 | AVX512CD_512 | AVX512DQ_128 | AVX512DQ_128N
-  | AVX512DQ_256 | AVX512DQ_512 | AVX512DQ_KOP | AVX512DQ_SCALAR | AVX512ER_512
-  | AVX512ER_SCALAR | AVX512F_128 | AVX512F_128N | AVX512F_256 | AVX512F_512
-  | AVX512F_KOP | AVX512F_SCALAR | AVX512PF_512 | AVX512_4FMAPS_512
-  | AVX512_4FMAPS_SCALAR | AVX512_4VNNIW_512 | AVX512_BITALG_128
-  | AVX512_BITALG_256 | AVX512_BITALG_512 | AVX512_GFNI_128 | AVX512_GFNI_256
-  | AVX512_GFNI_512 | AVX512_IFMA_128 | AVX512_IFMA_256 | AVX512_IFMA_512
-  | AVX512_VAES_128 | AVX512_VAES_256 | AVX512_VAES_512 | AVX512_VBMI2_128
-  | AVX512_VBMI2_256 | AVX512_VBMI2_512 | AVX512_VBMI_128 | AVX512_VBMI_256
-  | AVX512_VBMI_512 | AVX512_VNNI_128 | AVX512_VNNI_256 | AVX512_VNNI_512
-  | AVX512_VPCLMULQDQ_128 | AVX512_VPCLMULQDQ_256 | AVX512_VPCLMULQDQ_512
-  | AVX512_VPOPCNTDQ_128 | AVX512_VPOPCNTDQ_256 | AVX512_VPOPCNTDQ_512 | AVXAES
-  | AVX_GFNI | BMI1 | BMI2 | CET | CLFLUSHOPT | CLFSH | CLWB | CLZERO | CMOV
-  | CMPXCHG16B | F16C | FAT_NOP | FCMOV | FMA | FMA4 | FXSAVE | FXSAVE64 | GFNI
-  | I186 | I286PROTECTED | I286REAL | I386 | I486 | I486REAL | I86 | INVPCID
-  | LAHF | LONGMODE | LZCNT | MONITOR | MOVBE | MPX | PAUSE | PCLMULQDQ
-  | PCONFIG | PENTIUMMMX | PENTIUMREAL | PKU | POPCNT | PPRO | PREFETCHW
-  | PREFETCHWT1 | PREFETCH_NOP | PT | RDPID | RDPMC | RDRAND | RDSEED | RDTSCP
-  | RDWRFSGS | RTM | SGX | SHA | SMAP | SMX | SSE | SSE2 | SSE2MMX | SSE3
-  | SSE3X87 | SSE4 | SSE42 | SSE4A | SSEMXCSR | SSE_PREFETCH | SSSE3 | SSSE3MMX
-  | SVM | TBM | VAES | VMFUNC | VPCLMULQDQ | VTX | X87 | XOP | XSAVE | XSAVEC
-  | XSAVEOPT | XSAVES
-let isa_set_to_int : isa_set -> int = Obj.magic
-let isa_set_of_int : int -> isa_set = Obj.magic
+type reg_class =
+  | INVALID | BNDCFG | BNDSTAT | BOUND | CR | DR | FLAGS | GPR | GPR16 | GPR32
+  | GPR64 | GPR8 | IP | MASK | MMX | MSR | MXCSR | PSEUDO | PSEUDOX87 | SR
+  | TMP | X87 | XCR | XMM | YMM | ZMM
+let reg_class_to_int : reg_class -> int = Obj.magic
+let reg_class_of_int : int -> reg_class = Obj.magic
 
-type operand_width =
-  | INVALID | ASZ | SSZ | PSEUDO | PSEUDOX87 | A16 | A32 | B | D | I8 | U8
-  | I16 | U16 | I32 | U32 | I64 | U64 | F16 | F32 | F64 | DQ | XUB | XUW | XUD
-  | XUQ | X128 | XB | XW | XD | XQ | MB | MW | MD | MQ | M64INT | M64REAL
-  | MEM108 | MEM14 | MEM16 | MEM16INT | MEM28 | MEM32INT | MEM32REAL | MEM80DEC
-  | MEM80REAL | F80 | MEM94 | MFPXENV | MXSAVE | MPREFETCH | P | P2 | PD | PS
-  | PI | Q | S | S64 | SD | SI | SS | V | Y | W | Z | SPW8 | SPW | SPW5 | SPW3
-  | SPW2 | I1 | I2 | I3 | I4 | I5 | I6 | I7 | VAR | BND32 | BND64 | QQ | YUB
-  | YUW | YUD | YUQ | Y128 | YB | YW | YD | YQ | YPS | YPD | VV | ZV | WRD
-  | MSKW | ZMSKW | ZF32 | ZF64 | ZB | ZW | ZD | ZQ | ZUB | ZUW | ZUD | ZUQ
-  | ZI8 | ZI16 | ZI32 | ZI64 | ZU8 | ZU16 | ZU32 | ZU64 | ZU128
-let operand_width_to_int : operand_width -> int = Obj.magic
-let operand_width_of_int : int -> operand_width = Obj.magic
+type syntax =
+  | INVALID | XED | ATT | INTEL
+let syntax_to_int : syntax -> int = Obj.magic
+let syntax_of_int : int -> syntax = Obj.magic
 
