@@ -8,8 +8,13 @@ OCAMLBUILD := ocamlbuild -use-ocamlfind -j 4 \
 .PHONY: all clean veryclean install uninstall
 all: lib test
 
+ifeq (${NO_GENERATE},)
 clean:
 	rm -Rf ./_build ./generated
+else
+clean:
+	rm -Rf ./_build
+endif
 
 veryclean: clean
 	rm -Rf ./xed/obj

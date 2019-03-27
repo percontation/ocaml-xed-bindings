@@ -40,7 +40,8 @@ def xedfile(path):
   return os.path.join(os.path.dirname(__file__), "xed", path)
 
 args = ["-I"+xedfile("obj"), "-I"+xedfile("include/public/xed")]
-tu = Index.parse(xedfile("include/public/xed/xed-interface.h"), args=args)
+options = cindex.TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD
+tu = Index.parse(xedfile("include/public/xed/xed-interface.h"), args=args, options=options)
 
 
 #
@@ -145,6 +146,10 @@ class BPtr(namedtuple('BPtr', ('type', 'const'))):
     else:
       return "(*) " + str(self.type)
 
+  @property
+  def oname(self):
+    return self.type.oname + '*'
+
 class BOpaque(namedtuple('BOpaque', ('cname', 'oname', 'size'))):
   def valid(self):
     return self.cname and self.size >= 0
@@ -162,6 +167,9 @@ class BBufArg(namedtuple('BBufArg', ('ptr', 'idx', 'out'))):
   def __str__(self):
     return "(buf %d) %s" % (self.idx, str(self.ptr))
 
+  @property
+  def oname(self):
+    return self.ptr.type.oname + '[]'
 
 def bmatches(btype, pattern):
   if pattern is None:
@@ -202,8 +210,25 @@ prim_types = [
   BPrim('uint64_t', 'Unsigned.UInt64.t', BUINT64),
   BPrim('unsigned int', 'int', BUINT),
   BPrim('xed_uint_t', 'int', BUINT),
-  #BPrim('xed_attributes_t', 'attribute list', ???),
+  BPrim('xed_encoder_operand_t', 'XedBindingsStubs.encoder_operand', 'encoder_operand_view'),
+  BPrim('xed_enc_displacement_t', 'XedBindingsStubs.enc_displacement', 'enc_displacement_view'),
 ]
+
+prim_ctypes_views = []
+for decl in tu.cursor.get_children():
+  if decl.spelling in ("xed_encoder_operand_t", "xed_enc_displacement_t"):
+    name = decl.spelling[4:-2]
+    size = decl.type.get_size()
+    assert size > 0
+    prim_ctypes_views.append("""\
+type {name}_struct
+let {name}_struct : {name}_struct structure typ = structure ""
+let {name}_struct_dat = field {name}_struct "dat" @@ array {size} char
+let () = seal {name}_struct
+type {name}
+let {name}_view : {name} typ = view ~read:Obj.magic ~write:Obj.magic (typedef {name}_struct "xed_{name}_t")
+""".format(name=name, size=size))
+
 
 def ctype_for_prim(prim):
   if prim.kind == BUINT:
@@ -406,6 +431,18 @@ unwanted_functions = {
   # Exist in headerfile, but no implementation.
   "xed_operand_values_has_disp",
   "xed_operand_values_is_prefetch",
+
+  # Manual bindings for these.
+  "xed_inst_get_attributes",
+  "xed_decoded_inst_get_attributes",
+  "xed_encode",
+  # "xed_inst",
+  # "xed_inst0",
+  # "xed_inst1",
+  # "xed_inst2",
+  # "xed_inst3",
+  # "xed_inst4",
+  # "xed_inst5",
 }
 
 def fix_function_name(s):
@@ -416,7 +453,7 @@ def fix_function_name(s):
   else:
     return s
 
-print_funcs_buf_args = {
+func_buf_args = {
   "xed_operand_print(const xed_operand_t, char *, int)" : ((1,2,True),),
   "xed_flag_set_print(const xed_flag_set_t *, char *, int)": ((1,2,True),),
   "xed_flag_action_print(const xed_flag_action_t *, char *, int)": ((1,2,True),),
@@ -431,10 +468,11 @@ print_funcs_buf_args = {
   "xed_ild_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2,False),),
   "xed_operand_print(const xed_operand_t *, char *, int)": ((1,2,True),),
   "xed_decode_with_features(xed_decoded_inst_t *, const uint8_t *, const unsigned int, xed_chip_features_t *)": ((1,2,False),),
+  "xed_encode_nop(uint8_t *, const unsigned int)": ((0,1,True),),
 }
 
 def find_buffer_args(decl):
-  return print_funcs_buf_args.get(decl.displayname, ())
+  return func_buf_args.get(decl.displayname, ())
 
 def process_function(decl):
   oname = fix_function_name(decl.spelling)
@@ -453,6 +491,7 @@ def process_function(decl):
   return BFunc(oname=oname, cname=decl.spelling, types=tuple(args))
 
 functions = []
+constants = []
 for decl in tu.cursor.get_children():
   if decl.kind == cindex.CursorKind.FUNCTION_DECL and decl == decl.canonical:
     x = process_function(decl)
@@ -462,6 +501,22 @@ for decl in tu.cursor.get_children():
       else:
         # This happens with functions that take function pointer callbacks.
         print >> sys.stderr, "unable to handle", x.cname
+  if decl.kind == cindex.CursorKind.MACRO_DEFINITION and decl == decl.canonical:
+    if decl.spelling.startswith('XED_') and decl.spelling[4:5].isalpha() and decl.extent.start.file.name == decl.extent.end.file.name:
+      with open(decl.extent.start.file.name) as f:
+        start = decl.extent.start.offset + len(decl.spelling)
+        f.seek(start)
+        s = f.read(decl.extent.end.offset-start).strip()
+      if s:
+        try:
+          value = int(s, 0)
+        except ValueError:
+          pass
+        else:
+          name = decl.spelling[4:].lower()
+          constants.append((name, value))
+
+constants.sort()
 
 def filter_funcs(func):
   for i in func.types:
@@ -485,10 +540,6 @@ skip_funcs = {
   "xed_init_print_info",
   "xed_format_generic",
   "xed_get_cpuid_rec",
-  "xed_addr",
-  "xed_rep",
-  "xed_repne",
-  "xed_convert_to_encoder_request",
 }
 
 for func in functions:
@@ -498,15 +549,19 @@ for func in functions:
     print >> sys.stderr, "not handling", func
 
 functions = [i for i in functions if filter_funcs(i) and i.cname not in skip_funcs]
+functions.sort(key=lambda k: k.oname)
 
-types = {i for func in functions for i in func.types}
-enum_types = {i for i in types if isinstance(i, BEnum)}
-opaque_ptrs = {i for i in types if isinstance(i, BPtr) and isinstance(i.type, BOpaque)}
+types = sorted({i for func in functions for i in func.types}, key=lambda k: k.oname)
+enum_types = sorted({i for i in types if isinstance(i, BEnum)}, key=lambda k: k.oname)
+opaque_types = sorted({i.type for i in types if isinstance(i, BPtr) and isinstance(i.type, BOpaque)}, key=lambda k: k.oname)
 
 
 def outfile(name):
   return os.path.join(os.path.dirname(__file__), "generated", name)
 
+with open(outfile("XedBindingsConstants.ml"), 'w') as f:
+  for name, value in constants:
+    print >> f, "let %s = %s" % (name, value)
 
 enum_ctypes_views = []
 with open(outfile("XedBindingsEnums.ml"), 'w') as f:
@@ -523,6 +578,7 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
 
     # Sort by value instead of by name so the Obj.magic (below) might work.
     constructors.sort(key=lambda x: x.cval)
+    aliases.sort(key=lambda k: (k.cval, k.oname))
 
     print >> f, "type %s =" % enum.oname
     i = 0
@@ -570,7 +626,7 @@ with open(outfile("XedBindingsStructs.ml"), 'w') as f:
   print >> f, "type (+'a, +'b) myptr"
   print >> f, "let const : ('a, [<`M|`C]) myptr -> ('a, [`C]) myptr = Obj.magic"
   print >> f, "let _allocate n : ('a, [`M]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic\n"
-  for i in sorted({i.type for i in opaque_ptrs}):
+  for i in opaque_types:
     module_name = lu2ucc(i.oname)
     print >> f, "module %s = struct" % module_name
     print >> f, "  type _t"
@@ -589,6 +645,7 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
   print >> f, "open Ctypes"
   print >> f, ""
   print >> f, "\n".join(enum_ctypes_views)
+  print >> f, "\n".join(prim_ctypes_views)
   print >> f, "\n".join(struct_ctypes_views)
   print >> f, ""
   print >> f, "module Bindings (F : Cstubs.FOREIGN) = struct"
@@ -608,7 +665,7 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
     else:
       return type.oname
 
-  for func in sorted(functions, key=lambda x: x.oname):
+  for func in functions:
     xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
     if not xargs:
       xargs = "void"
@@ -644,15 +701,13 @@ for func in functions:
     enum2str_funcs.append(func._replace(oname="%s_to_string" % t, cname=func.oname))
     continue
 
-  if len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
+  if cname.startswith("xed_") and len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
     classname = func.types[0].type.oname
     t = "xed_" + classname + "_"
     if cname.startswith(t):
       method_name = func_class_name_fixes(cname, cname[len(t):])
-    elif cname.startswith("xed_") and cname.endswith(classname):
-      method_name = func_class_name_fixes(cname, cname[4:-len(classname)-1])
     else:
-      method_name = None
+      method_name = func_class_name_fixes(cname, cname[4:])
     if method_name:
       methods = func_classes.setdefault(lu2ucc(classname), (func.types[0].type, {}))[1]
       assert method_name not in methods, "duplicate decl? (%r, %r, %r)" % (classname, method_name, cname)
@@ -668,6 +723,8 @@ for func in functions:
 
   other_funcs.append(func)
 
+enum2str_funcs.sort(key=lambda k: k.oname)
+other_funcs.sort(key=lambda k: k.oname)
 
 with open(outfile("XedBindingsInternal.ml"), 'w') as f:
   print >> f, "module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)"
@@ -718,7 +775,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         for x in bufsize_idxs[i]:
           t = "String" if func.types[x].ptr.const else "Bytes"
           lengths.append("%s.length a%d" % (t, x))
-        if lengths <= 1:
+        if len(lengths) <= 1:
           yargs.append("(" + lengths[0] + ")")
         else:
           pre.append("let %s = %s in" % (name, lengths[0]))
@@ -739,7 +796,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         xargs.append("(%s : %s)" % (name, arg.oname))
         yargs.append(name)
 
-      if isinstance(arg, BPrim) and arg.kind is BUINT:
+      if isinstance(arg, BPrim) and arg.kind is BUINT and i not in bufsize_idxs:
         asserts.append(name + " >= 0")
 
     ret = func.types[-1]
@@ -780,6 +837,3 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
     print >> f, "\n(* other *)"
   for func in other_funcs:
     print >> f, trans(func)
-
-# for i in other_funcs:
-#   print i.cname, ', '.join(str(j) for j in i.types)

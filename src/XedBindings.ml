@@ -7,6 +7,10 @@ end
 
 module DecodedInst = struct
   include XedBindingsInternal.DecodedInst
+  external _decoded_inst_get_attributes : nativeint -> XedBindingsEnums.attribute list = "xb_decoded_inst_get_attributes"
+  let get_attributes x : XedBindingsEnums.attribute list =
+    _decoded_inst_get_attributes (const_pointer x |> Ctypes.raw_address_of_ptr)
+
   let init mode =
     let x = allocate ()
     in zero_set_mode x mode; x
@@ -19,11 +23,43 @@ module DecodedInst = struct
 
   external _disassemble : int -> nativeint -> int64 -> string = "xb_disassemble"
   let disassemble x syntax addr =
-    _disassemble (XedBindingsInternal.Enum.syntax_to_int syntax) (const_pointer x |> Ctypes.raw_address_of_ptr) addr
+    _disassemble (XedBindingsEnums.syntax_to_int syntax) (const_pointer x |> Ctypes.raw_address_of_ptr) addr
+end
+
+module EncoderInstruction = struct
+  include XedBindingsInternal.EncoderInstruction
+  (* external _xed_inst : nativeint -> nativeint -> int -> int -> int -> nativeint -> unit = "xb_xed_inst"
+  let init state iclass effective_operand_width operands =
+    assert (effective_operand_width >= 0);
+
+    let f (operand : XedBindingsStubs.encoder_operand) : nativeint =
+      let dat = Ctypes.getf (Obj.magic operand) XedBindingsStubs.enc_displacement_struct_dat in
+      Ctypes.CArray.start dat |> Ctypes.raw_address_of_ptr
+    in
+    let carr = Ctypes.CArray.of_list @@ List.map f operands in
+    let length = Ctypes.CArray.length carr in
+    assert (length <= XedBindingsConstants.encoder_operands_max);
+    let x = allocate () in
+    _xed_inst
+      (pointer x |> Ctypes.raw_address_of_ptr)
+      (XedBindingsInternal.State.const_pointer state |> Ctypes.raw_address_of_ptr)
+      (XedBindingsEnums.iclass_to_int iclass)
+      effective_operand_width
+      length
+      (Ctypes.CArray.start carr |> Ctypes.raw_address_of_ptr)
+    ; x *)
 end
 
 module EncoderRequest = struct
   include XedBindingsInternal.EncoderRequest
+  external _encode : nativeint -> (int * string) = "xb_encode"
+  let encode x =
+    let err, dat = _encode (pointer x |> Ctypes.raw_address_of_ptr) in
+    XedBindingsEnums.error_of_int err, dat
+
+  let of_encoder_instruction (y : [`M] XedBindingsStructs.EncoderInstruction.t) =
+    let x = allocate () in
+    if convert_to_encoder_request x y then Some x else None
 end
 
 module FlagAction = struct
@@ -42,6 +78,9 @@ end
 
 module Inst = struct
   include XedBindingsInternal.Inst
+  external _inst_get_attributes : nativeint -> XedBindingsEnums.attribute list = "xb_inst_get_attributes"
+  let get_attributes x : XedBindingsEnums.attribute list =
+    _inst_get_attributes (const_pointer x |> Ctypes.raw_address_of_ptr)
 end
 
 module Operand = struct
@@ -131,28 +170,33 @@ end
 
 let () = XedBindingsInternal.xed_tables_init ()
 
-open Enum
-let state32 = State.init2 LEGACY_32 A32b |> XedBindingsStructs.const
-let state64 = State.init2 LONG_64 A64b |> XedBindingsStructs.const
+let state32 = State.init2 Enum.LEGACY_32 Enum.A32b |> XedBindingsStructs.const
+let state64 = State.init2 Enum.LONG_64 Enum.A64b |> XedBindingsStructs.const
 
 let decode state s =
   let x = DecodedInst.init state in
-  match XedBindingsInternal.xed_decode x s with
+  match XedBindingsInternal.DecodedInst.decode x s with
   | Enum.NONE -> Ok x
   | err -> Error err
 
 let decode_with_features state s chipfeat =
   let x = DecodedInst.init state in
-  match XedBindingsInternal.xed_decode_with_features x s chipfeat with
+  match XedBindingsInternal.DecodedInst.decode_with_features x s chipfeat with
   | Enum.NONE -> Ok x
   | err -> Error err
 
 let ild_decode state s =
   let x = DecodedInst.init state in
-  match XedBindingsInternal.xed_ild_decode x s with
+  match XedBindingsInternal.DecodedInst.ild_decode x s with
   | Enum.NONE -> Ok x
   | err -> Error err
 
 let get_version = XedBindingsInternal.xed_get_version
 let get_copyright = XedBindingsInternal.xed_get_copyright
 let get_cpuid_bit_for_isa_set = XedBindingsInternal.xed_get_cpuid_bit_for_isa_set
+
+let encode_nop len =
+  let bytes = Bytes.create len in
+  match XedBindingsInternal.xed_encode_nop bytes with
+  | Enum.NONE -> Ok bytes
+  | err -> Error err
