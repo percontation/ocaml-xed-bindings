@@ -618,27 +618,29 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
 
 struct_ctypes_views = []
 with open(outfile("XedBindingsStructs.ml"), 'w') as f:
-  print >> f, "(* 'a [`C] myptr is const; 'a [`M] myptr is non const. The reason for this"
-  print >> f, "   representation is that polymorphic variants are the only way to get cross-"
-  print >> f, "   module automatic subtyping (that I could find, as of 4.04), which allows"
-  print >> f, "   using writing signatures that accept const or mutable. The generated Ctypes"
-  print >> f, "   module won't support this, but our (generated) wrapper module can. *)"
-  print >> f, "type (+'a, +'b) myptr"
-  print >> f, "let const : ('a, [<`M|`C]) myptr -> ('a, [`C]) myptr = Obj.magic"
-  print >> f, "let _allocate n : ('a, [`M]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic\n"
+  print >> f, "(* We use a phantom permission type, where [`Read] indicates readability,"
+  print >> f, " * [`Write of [`Yes]] indicates writeability, and [`Write of [`No]] indicates"
+  print >> f, " * immutability. It's our own version of Core_kernel.Perms, so see that."
+  print >> f, " * Note that basically everything requires & is granted `Read because we don't"
+  print >> f, " * have a reasonable way to infer that from the C api. *)"
+  print >> f, "type (+'a, -'perms) myptr"
+  print >> f, "let const : ('a, [>`Read]) myptr -> ('a, [`Read]) myptr = Obj.magic"
+  print >> f, "let _allocate n : ('a, [<`Read|`Write of [`Yes]]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic\n"
   for i in opaque_types:
     module_name = lu2ucc(i.oname)
     print >> f, "module %s = struct" % module_name
     print >> f, "  type _t"
-    print >> f, "  type +'a t = (_t, 'a) myptr"
-    print >> f, "  let allocate () : [`M] t = _allocate %d |> Obj.magic" % i.size
-    print >> f, "  let pointer : [`M] t -> unit Ctypes.ptr = Obj.magic"
-    print >> f, "  let const_pointer : [<`M|`C] t -> unit Ctypes.ptr = Obj.magic"
+    print >> f, "  type -'a t = (_t, 'a) myptr"
+    print >> f, "  let allocate () : [<`Read|`Write of [`Yes]] t = _allocate %d |> Obj.magic" % i.size
+    print >> f, "  let pointer : [>`Read|`Write of [`Yes]] t -> unit Ctypes.ptr = Obj.magic"
+    print >> f, "  let const_pointer : [>`Read] t -> unit Ctypes.ptr = Obj.magic"
     print >> f, "end"
-    fmt1 = "let %s  : [`C] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"const %s\")"
-    fmt2 = "let %s' : [`M] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"%s\")"
+    fmt1 = "let %s_arg : [`Read]                  XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"const %s\")"
+    fmt2 = "let %s_ret : [`Read|`Write of [`No]]  XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"const %s\")"
+    fmt3 = "let %s_mut : [`Read|`Write of [`Yes]] XedBindingsStructs.%s.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr (typedef void \"%s\")"
     struct_ctypes_views.append(fmt1 % (i.oname, module_name, i.cname))
     struct_ctypes_views.append(fmt2 % (i.oname, module_name, i.cname))
+    struct_ctypes_views.append(fmt3 % (i.oname, module_name, i.cname))
 
 with open(outfile("XedBindingsStubs.ml"), 'w') as f:
   print >> f, "(* \"Low level\" binding functions, not to be exposed. *)"
@@ -651,9 +653,12 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
   print >> f, "module Bindings (F : Cstubs.FOREIGN) = struct"
   print >> f, "  open F\n"
 
-  def map_type(type, context = ""):
+  def map_type(type, arg, context = ""):
     if isinstance(type, BPtr) and isinstance(type.type, BOpaque):
-      return type.type.oname if type.const else type.type.oname + "'"
+      if type.const:
+        return type.type.oname + ("_arg" if arg else "_ret")
+      else:
+        return type.type.oname + "_mut"
     elif isinstance(type, BBufArg):
       if type.ptr.type.kind == BBYTE:
         return 'ocaml_string' if type.ptr.const else 'ocaml_bytes'
@@ -666,10 +671,10 @@ with open(outfile("XedBindingsStubs.ml"), 'w') as f:
       return type.oname
 
   for func in functions:
-    xargs = " @-> ".join(map_type(i) for i in func.types[:-1])
+    xargs = " @-> ".join(map_type(i, True) for i in func.types[:-1])
     if not xargs:
       xargs = "void"
-    xres = map_type(func.types[-1])
+    xres = map_type(func.types[-1], False)
     print >> f, "  let %s = foreign \"%s\" (%s @-> returning %s)" % (func.oname, func.cname, xargs, xres)
 
   print >> f, "end"
@@ -769,7 +774,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         yargs.append("(Obj.magic %s)" % name)
         assert not retval
         retval = name
-        rettype = "[`M] t"
+        rettype = "[<`Read|`Write of [`Yes]] t"
       elif i in bufsize_idxs:
         lengths = []
         for x in bufsize_idxs[i]:
@@ -787,7 +792,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         t = "ocaml_string_start" if arg.ptr.const else "ocaml_bytes_start"
         yargs.append("(Ctypes.%s %s)" % (t, name))
       elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
-        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg, "[<`C|`M]", "[<`M]")))
+        xargs.append("(%s : %s)" % (name, name_opaque_ptr(arg, "[>`Read]", "[>`Read|`Write of [`Yes]]")))
         yargs.append("(Obj.magic %s)" % name)
       elif isinstance(arg, BEnum):
         xargs.append("(%s : XedBindingsEnums.%s)" % (name, arg.oname))
@@ -803,7 +808,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
     if retval:
       assert rettype
     elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
-      rettype = name_opaque_ptr(ret, "[`C]", "[`M]")
+      rettype = name_opaque_ptr(ret, "[<`Read|`Write of [`No]]", "[<`Read|`Write of [`Yes]]")
     elif isinstance(ret, BEnum):
       rettype = "XedBindingsEnums.%s" % ret.oname
     else:
