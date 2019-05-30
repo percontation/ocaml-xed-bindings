@@ -28,7 +28,7 @@ uninstall:
 
 .PHONY: lib
 lib: stubs _build/dllxedbindings.so
-	${OCAMLBUILD} src/XedBindings.cmi src/XedBindings.cma src/XedBindings.cmxa src/XedBindings.a src/XedBindings.inferred.mli
+	${OCAMLBUILD} src/Xed.cmi src/Xed.cma src/Xed.cmxa src/Xed.a src/Xed.inferred.mli
 
 .PHONY: submodules
 submodules:

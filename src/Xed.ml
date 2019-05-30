@@ -1,4 +1,5 @@
 let cstring x = Bytes.sub_string x 0 (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
+let const = XedBindingsStructs.const
 
 module ChipFeatures = struct
   include XedBindingsInternal.ChipFeatures
@@ -169,8 +170,8 @@ end
 
 let () = XedBindingsInternal.xed_tables_init ()
 
-let state32 = State.init2 Enum.LEGACY_32 Enum.A32b |> XedBindingsStructs.const
-let state64 = State.init2 Enum.LONG_64 Enum.A64b |> XedBindingsStructs.const
+let state32 = State.init2 Enum.LEGACY_32 Enum.A32b |> const
+let state64 = State.init2 Enum.LONG_64 Enum.A64b |> const
 
 let decode state s =
   let x = DecodedInst.init state in

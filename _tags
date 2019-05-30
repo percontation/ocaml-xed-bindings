@@ -2,7 +2,7 @@
 <generated/xedbindings_genstubs.c>: use_xed
 <src/xedbindings_stubs.c>: use_xed
 <src/test.*>: use_xed
-<src/XedBindings.*>: use_xed
+<src/Xed.*>: use_xed
 
 true: package(ctypes,ctypes.stubs,result)
 true: safe_string, debug, bin_annot
