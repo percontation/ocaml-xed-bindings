@@ -9,7 +9,6 @@ install: [make "NO_GENERATE=1" "install"]
 remove:  ["ocamlfind" "remove" "xed-bindings"]
 depends: [
   "ctypes" {>= "0.4.0"}
-  "result"
   "ocamlbuild" {build}
   "ocamlfind" {build}
 ]

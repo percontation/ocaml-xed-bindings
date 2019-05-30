@@ -1,4 +1,3 @@
-open Result
 let cstring x = Bytes.sub_string x 0 (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
 
 module ChipFeatures = struct
@@ -57,7 +56,7 @@ module EncoderRequest = struct
     let err, dat = _encode (pointer x |> Ctypes.raw_address_of_ptr) in
     XedBindingsEnums.error_of_int err, dat
 
-  let of_encoder_instruction (y : [`M] XedBindingsStructs.EncoderInstruction.t) =
+  let of_encoder_instruction (y : [>`Read] XedBindingsStructs.EncoderInstruction.t) =
     let x = allocate () in
     if convert_to_encoder_request x y then Some x else None
 end
