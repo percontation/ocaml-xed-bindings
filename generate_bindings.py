@@ -6,6 +6,8 @@ import re
 from clang import cindex
 from collections import namedtuple
 
+use_polymorphic_variants_for_enums = False
+
 # Monkeypatch for using a slightly older clang.cindex with a new libclang.
 try:
   cindex.TypeKind.ELABORATED
@@ -32,6 +34,18 @@ except cindex.LibclangError as exc:
   else:
     raise exc
 
+# Concatenate the strings from the given generator, except add newlines every
+# once in a while and start each line with the given prefix.
+def group_into_lines(prefix, line_gen):
+  assert len(prefix) < 80
+  curr_line = prefix
+  for elt in line_gen:
+    if len(curr_line)+len(elt) > 80:
+      yield curr_line
+      curr_line = prefix
+    curr_line += elt
+  if curr_line != prefix:
+    yield curr_line
 
 #
 # Parse XED headers.
@@ -357,6 +371,8 @@ class ProcessType(object):
             new_oname = "A" + oname
             print >> sys.stderr, "Enum %s has bad constructor name %s, using %s" % (enum_cname, oname, new_oname)
             oname = new_oname
+        if use_polymorphic_variants_for_enums:
+          oname = "`" + oname
         vals.append(BEnumVal(oname, i.spelling, i.enum_value))
 
     return BEnum(enum_oname, enum_cname, self(decl.enum_type), tuple(vals))
@@ -580,33 +596,31 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
     constructors.sort(key=lambda x: x.cval)
     aliases.sort(key=lambda k: (k.cval, k.oname))
 
-    print >> f, "type %s =" % enum.oname
-    i = 0
-    while i < len(constructors):
-      line = " "
-      while i < len(constructors):
-        new_line = line + " | " + constructors[i].oname
-        if len(new_line) < 80 or not line.strip():
-          line = new_line
-          i += 1
-        else:
-          break
+    if use_polymorphic_variants_for_enums:
+      print >> f, "type %s = [" % enum.oname
+    else:
+      print >> f, "type %s =" % enum.oname
+
+    for line in group_into_lines(" ", (" | " + i.oname for i in constructors)):
       print >> f, line
 
-    for i in aliases:
-      print >> f, "let %s = %s" % (i.oname.lower(), already_vals[i.cval].oname)
+    if use_polymorphic_variants_for_enums:
+      print >> f, "]"
 
-    if [i.cval for i in constructors] == range(len(constructors)):
+    for i in aliases:
+      print >> f, "let %s = %s" % (i.oname.lower().lstrip("`"), already_vals[i.cval].oname)
+
+    if not use_polymorphic_variants_for_enums and [i.cval for i in constructors] == range(len(constructors)):
       # OCaml represents argumentless constructors in a type as sequential integers.
       print >> f, "let %s_to_int : %s -> int = Obj.magic" % (enum.oname, enum.oname)
       print >> f, "let %s_of_int : int -> %s = Obj.magic" % (enum.oname, enum.oname)
     else:
-      print >> f, "let %s_to_int = function" % enum.oname
-      for i in constructors:
-        print >> f, "  | %s -> %d" % (i.oname, i.cval)
-      print >> f, "let %s_of_int = function" % enum.oname
-      for i in constructors:
-        print >> f, "  | %d -> %s" % (i.cval, i.oname)
+      print >> f, "let %s_to_int : %s -> int = function" % (enum.oname, enum.oname)
+      for line in group_into_lines(" ", (" | %s -> %d" % (i.oname, i.cval) for i in constructors)):
+        print >> f, line
+      print >> f, "let %s_of_int : int -> %s = function" % (enum.oname, enum.oname)
+      for line in group_into_lines(" ", (" | %d -> %s" % (i.cval, i.oname) for i in constructors)):
+        print >> f, line
       print >> f, "  | _ -> failwith \"%s_of_int: no enum for given int\"" % enum.oname
 
     enum_ctypes_views.append(

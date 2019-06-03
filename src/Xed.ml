@@ -200,3 +200,5 @@ let encode_nop len =
   match XedBindingsInternal.xed_encode_nop bytes with
   | Enum.NONE -> Ok bytes
   | err -> Error err
+
+let ok_err = function Ok x -> x | Error e -> failwith (Enum.error_to_string e)
