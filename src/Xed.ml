@@ -20,6 +20,8 @@ module DecodedInst = struct
   let to_string_xedfmt x addr =
     let bytes = Bytes.create 1024
     in dump_xed_format x bytes addr, cstring bytes
+  let get_bytes x =
+    String.init (get_length x) (get_byte x)
 
   external _disassemble : int -> nativeint -> int64 -> string = "xb_disassemble"
   let disassemble x syntax addr =
