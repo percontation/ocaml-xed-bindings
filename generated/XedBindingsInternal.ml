@@ -1362,6 +1362,119 @@ module Enum = struct
     Bindings.str2xed_syntax_enum_t a0
   let syntax_to_string (a0 : XedBindingsEnums.syntax) : string =
     Bindings.xed_syntax_enum_t2str a0
+  let cpuid_bit_for_isa_set (a0 : XedBindingsEnums.isa_set) (a1 : int) : XedBindingsEnums.cpuid_bit =
+    assert (a1 >= 0);
+    Bindings.xed_get_cpuid_bit_for_isa_set a0 a1
+  let flag_action_action_invalid (a0 : XedBindingsEnums.flag_action) : bool =
+    Bindings.xed_flag_action_action_invalid a0
+  let flag_action_read_action (a0 : XedBindingsEnums.flag_action) : bool =
+    Bindings.xed_flag_action_read_action a0
+  let flag_action_write_action (a0 : XedBindingsEnums.flag_action) : bool =
+    Bindings.xed_flag_action_write_action a0
+  let gpr_reg_class (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg_class =
+    Bindings.xed_gpr_reg_class a0
+  let iclass_norep_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
+    Bindings.xed_norep_map a0
+  let iclass_rep_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
+    Bindings.xed_rep_map a0
+  let iclass_rep_remove (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
+    Bindings.xed_rep_remove a0
+  let iclass_repe_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
+    Bindings.xed_repe_map a0
+  let iclass_repne_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
+    Bindings.xed_repne_map a0
+  let iform_first_per_iclass (a0 : XedBindingsEnums.iclass) : Unsigned.UInt32.t =
+    Bindings.xed_iform_first_per_iclass a0
+  let iform_max_per_iclass (a0 : XedBindingsEnums.iclass) : Unsigned.UInt32.t =
+    Bindings.xed_iform_max_per_iclass a0
+  let iform_to_category (a0 : XedBindingsEnums.iform) : XedBindingsEnums.category =
+    Bindings.xed_iform_to_category a0
+  let iform_to_extension (a0 : XedBindingsEnums.iform) : XedBindingsEnums.extension =
+    Bindings.xed_iform_to_extension a0
+  let iform_to_iclass (a0 : XedBindingsEnums.iform) : XedBindingsEnums.iclass =
+    Bindings.xed_iform_to_iclass a0
+  let iform_to_iclass_string_att (a0 : XedBindingsEnums.iform) : string =
+    Bindings.xed_iform_to_iclass_string_att a0
+  let iform_to_iclass_string_intel (a0 : XedBindingsEnums.iform) : string =
+    Bindings.xed_iform_to_iclass_string_intel a0
+  let iform_to_isa_set (a0 : XedBindingsEnums.iform) : XedBindingsEnums.isa_set =
+    Bindings.xed_iform_to_isa_set a0
+  let largest_enclosing_register (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg =
+    Bindings.xed_get_largest_enclosing_register a0
+  let largest_enclosing_register32 (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg =
+    Bindings.xed_get_largest_enclosing_register32 a0
+  let operand_action_conditional_read (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_conditional_read a0
+  let operand_action_conditional_write (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_conditional_write a0
+  let operand_action_read (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_read a0
+  let operand_action_read_and_written (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_read_and_written a0
+  let operand_action_read_only (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_read_only a0
+  let operand_action_written (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_written a0
+  let operand_action_written_only (a0 : XedBindingsEnums.operand_action) : int =
+    Bindings.xed_operand_action_written_only a0
+  let operand_is_memory_addressing_register (a0 : XedBindingsEnums.operand) : int =
+    Bindings.xed_operand_is_memory_addressing_register a0
+  let operand_is_register (a0 : XedBindingsEnums.operand) : int =
+    Bindings.xed_operand_is_register a0
+  let reg_class (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg_class =
+    Bindings.xed_reg_class a0
+  let register_width_bits (a0 : XedBindingsEnums.reg) : Unsigned.UInt32.t =
+    Bindings.xed_get_register_width_bits a0
+  let register_width_bits64 (a0 : XedBindingsEnums.reg) : Unsigned.UInt32.t =
+    Bindings.xed_get_register_width_bits64 a0
+end
+
+module Enc = struct
+  let disp (a0 : Unsigned.UInt64.t) (a1 : Unsigned.UInt32.t) : XedBindingsStubs.enc_displacement =
+    Bindings.xed_disp a0 a1
+  let imm0 (a0 : Unsigned.UInt64.t) (a1 : int) : XedBindingsStubs.encoder_operand =
+    assert (a1 >= 0);
+    Bindings.xed_imm0 a0 a1
+  let imm1 (a0 : char) : XedBindingsStubs.encoder_operand =
+    Bindings.xed_imm1 a0
+  let mem_b (a0 : XedBindingsEnums.reg) (a1 : int) : XedBindingsStubs.encoder_operand =
+    assert (a1 >= 0);
+    Bindings.xed_mem_b a0 a1
+  let mem_bd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsStubs.enc_displacement) (a2 : int) : XedBindingsStubs.encoder_operand =
+    assert (a2 >= 0);
+    Bindings.xed_mem_bd a0 a1 a2
+  let mem_bisd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : int) (a3 : XedBindingsStubs.enc_displacement) (a4 : int) : XedBindingsStubs.encoder_operand =
+    assert (a2 >= 0 && a4 >= 0);
+    Bindings.xed_mem_bisd a0 a1 a2 a3 a4
+  let mem_gb (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : int) : XedBindingsStubs.encoder_operand =
+    assert (a2 >= 0);
+    Bindings.xed_mem_gb a0 a1 a2
+  let mem_gbd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : XedBindingsStubs.enc_displacement) (a3 : int) : XedBindingsStubs.encoder_operand =
+    assert (a3 >= 0);
+    Bindings.xed_mem_gbd a0 a1 a2 a3
+  let mem_gbisd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : XedBindingsEnums.reg) (a3 : int) (a4 : XedBindingsStubs.enc_displacement) (a5 : int) : XedBindingsStubs.encoder_operand =
+    assert (a3 >= 0 && a5 >= 0);
+    Bindings.xed_mem_gbisd a0 a1 a2 a3 a4 a5
+  let mem_gd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsStubs.enc_displacement) (a2 : int) : XedBindingsStubs.encoder_operand =
+    assert (a2 >= 0);
+    Bindings.xed_mem_gd a0 a1 a2
+  let other (a0 : XedBindingsEnums.operand) (a1 : Signed.Int32.t) : XedBindingsStubs.encoder_operand =
+    Bindings.xed_other a0 a1
+  let ptr (a0 : Signed.Int32.t) (a1 : int) : XedBindingsStubs.encoder_operand =
+    assert (a1 >= 0);
+    Bindings.xed_ptr a0 a1
+  let reg (a0 : XedBindingsEnums.reg) : XedBindingsStubs.encoder_operand =
+    Bindings.xed_reg a0
+  let relbr (a0 : Signed.Int32.t) (a1 : int) : XedBindingsStubs.encoder_operand =
+    assert (a1 >= 0);
+    Bindings.xed_relbr a0 a1
+  let seg0 (a0 : XedBindingsEnums.reg) : XedBindingsStubs.encoder_operand =
+    Bindings.xed_seg0 a0
+  let seg1 (a0 : XedBindingsEnums.reg) : XedBindingsStubs.encoder_operand =
+    Bindings.xed_seg1 a0
+  let simm0 (a0 : Signed.Int32.t) (a1 : int) : XedBindingsStubs.encoder_operand =
+    assert (a1 >= 0);
+    Bindings.xed_simm0 a0 a1
 end
 
 (* other *)
@@ -1370,123 +1483,13 @@ let xed_attribute (a0 : int) : XedBindingsEnums.attribute =
   Bindings.xed_attribute a0
 let xed_attribute_max () : int =
   Bindings.xed_attribute_max ()
-let xed_disp (a0 : Unsigned.UInt64.t) (a1 : Unsigned.UInt32.t) : XedBindingsStubs.enc_displacement =
-  Bindings.xed_disp a0 a1
 let xed_encode_nop (a0 : bytes) : XedBindingsEnums.error =
   Bindings.xed_encode_nop (Ctypes.ocaml_bytes_start a0) (Bytes.length a0)
-let xed_flag_action_action_invalid (a0 : XedBindingsEnums.flag_action) : bool =
-  Bindings.xed_flag_action_action_invalid a0
-let xed_flag_action_read_action (a0 : XedBindingsEnums.flag_action) : bool =
-  Bindings.xed_flag_action_read_action a0
-let xed_flag_action_write_action (a0 : XedBindingsEnums.flag_action) : bool =
-  Bindings.xed_flag_action_write_action a0
 let xed_get_copyright () : string =
   Bindings.xed_get_copyright ()
-let xed_get_cpuid_bit_for_isa_set (a0 : XedBindingsEnums.isa_set) (a1 : int) : XedBindingsEnums.cpuid_bit =
-  assert (a1 >= 0);
-  Bindings.xed_get_cpuid_bit_for_isa_set a0 a1
-let xed_get_largest_enclosing_register (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg =
-  Bindings.xed_get_largest_enclosing_register a0
-let xed_get_largest_enclosing_register32 (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg =
-  Bindings.xed_get_largest_enclosing_register32 a0
-let xed_get_register_width_bits (a0 : XedBindingsEnums.reg) : Unsigned.UInt32.t =
-  Bindings.xed_get_register_width_bits a0
-let xed_get_register_width_bits64 (a0 : XedBindingsEnums.reg) : Unsigned.UInt32.t =
-  Bindings.xed_get_register_width_bits64 a0
 let xed_get_version () : string =
   Bindings.xed_get_version ()
-let xed_gpr_reg_class (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg_class =
-  Bindings.xed_gpr_reg_class a0
-let xed_iform_first_per_iclass (a0 : XedBindingsEnums.iclass) : Unsigned.UInt32.t =
-  Bindings.xed_iform_first_per_iclass a0
-let xed_iform_max_per_iclass (a0 : XedBindingsEnums.iclass) : Unsigned.UInt32.t =
-  Bindings.xed_iform_max_per_iclass a0
-let xed_iform_to_category (a0 : XedBindingsEnums.iform) : XedBindingsEnums.category =
-  Bindings.xed_iform_to_category a0
-let xed_iform_to_extension (a0 : XedBindingsEnums.iform) : XedBindingsEnums.extension =
-  Bindings.xed_iform_to_extension a0
-let xed_iform_to_iclass (a0 : XedBindingsEnums.iform) : XedBindingsEnums.iclass =
-  Bindings.xed_iform_to_iclass a0
-let xed_iform_to_iclass_string_att (a0 : XedBindingsEnums.iform) : string =
-  Bindings.xed_iform_to_iclass_string_att a0
-let xed_iform_to_iclass_string_intel (a0 : XedBindingsEnums.iform) : string =
-  Bindings.xed_iform_to_iclass_string_intel a0
-let xed_iform_to_isa_set (a0 : XedBindingsEnums.iform) : XedBindingsEnums.isa_set =
-  Bindings.xed_iform_to_isa_set a0
-let xed_imm0 (a0 : Unsigned.UInt64.t) (a1 : int) : XedBindingsStubs.encoder_operand =
-  assert (a1 >= 0);
-  Bindings.xed_imm0 a0 a1
-let xed_imm1 (a0 : char) : XedBindingsStubs.encoder_operand =
-  Bindings.xed_imm1 a0
-let xed_mem_b (a0 : XedBindingsEnums.reg) (a1 : int) : XedBindingsStubs.encoder_operand =
-  assert (a1 >= 0);
-  Bindings.xed_mem_b a0 a1
-let xed_mem_bd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsStubs.enc_displacement) (a2 : int) : XedBindingsStubs.encoder_operand =
-  assert (a2 >= 0);
-  Bindings.xed_mem_bd a0 a1 a2
-let xed_mem_bisd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : int) (a3 : XedBindingsStubs.enc_displacement) (a4 : int) : XedBindingsStubs.encoder_operand =
-  assert (a2 >= 0 && a4 >= 0);
-  Bindings.xed_mem_bisd a0 a1 a2 a3 a4
-let xed_mem_gb (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : int) : XedBindingsStubs.encoder_operand =
-  assert (a2 >= 0);
-  Bindings.xed_mem_gb a0 a1 a2
-let xed_mem_gbd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : XedBindingsStubs.enc_displacement) (a3 : int) : XedBindingsStubs.encoder_operand =
-  assert (a3 >= 0);
-  Bindings.xed_mem_gbd a0 a1 a2 a3
-let xed_mem_gbisd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsEnums.reg) (a2 : XedBindingsEnums.reg) (a3 : int) (a4 : XedBindingsStubs.enc_displacement) (a5 : int) : XedBindingsStubs.encoder_operand =
-  assert (a3 >= 0 && a5 >= 0);
-  Bindings.xed_mem_gbisd a0 a1 a2 a3 a4 a5
-let xed_mem_gd (a0 : XedBindingsEnums.reg) (a1 : XedBindingsStubs.enc_displacement) (a2 : int) : XedBindingsStubs.encoder_operand =
-  assert (a2 >= 0);
-  Bindings.xed_mem_gd a0 a1 a2
-let xed_norep_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
-  Bindings.xed_norep_map a0
-let xed_operand_action_conditional_read (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_conditional_read a0
-let xed_operand_action_conditional_write (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_conditional_write a0
-let xed_operand_action_read (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_read a0
-let xed_operand_action_read_and_written (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_read_and_written a0
-let xed_operand_action_read_only (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_read_only a0
-let xed_operand_action_written (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_written a0
-let xed_operand_action_written_only (a0 : XedBindingsEnums.operand_action) : int =
-  Bindings.xed_operand_action_written_only a0
-let xed_operand_is_memory_addressing_register (a0 : XedBindingsEnums.operand) : int =
-  Bindings.xed_operand_is_memory_addressing_register a0
-let xed_operand_is_register (a0 : XedBindingsEnums.operand) : int =
-  Bindings.xed_operand_is_register a0
-let xed_other (a0 : XedBindingsEnums.operand) (a1 : Signed.Int32.t) : XedBindingsStubs.encoder_operand =
-  Bindings.xed_other a0 a1
-let xed_ptr (a0 : Signed.Int32.t) (a1 : int) : XedBindingsStubs.encoder_operand =
-  assert (a1 >= 0);
-  Bindings.xed_ptr a0 a1
-let xed_reg (a0 : XedBindingsEnums.reg) : XedBindingsStubs.encoder_operand =
-  Bindings.xed_reg a0
-let xed_reg_class (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg_class =
-  Bindings.xed_reg_class a0
-let xed_relbr (a0 : Signed.Int32.t) (a1 : int) : XedBindingsStubs.encoder_operand =
-  assert (a1 >= 0);
-  Bindings.xed_relbr a0 a1
-let xed_rep_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
-  Bindings.xed_rep_map a0
-let xed_rep_remove (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
-  Bindings.xed_rep_remove a0
-let xed_repe_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
-  Bindings.xed_repe_map a0
-let xed_repne_map (a0 : XedBindingsEnums.iclass) : XedBindingsEnums.iclass =
-  Bindings.xed_repne_map a0
-let xed_seg0 (a0 : XedBindingsEnums.reg) : XedBindingsStubs.encoder_operand =
-  Bindings.xed_seg0 a0
-let xed_seg1 (a0 : XedBindingsEnums.reg) : XedBindingsStubs.encoder_operand =
-  Bindings.xed_seg1 a0
 let xed_set_verbosity (a0 : int) : unit =
   Bindings.xed_set_verbosity a0
-let xed_simm0 (a0 : Signed.Int32.t) (a1 : int) : XedBindingsStubs.encoder_operand =
-  assert (a1 >= 0);
-  Bindings.xed_simm0 a0 a1
 let xed_tables_init () : unit =
   Bindings.xed_tables_init ()

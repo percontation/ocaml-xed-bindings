@@ -129,45 +129,27 @@ module State = struct
 end
 
 module Enum = struct
-  open XedBindingsInternal
-  include Enum
-  let operand_is_register = xed_operand_is_register
-  let operand_is_memory_addressing_register = xed_operand_is_memory_addressing_register
-  let operand_action_read x = xed_operand_action_read x <> 0
-  let operand_action_read_only x = xed_operand_action_read_only x <> 0
-  let operand_action_written x = xed_operand_action_written x <> 0
-  let operand_action_written_only x = xed_operand_action_written_only x <> 0
-  let operand_action_read_and_written x = xed_operand_action_read_and_written x <> 0
-  let operand_action_conditional_read x = xed_operand_action_conditional_read x <> 0
-  let operand_action_conditional_write x = xed_operand_action_conditional_write x <> 0
+  include XedBindingsInternal.Enum
+  let operand_action_read x = operand_action_read x <> 0
+  let operand_action_read_only x = operand_action_read_only x <> 0
+  let operand_action_written x = operand_action_written x <> 0
+  let operand_action_written_only x = operand_action_written_only x <> 0
+  let operand_action_read_and_written x = operand_action_read_and_written x <> 0
+  let operand_action_conditional_read x = operand_action_conditional_read x <> 0
+  let operand_action_conditional_write x = operand_action_conditional_write x <> 0
 
-  let reg_class = xed_reg_class
-  let gpr_reg_class = xed_gpr_reg_class
-  let largest_enclosing_reg = xed_get_largest_enclosing_register
-  let largest_enclosing_reg32 = xed_get_largest_enclosing_register32
-  let reg_width_bits x = xed_get_register_width_bits x |> Unsigned.UInt32.to_int
-  let reg_width_bits64 x = xed_get_register_width_bits64 x |> Unsigned.UInt32.to_int
+  let register_width_bits x = register_width_bits x |> Unsigned.UInt32.to_int
+  let register_width_bits64 x = register_width_bits64 x |> Unsigned.UInt32.to_int
 
-  let iclass_rep_remove = xed_rep_remove
-  let iclass_repe_map = xed_repe_map
-  let iclass_repne_map = xed_repne_map
-  let iclass_rep_map = xed_rep_map
-  let iclass_norep_map = xed_norep_map
+  let iform_max_per_iclass x = iform_max_per_iclass x |> Unsigned.UInt32.to_int
+  let iform_first_per_iclass x = iform_first_per_iclass x |> Unsigned.UInt32.to_int
 
-  let iform_max_per_iclass x = xed_iform_max_per_iclass x |> Unsigned.UInt32.to_int
-  let iform_first_per_iclass x = xed_iform_first_per_iclass x |> Unsigned.UInt32.to_int
-  let iform_to_iclass = xed_iform_to_iclass
-  let iform_to_category = xed_iform_to_category
-  let iform_to_extension = xed_iform_to_extension
-  let iform_to_isa_set = xed_iform_to_isa_set
-  let iform_to_iclass_string_att = xed_iform_to_iclass_string_att
-  let iform_to_iclass_string_intel = xed_iform_to_iclass_string_intel
+  let attributes =
+    Array.init (XedBindingsInternal.xed_attribute_max ()) XedBindingsInternal.xed_attribute
+end
 
-  let flag_action_action_invalid = xed_flag_action_action_invalid
-  let flag_action_read_action = xed_flag_action_read_action
-  let flag_action_write_action = xed_flag_action_write_action
-
-  let attributes = Array.init (xed_attribute_max ()) xed_attribute
+module Enc = struct
+  include XedBindingsInternal.Enc
 end
 
 let () = XedBindingsInternal.xed_tables_init ()
@@ -193,14 +175,14 @@ let ild_decode state s =
   | Enum.NONE -> Ok x
   | err -> Error err
 
-let get_version = XedBindingsInternal.xed_get_version
-let get_copyright = XedBindingsInternal.xed_get_copyright
-let get_cpuid_bit_for_isa_set = XedBindingsInternal.xed_get_cpuid_bit_for_isa_set
-
 let encode_nop len =
   let bytes = Bytes.create len in
   match XedBindingsInternal.xed_encode_nop bytes with
   | Enum.NONE -> Ok bytes
   | err -> Error err
+
+let get_copyright = XedBindingsInternal.xed_get_copyright
+let get_version = XedBindingsInternal.xed_get_version
+let set_verbosity = XedBindingsInternal.xed_set_verbosity
 
 let ok_err = function Ok x -> x | Error e -> failwith (Enum.error_to_string e)

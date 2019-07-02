@@ -210,6 +210,13 @@ BUINT16  = intern('uint16_t')
 BUINT32  = intern('uint32_t')
 BUINT64  = intern('uint64_t')
 
+basic_prim_kinds = [
+  BBOOL, BINT, BUINT, BSTRING, BBYTE, BSINT32, BSINT64, BUINT16, BUINT32, BUINT64
+]
+
+def type_is_nonvoid_basic_prim(t):
+  return isinstance(t, BPrim) and t.kind in basic_prim_kinds
+
 prim_types = [
   BPrim('void', 'unit', BVOID),
   BPrim('xed_bool_t', 'bool', BBOOL),
@@ -707,6 +714,8 @@ def func_class_name_fixes(cname, default=None):
 # Produced cnames are actually the oname used in functions.ml
 func_classes = {}
 enum2str_funcs = []
+enuminfo_funcs = []
+encoder_funcs = []
 other_funcs = []
 for func in functions:
   cname = func.cname
@@ -740,9 +749,31 @@ for func in functions:
     methods[method_name] = func._replace(oname=method_name, cname=func.oname)
     continue
 
+  if (
+    len(func.types) >= 2
+    and isinstance(func.types[0], BEnum)
+    and all(isinstance(i, BEnum) or type_is_nonvoid_basic_prim(i) for i in func.types)
+  ):
+    oname = func.oname
+    if oname.startswith("xed_"): oname = oname[4:]
+    if oname.startswith("get_"): oname = oname[4:]
+    if func.types[0].oname not in oname:
+      oname = func.types[0].oname + "_" + oname
+    enuminfo_funcs.append(func._replace(oname=oname))
+    continue
+
+  if func.types[-1].cname in ("xed_encoder_operand_t", "xed_enc_displacement_t"):
+    oname = func.oname
+    if oname.startswith("xed_"):
+      oname = oname[4:]
+    encoder_funcs.append(func._replace(oname=oname))
+    continue
+
   other_funcs.append(func)
 
 enum2str_funcs.sort(key=lambda k: k.oname)
+enuminfo_funcs.sort(key=lambda k: k.oname)
+encoder_funcs.sort(key=lambda k: k.oname)
 other_funcs.sort(key=lambda k: k.oname)
 
 with open(outfile("XedBindingsInternal.ml"), 'w') as f:
@@ -849,6 +880,15 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
   print >> f, "module Enum = struct"
   print >> f, "  include XedBindingsEnums"
   for func in enum2str_funcs:
+    print >> f, trans(func, indent="  ")
+  for func in enuminfo_funcs:
+    print >> f, trans(func, indent="  ")
+  print >> f, "end"
+
+  print >> f, ""
+
+  print >> f, "module Enc = struct"
+  for func in encoder_funcs:
     print >> f, trans(func, indent="  ")
   print >> f, "end"
 
