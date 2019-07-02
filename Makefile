@@ -19,7 +19,7 @@ endif
 veryclean: clean
 	rm -Rf ./xed/obj
 
-install: lib uninstall
+install: lib uninstall _build/dllxedbindings.so
 	# This is dumb and I should figure out how to use topkg
 	ocamlfind install xed-bindings META _build/dllxedbindings.so _build/src/xedbindings_stubs.o _build/generated/xedbindings_genstubs.o xed/obj/libxed.a `find _build/src _build/generated -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmt'`
 
@@ -27,7 +27,8 @@ uninstall:
 	ocamlfind remove xed-bindings
 
 .PHONY: lib
-lib: stubs _build/dllxedbindings.so
+lib: stubs
+	${OCAMLBUILD} generated/xedbindings_genstubs.o src/xedbindings_stubs.o
 	${OCAMLBUILD} src/Xed.cmi src/Xed.cma src/Xed.cmxa src/Xed.a src/Xed.inferred.mli
 
 .PHONY: submodules
@@ -56,9 +57,9 @@ test: stubs
 	${OCAMLBUILD} test.native
 	./_build/src/test.native
 
-_build/dllxed.so: xed
-	mkdir -p _build
-	cc -shared xed/obj/libxed.a -o $@
+# _build/dllxed.so: xed
+# 	mkdir -p _build
+# 	cc -shared xed/obj/libxed.a -o $@
 
 ifeq ($(shell uname),Darwin)
 WLIGNORE := -Wl,-flat_namespace,-undefined,dynamic_lookup

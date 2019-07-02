@@ -22,7 +22,7 @@ dispatch begin function
             A"-cclib"; A"../xed/obj/libxed.a";
           ]);
 
-    flag ["link"; "ocaml"; "library"; "native"; "use_xed"]
+    flag ["link"; "ocaml"; "library"; "use_xed"]
       (S[A"-ccopt"; P"$CAMLORIGIN/xedbindings_genstubs.o";
          A"-ccopt"; P"$CAMLORIGIN/xedbindings_stubs.o";
          A"-ccopt"; A"$CAMLORIGIN/libxed.a";
@@ -33,7 +33,6 @@ dispatch begin function
          A"-ccopt"; P"src/xedbindings_stubs.o";
          A"-ccopt"; A"../xed/obj/libxed.a";
        ]);
-
 
     flag ["link"; "ocaml"; "byte"; "use_xed"] (S[A"-dllib"; A"-lxedbindings"]);
 
