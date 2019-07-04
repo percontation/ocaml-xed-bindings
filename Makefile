@@ -31,14 +31,10 @@ lib: stubs
 	${OCAMLBUILD} generated/xedbindings_genstubs.o src/xedbindings_stubs.o
 	${OCAMLBUILD} src/Xed.cmi src/Xed.cma src/Xed.cmxa src/Xed.a src/Xed.inferred.mli
 
-.PHONY: submodules
-submodules:
-	git submodule update --init --checkout --recursive -- mbuild
-	git submodule update --init --checkout --recursive -- xed
-
 .PHONY: xed
-xed: submodules
-	cd xed && { test -n "`find obj/xed-reg-enum.h -mtime -1h 2>/dev/null || true`" || { ./mfile.py --no-werror --extra-flags=-fPIC  && touch obj/xed-reg-enum.h; }; }
+xed:
+	git submodule update --init --checkout --recursive -- xed mbuild || true
+	cd xed && ./mfile.py --no-werror --extra-flags=-fPIC
 
 .PHONY: stubs
 ifeq (${NO_GENERATE},)
@@ -49,7 +45,7 @@ stubs: xed generate_bindings.py
 	${OCAMLBUILD} generate_stubs.native
 	./_build/generate_stubs.native
 else
-stubs: generated/XedBindingsEnums.ml generated/XedBindingsGenerated.ml generated/XedBindingsInternal.ml generated/XedBindingsStructs.ml generated/XedBindingsStubs.ml generated/xedbindings_genstubs.c
+stubs: xed generated/XedBindingsEnums.ml generated/XedBindingsGenerated.ml generated/XedBindingsInternal.ml generated/XedBindingsStructs.ml generated/XedBindingsStubs.ml generated/xedbindings_genstubs.c
 endif
 
 .PHONY: test
