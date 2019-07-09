@@ -35,6 +35,15 @@ value xb_encode(value encoder_request) {
   CAMLreturn(outtup);
 }
 
+value xb_encoder_request_init_from_decode(value encoder_request, value decoded_inst) {
+  CAMLparam2(encoder_request, decoded_inst);
+  xed_encoder_request_t *req = (void *)Nativeint_val(encoder_request);
+  const xed_decoded_inst_t *xedd = (void *)Nativeint_val(decoded_inst);
+  *req = *xedd;
+  xed_encoder_request_init_from_decode(req);
+  CAMLreturn(Val_unit);
+}
+
 value xb_attrs_to_list(xed_attributes_t attrs) {
   int i;
   CAMLparam0();

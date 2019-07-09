@@ -31,6 +31,9 @@ module DecodedInst = struct
   external _disassemble : int -> nativeint -> int64 -> string = "xb_disassemble"
   let disassemble x syntax addr =
     _disassemble (XedBindingsEnums.syntax_to_int syntax) (const_pointer x |> Ctypes.raw_address_of_ptr) addr
+
+  let to_string_intel x =
+    disassemble x XedBindingsEnums.INTEL 0L
 end
 
 module EncoderInstruction = struct
@@ -62,11 +65,29 @@ module EncoderRequest = struct
   external _encode : nativeint -> (int * string) = "xb_encode"
   let encode x =
     let err, dat = _encode (pointer x |> Ctypes.raw_address_of_ptr) in
-    XedBindingsEnums.error_of_int err, dat
+    match XedBindingsEnums.error_of_int err with
+    | XedBindingsEnums.NONE -> Ok dat
+    | err -> Error err
+
+  let init mode =
+    let x = allocate ()
+    in zero_set_mode x mode; x
 
   let of_encoder_instruction (y : [>`Read] XedBindingsStructs.EncoderInstruction.t) =
     let x = allocate () in
     if convert_to_encoder_request x y then Some x else None
+
+  external _init_from_decode : nativeint -> nativeint -> unit = "xb_encoder_request_init_from_decode"
+  let of_decoded_inst (y : [>`Read] XedBindingsStructs.DecodedInst.t) =
+    let x = allocate ()
+    in _init_from_decode (const_pointer x |> Ctypes.raw_address_of_ptr) (XedBindingsStructs.DecodedInst.const_pointer y |> Ctypes.raw_address_of_ptr); x
+
+  let to_string x =
+    let bytes = Bytes.create 5000 in
+    print x bytes;
+    match Bytes.index_opt bytes '\000' with
+    | Some i -> Bytes.sub_string bytes 0 i
+    | None -> Bytes.unsafe_to_string bytes
 end
 
 module FlagAction = struct

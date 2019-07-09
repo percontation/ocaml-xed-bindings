@@ -250,6 +250,8 @@ module EncoderRequest = struct
     Bindings.xed_encoder_request_operands (Obj.magic a0)
   let operands_const (a0 : [>`Read] t) : [<`Read|`Write of [`No]] XedBindingsStructs.OperandValues.t =
     Bindings.xed_encoder_request_operands_const (Obj.magic a0)
+  let print (a0 : [>`Read] t) (a1 : bytes) : unit =
+    Bindings.xed_encode_request_print (Obj.magic a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
   let set_agen (a0 : [>`Read|`Write of [`Yes]] t) : unit =
     Bindings.xed_encoder_request_set_agen (Obj.magic a0)
   let set_base0 (a0 : [>`Read|`Write of [`Yes]] t) (a1 : XedBindingsEnums.reg) : unit =

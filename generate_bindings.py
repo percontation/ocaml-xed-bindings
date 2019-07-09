@@ -459,6 +459,7 @@ unwanted_functions = {
   "xed_inst_get_attributes",
   "xed_decoded_inst_get_attributes",
   "xed_encode",
+  "xed_encoder_request_init_from_decode",
   # "xed_inst",
   # "xed_inst0",
   # "xed_inst1",
@@ -558,8 +559,6 @@ def filter_funcs(func):
 skip_funcs = {
   "xed_iform_map",
   "xed3_set_generic_operand",
-  "xed_encoder_request_init_from_decode",
-  "xed_encode_request_print",
   "xed_init_print_info",
   "xed_format_generic",
   "xed_get_cpuid_rec",
@@ -709,6 +708,8 @@ def func_class_name_fixes(cname, default=None):
     return "op_type"
   if cname == "xed_operand_operand_visibility":
     return "visibility"
+  if cname == "xed_encode_request_print":
+    return "print"
   return default or cname
 
 # Produced cnames are actually the oname used in functions.ml

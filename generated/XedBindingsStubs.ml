@@ -451,6 +451,7 @@ module Bindings (F : Cstubs.FOREIGN) = struct
   let xed_decoded_inst_zeroing = foreign "xed_decoded_inst_zeroing" (decoded_inst_arg @-> returning bool)
   let xed_disp = foreign "xed_disp" (uint64_t @-> uint32_t @-> returning enc_displacement_view)
   let xed_encode_nop = foreign "xed_encode_nop" (ocaml_bytes @-> int @-> returning error_enum)
+  let xed_encode_request_print = foreign "xed_encode_request_print" (encoder_request_arg @-> ocaml_bytes @-> int @-> returning void)
   let xed_encoder_request_clear_rep = foreign "xed_encoder_request_clear_rep" (encoder_request_mut @-> returning void)
   let xed_encoder_request_get_iclass = foreign "xed_encoder_request_get_iclass" (encoder_request_arg @-> returning iclass_enum)
   let xed_encoder_request_get_operand_order = foreign "xed_encoder_request_get_operand_order" (encoder_request_mut @-> int @-> returning operand_enum)
