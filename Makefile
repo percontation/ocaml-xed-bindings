@@ -21,7 +21,7 @@ veryclean: clean
 
 install: lib uninstall _build/dllxedbindings.so
 	# This is dumb and I should figure out how to use topkg
-	ocamlfind install xed-bindings META _build/dllxedbindings.so _build/src/xedbindings_stubs.o _build/generated/xedbindings_genstubs.o xed/obj/libxed.a `find _build/src _build/generated -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmt'`
+	ocamlfind install xed-bindings META _build/dllxedbindings.so _build/src/xedbindings_stubs.o _build/generated/xedbindings_genstubs.o xed/obj/libxed.a `find _build/src _build/generated -name '*.a' -o -name '*.mli' -o -name '*.cmi' -o -name '*.cma' -o -name '*.cmxa' -o -name '*.cmx' -o -name '*.cmt'`
 
 uninstall:
 	ocamlfind remove xed-bindings
