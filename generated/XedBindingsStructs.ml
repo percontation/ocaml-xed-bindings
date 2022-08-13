@@ -10,7 +10,7 @@ let _allocate n : ('a, [<`Read|`Write of [`Yes]]) myptr = Ctypes.allocate_n Ctyp
 module ChipFeatures = struct
   type _t
   type -'a t = (_t, 'a) myptr
-  let allocate () : [<`Read|`Write of [`Yes]] t = _allocate 32 |> Obj.magic
+  let allocate () : [<`Read|`Write of [`Yes]] t = _allocate 40 |> Obj.magic
   let pointer : [>`Read|`Write of [`Yes]] t -> unit Ctypes.ptr = Obj.magic
   let const_pointer : [>`Read] t -> unit Ctypes.ptr = Obj.magic
 end
@@ -24,7 +24,7 @@ end
 module EncoderInstruction = struct
   type _t
   type -'a t = (_t, 'a) myptr
-  let allocate () : [<`Read|`Write of [`Yes]] t = _allocate 272 |> Obj.magic
+  let allocate () : [<`Read|`Write of [`Yes]] t = _allocate 416 |> Obj.magic
   let pointer : [>`Read|`Write of [`Yes]] t -> unit Ctypes.ptr = Obj.magic
   let const_pointer : [>`Read] t -> unit Ctypes.ptr = Obj.magic
 end

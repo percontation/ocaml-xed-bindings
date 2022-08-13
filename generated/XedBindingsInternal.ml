@@ -10,6 +10,10 @@ end
 
 module DecodedInst = struct
   include XedBindingsStructs.DecodedInst
+  let avx512_dest_elements (a0 : [>`Read] t) : int =
+    Bindings.xed_decoded_inst_avx512_dest_elements (Obj.magic a0)
+  let classify_amx (a0 : [>`Read] t) : bool =
+    Bindings.xed_classify_amx (Obj.magic a0)
   let classify_avx (a0 : [>`Read] t) : bool =
     Bindings.xed_classify_avx (Obj.magic a0)
   let classify_avx512 (a0 : [>`Read] t) : bool =
@@ -86,7 +90,7 @@ module DecodedInst = struct
     Bindings.xed_decoded_inst_get_memory_operand_length (Obj.magic a0) a1
   let get_modrm (a0 : [>`Read] t) : char =
     Bindings.xed_decoded_inst_get_modrm (Obj.magic a0)
-  let get_nprefixes (a0 : [>`Read|`Write of [`Yes]] t) : int =
+  let get_nprefixes (a0 : [>`Read] t) : int =
     Bindings.xed_decoded_inst_get_nprefixes (Obj.magic a0)
   let get_operand_width (a0 : [>`Read] t) : Unsigned.UInt32.t =
     Bindings.xed_decoded_inst_get_operand_width (Obj.magic a0)
@@ -235,8 +239,6 @@ end
 
 module EncoderRequest = struct
   include XedBindingsStructs.EncoderRequest
-  let clear_rep (a0 : [>`Read|`Write of [`Yes]] t) : unit =
-    Bindings.xed_encoder_request_clear_rep (Obj.magic a0)
   let convert_to_encoder_request (a0 : [>`Read|`Write of [`Yes]] t) (a1 : [>`Read|`Write of [`Yes]] XedBindingsStructs.EncoderInstruction.t) : bool =
     Bindings.xed_convert_to_encoder_request (Obj.magic a0) (Obj.magic a1)
   let get_iclass (a0 : [>`Read] t) : XedBindingsEnums.iclass =
@@ -290,10 +292,6 @@ module EncoderRequest = struct
     Bindings.xed_encoder_request_set_reg (Obj.magic a0) a1 a2
   let set_relbr (a0 : [>`Read|`Write of [`Yes]] t) : unit =
     Bindings.xed_encoder_request_set_relbr (Obj.magic a0)
-  let set_rep (a0 : [>`Read|`Write of [`Yes]] t) : unit =
-    Bindings.xed_encoder_request_set_rep (Obj.magic a0)
-  let set_repne (a0 : [>`Read|`Write of [`Yes]] t) : unit =
-    Bindings.xed_encoder_request_set_repne (Obj.magic a0)
   let set_scale (a0 : [>`Read|`Write of [`Yes]] t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed_encoder_request_set_scale (Obj.magic a0) a1
@@ -435,6 +433,8 @@ module Operand3 = struct
     Bindings.xed3_operand_get_cet (Obj.magic a0)
   let get_chip (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : XedBindingsEnums.chip =
     Bindings.xed3_operand_get_chip (Obj.magic a0)
+  let get_cldemote (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_cldemote (Obj.magic a0)
   let get_default_seg (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_default_seg (Obj.magic a0)
   let get_df32 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -451,6 +451,8 @@ module Operand3 = struct
     Bindings.xed3_operand_get_easz (Obj.magic a0)
   let get_element_size (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_element_size (Obj.magic a0)
+  let get_encode_force (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_encode_force (Obj.magic a0)
   let get_encoder_preferred (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_encoder_preferred (Obj.magic a0)
   let get_eosz (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -459,8 +461,6 @@ module Operand3 = struct
     Bindings.xed3_operand_get_error (Obj.magic a0)
   let get_esrc (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_esrc (Obj.magic a0)
-  let get_evexrr (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
-    Bindings.xed3_operand_get_evexrr (Obj.magic a0)
   let get_first_f2f3 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_first_f2f3 (Obj.magic a0)
   let get_has_modrm (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -515,6 +515,8 @@ module Operand3 = struct
     Bindings.xed3_operand_get_mode (Obj.magic a0)
   let get_mode_first_prefix (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_mode_first_prefix (Obj.magic a0)
+  let get_mode_short_ud0 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_mode_short_ud0 (Obj.magic a0)
   let get_modep5 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_modep5 (Obj.magic a0)
   let get_modep55c (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -523,14 +525,20 @@ module Operand3 = struct
     Bindings.xed3_operand_get_modrm_byte (Obj.magic a0)
   let get_mpxmode (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_mpxmode (Obj.magic a0)
+  let get_must_use_evex (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_must_use_evex (Obj.magic a0)
   let get_need_memdisp (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_need_memdisp (Obj.magic a0)
+  let get_need_sib (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_need_sib (Obj.magic a0)
   let get_needrex (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_needrex (Obj.magic a0)
   let get_nelem (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_nelem (Obj.magic a0)
-  let get_no_scale_disp8 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
-    Bindings.xed3_operand_get_no_scale_disp8 (Obj.magic a0)
+  let get_no_evex (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_no_evex (Obj.magic a0)
+  let get_no_vex (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_no_vex (Obj.magic a0)
   let get_nominal_opcode (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_nominal_opcode (Obj.magic a0)
   let get_norex (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -587,6 +595,8 @@ module Operand3 = struct
     Bindings.xed3_operand_get_reg7 (Obj.magic a0)
   let get_reg8 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : XedBindingsEnums.reg =
     Bindings.xed3_operand_get_reg8 (Obj.magic a0)
+  let get_reg9 (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : XedBindingsEnums.reg =
+    Bindings.xed3_operand_get_reg9 (Obj.magic a0)
   let get_relbr (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_relbr (Obj.magic a0)
   let get_rep (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -617,22 +627,16 @@ module Operand3 = struct
     Bindings.xed3_operand_get_seg1 (Obj.magic a0)
   let get_seg_ovd (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_seg_ovd (Obj.magic a0)
-  let get_sib (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
-    Bindings.xed3_operand_get_sib (Obj.magic a0)
   let get_sibbase (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_sibbase (Obj.magic a0)
   let get_sibindex (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_sibindex (Obj.magic a0)
   let get_sibscale (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_sibscale (Obj.magic a0)
-  let get_skip_osz (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
-    Bindings.xed3_operand_get_skip_osz (Obj.magic a0)
   let get_smode (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_smode (Obj.magic a0)
   let get_srm (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_srm (Obj.magic a0)
-  let get_type (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : XedBindingsEnums.operand_element_type =
-    Bindings.xed3_operand_get_type (Obj.magic a0)
   let get_tzcnt (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_tzcnt (Obj.magic a0)
   let get_ubit (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
@@ -659,6 +663,8 @@ module Operand3 = struct
     Bindings.xed3_operand_get_vexvalid (Obj.magic a0)
   let get_vl (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_vl (Obj.magic a0)
+  let get_wbnoinvd (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
+    Bindings.xed3_operand_get_wbnoinvd (Obj.magic a0)
   let get_zeroing (a0 : [>`Read] XedBindingsStructs.DecodedInst.t) : int =
     Bindings.xed3_operand_get_zeroing (Obj.magic a0)
   let set_agen (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
@@ -687,6 +693,9 @@ module Operand3 = struct
     Bindings.xed3_operand_set_cet (Obj.magic a0) a1
   let set_chip (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : XedBindingsEnums.chip) : unit =
     Bindings.xed3_operand_set_chip (Obj.magic a0) a1
+  let set_cldemote (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_cldemote (Obj.magic a0) a1
   let set_default_seg (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_default_seg (Obj.magic a0) a1
@@ -709,6 +718,9 @@ module Operand3 = struct
   let set_element_size (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_element_size (Obj.magic a0) a1
+  let set_encode_force (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_encode_force (Obj.magic a0) a1
   let set_encoder_preferred (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_encoder_preferred (Obj.magic a0) a1
@@ -720,9 +732,6 @@ module Operand3 = struct
   let set_esrc (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_esrc (Obj.magic a0) a1
-  let set_evexrr (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
-    assert (a1 >= 0);
-    Bindings.xed3_operand_set_evexrr (Obj.magic a0) a1
   let set_first_f2f3 (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_first_f2f3 (Obj.magic a0) a1
@@ -800,6 +809,9 @@ module Operand3 = struct
   let set_mode_first_prefix (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_mode_first_prefix (Obj.magic a0) a1
+  let set_mode_short_ud0 (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_mode_short_ud0 (Obj.magic a0) a1
   let set_modep5 (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_modep5 (Obj.magic a0) a1
@@ -812,18 +824,27 @@ module Operand3 = struct
   let set_mpxmode (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_mpxmode (Obj.magic a0) a1
+  let set_must_use_evex (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_must_use_evex (Obj.magic a0) a1
   let set_need_memdisp (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_need_memdisp (Obj.magic a0) a1
+  let set_need_sib (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_need_sib (Obj.magic a0) a1
   let set_needrex (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_needrex (Obj.magic a0) a1
   let set_nelem (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_nelem (Obj.magic a0) a1
-  let set_no_scale_disp8 (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+  let set_no_evex (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
-    Bindings.xed3_operand_set_no_scale_disp8 (Obj.magic a0) a1
+    Bindings.xed3_operand_set_no_evex (Obj.magic a0) a1
+  let set_no_vex (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_no_vex (Obj.magic a0) a1
   let set_nominal_opcode (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_nominal_opcode (Obj.magic a0) a1
@@ -898,6 +919,8 @@ module Operand3 = struct
     Bindings.xed3_operand_set_reg7 (Obj.magic a0) a1
   let set_reg8 (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : XedBindingsEnums.reg) : unit =
     Bindings.xed3_operand_set_reg8 (Obj.magic a0) a1
+  let set_reg9 (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : XedBindingsEnums.reg) : unit =
+    Bindings.xed3_operand_set_reg9 (Obj.magic a0) a1
   let set_relbr (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_relbr (Obj.magic a0) a1
@@ -941,9 +964,6 @@ module Operand3 = struct
   let set_seg_ovd (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_seg_ovd (Obj.magic a0) a1
-  let set_sib (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
-    assert (a1 >= 0);
-    Bindings.xed3_operand_set_sib (Obj.magic a0) a1
   let set_sibbase (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_sibbase (Obj.magic a0) a1
@@ -953,17 +973,12 @@ module Operand3 = struct
   let set_sibscale (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_sibscale (Obj.magic a0) a1
-  let set_skip_osz (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
-    assert (a1 >= 0);
-    Bindings.xed3_operand_set_skip_osz (Obj.magic a0) a1
   let set_smode (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_smode (Obj.magic a0) a1
   let set_srm (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_srm (Obj.magic a0) a1
-  let set_type (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : XedBindingsEnums.operand_element_type) : unit =
-    Bindings.xed3_operand_set_type (Obj.magic a0) a1
   let set_tzcnt (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_tzcnt (Obj.magic a0) a1
@@ -1001,6 +1016,9 @@ module Operand3 = struct
   let set_vl (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_vl (Obj.magic a0) a1
+  let set_wbnoinvd (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Bindings.xed3_operand_set_wbnoinvd (Obj.magic a0) a1
   let set_zeroing (a0 : [>`Read|`Write of [`Yes]] XedBindingsStructs.DecodedInst.t) (a1 : int) : unit =
     assert (a1 >= 0);
     Bindings.xed3_operand_set_zeroing (Obj.magic a0) a1
@@ -1014,6 +1032,8 @@ module OperandValues = struct
     Bindings.xed_operand_values_branch_not_taken_hint (Obj.magic a0)
   let branch_taken_hint (a0 : [>`Read] t) : bool =
     Bindings.xed_operand_values_branch_taken_hint (Obj.magic a0)
+  let cet_no_track (a0 : [>`Read] t) : bool =
+    Bindings.xed_operand_values_cet_no_track (Obj.magic a0)
   let clear_rep (a0 : [>`Read|`Write of [`Yes]] t) : unit =
     Bindings.xed_operand_values_clear_rep (Obj.magic a0)
   let dump (a0 : [>`Read] t) (a1 : bytes) : unit =
@@ -1112,14 +1132,17 @@ module OperandValues = struct
   let has_sib_byte (a0 : [>`Read] t) : bool =
     Bindings.xed_operand_values_has_sib_byte (Obj.magic a0)
   let init () : [<`Read|`Write of [`Yes]] t =
-    let a0 = allocate () in
-    Bindings.xed_operand_values_init (Obj.magic a0); a0
+   let a0 = allocate () in
+    Bindings.xed_operand_values_init (Obj.magic a0);
+    a0
   let init_keep_mode (a1 : [>`Read] t) : [<`Read|`Write of [`Yes]] t =
-    let a0 = allocate () in
-    Bindings.xed_operand_values_init_keep_mode (Obj.magic a0) (Obj.magic a1); a0
+   let a0 = allocate () in
+    Bindings.xed_operand_values_init_keep_mode (Obj.magic a0) (Obj.magic a1);
+    a0
   let init_set_mode (a1 : [>`Read] XedBindingsStructs.State.t) : [<`Read|`Write of [`Yes]] t =
-    let a0 = allocate () in
-    Bindings.xed_operand_values_init_set_mode (Obj.magic a0) (Obj.magic a1); a0
+   let a0 = allocate () in
+    Bindings.xed_operand_values_init_set_mode (Obj.magic a0) (Obj.magic a1);
+    a0
   let is_nop (a0 : [>`Read] t) : bool =
     Bindings.xed_operand_values_is_nop (Obj.magic a0)
   let lockable (a0 : [>`Read] t) : bool =
@@ -1234,11 +1257,13 @@ module State = struct
   let get_stack_address_width (a0 : [>`Read] t) : XedBindingsEnums.address_width =
     Bindings.xed_state_get_stack_address_width (Obj.magic a0)
   let init (a1 : XedBindingsEnums.machine_mode) (a2 : XedBindingsEnums.address_width) (a3 : XedBindingsEnums.address_width) : [<`Read|`Write of [`Yes]] t =
-    let a0 = allocate () in
-    Bindings.xed_state_init (Obj.magic a0) a1 a2 a3; a0
+   let a0 = allocate () in
+    Bindings.xed_state_init (Obj.magic a0) a1 a2 a3;
+    a0
   let init2 (a1 : XedBindingsEnums.machine_mode) (a2 : XedBindingsEnums.address_width) : [<`Read|`Write of [`Yes]] t =
-    let a0 = allocate () in
-    Bindings.xed_state_init2 (Obj.magic a0) a1 a2; a0
+   let a0 = allocate () in
+    Bindings.xed_state_init2 (Obj.magic a0) a1 a2;
+    a0
   let long64_mode (a0 : [>`Read] t) : bool =
     Bindings.xed_state_long64_mode (Obj.magic a0)
   let mode_width_16 (a0 : [>`Read] t) : bool =
@@ -1401,6 +1426,8 @@ module Enum = struct
     Bindings.xed_iform_to_iclass_string_intel a0
   let iform_to_isa_set (a0 : XedBindingsEnums.iform) : XedBindingsEnums.isa_set =
     Bindings.xed_iform_to_isa_set a0
+  let isa_set_is_valid_for_chip (a0 : XedBindingsEnums.isa_set) (a1 : XedBindingsEnums.chip) : bool =
+    Bindings.xed_isa_set_is_valid_for_chip a0 a1
   let largest_enclosing_register (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg =
     Bindings.xed_get_largest_enclosing_register a0
   let largest_enclosing_register32 (a0 : XedBindingsEnums.reg) : XedBindingsEnums.reg =
@@ -1432,7 +1459,7 @@ module Enum = struct
 end
 
 module Enc = struct
-  let disp (a0 : Unsigned.UInt64.t) (a1 : Unsigned.UInt32.t) : XedBindingsStubs.enc_displacement =
+  let disp (a0 : Signed.Int64.t) (a1 : Unsigned.UInt32.t) : XedBindingsStubs.enc_displacement =
     Bindings.xed_disp a0 a1
   let imm0 (a0 : Unsigned.UInt64.t) (a1 : int) : XedBindingsStubs.encoder_operand =
     assert (a1 >= 0);
