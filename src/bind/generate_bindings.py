@@ -4,13 +4,26 @@ import sys, time, subprocess
 import os, os.path, glob
 import re
 from clang import cindex
-from collections import namedtuple
-
-use_polymorphic_variants_for_enums = False
+from collections import namedtuple, OrderedDict
 
 def stderr(s):
   sys.stderr.write(s+"\n")
   sys.stderr.flush()
+
+def usage_exit():
+  argv0 = (sys.argv[:1]+["generate_bindings.py"])[0]
+  stderr("Usage: %s path/to/include/xed" % argv0)
+  exit(64)
+
+if len(sys.argv) != 2:
+  usage_exit()
+
+XED_HEADERS = sys.argv[1]
+
+if not os.path.exists(os.path.join(XED_HEADERS, "xed-interface.h")):
+  usage_exit()
+
+use_polymorphic_variants_for_enums = False
 
 # Monkeypatch for using a slightly older clang.cindex with a new libclang.
 try:
@@ -54,13 +67,12 @@ def group_into_lines(prefix, line_gen):
 #
 # Parse XED headers.
 #
-def xedfile(path):
-  return os.path.join(os.path.dirname(__file__), "xed", path)
 
-args = ["-I"+xedfile("obj"), "-I"+xedfile("include/public/xed")]
-options = cindex.TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD
-tu = Index.parse(xedfile("include/public/xed/xed-interface.h"), args=args, options=options)
-
+tu = Index.parse(
+  os.path.join(XED_HEADERS, "xed-interface.h"),
+  args=["-I"+XED_HEADERS],
+  options=cindex.TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD,
+)
 
 #
 # cindex helper functions.
@@ -118,14 +130,14 @@ class BPrim(namedtuple('BPrim', ('cname', 'oname', 'kind'))):
   def __str__(self):
     return self.cname
 
-class BEnumVal(namedtuple('BEnumVal', ('oname', 'cname', 'cval'))):
+class BEnumVal(namedtuple('BEnumVal', ('oname', 'cname', 'value'))):
   def valid(self):
-    return self.cname and (self.cval is not None)
+    return self.cname and (self.value is not None)
 
   def __str__(self):
-    return "%s/%d" % (self.cname, self.cval)
+    return "%s/%s" % (self.cname, self.value)
 
-class BEnum(namedtuple('BEnum', ('oname', 'cname', 'ctype', 'elements'))):
+class BEnum(namedtuple('BEnum', ('oname', 'cname', 'ctype', 'elements', 'aliases', 'has_last'))):
   def valid(self):
     return all(i is not None and i.valid() for i in self.elements)
 
@@ -168,12 +180,15 @@ class BPtr(namedtuple('BPtr', ('type', 'const'))):
   def oname(self):
     return self.type.oname + '*'
 
-class BOpaque(namedtuple('BOpaque', ('cname', 'oname', 'size'))):
+class BOpaque(namedtuple('BOpaque', ('cname', 'oname', 'size', 'align'))):
   def valid(self):
-    return self.cname and self.size >= 0
+    return self.cname and self.size >= 0 and (self.align & (self.align - 1)) == 0
 
   def __str__(self):
-    return "%s:%d" % (self.cname, self.size)
+    if self.align == self.size:
+      return "%s:%d" % (self.cname, self.size)
+    else:
+      return "%s:%d:%s" % (self.cname, self.size, self.align)
 
 # May only appear as a function arg. `idx` indicates the sibling arg
 # index for buffer length. `ptr` is a BPtr. `out` indicates whether
@@ -235,26 +250,7 @@ prim_types = [
   BPrim('uint64_t', 'Unsigned.UInt64.t', BUINT64),
   BPrim('unsigned int', 'int', BUINT),
   BPrim('xed_uint_t', 'int', BUINT),
-  BPrim('xed_encoder_operand_t', 'XedBindingsStubs.encoder_operand', 'encoder_operand_view'),
-  BPrim('xed_enc_displacement_t', 'XedBindingsStubs.enc_displacement', 'enc_displacement_view'),
 ]
-
-prim_ctypes_views = []
-for decl in tu.cursor.get_children():
-  if decl.spelling in ("xed_encoder_operand_t", "xed_enc_displacement_t"):
-    name = decl.spelling[4:-2]
-    size = decl.type.get_size()
-    assert size > 0
-    prim_ctypes_views.append(f"""\
-type {name}_struct
-let {name}_struct : {name}_struct structure typ = structure ""
-let {name}_struct_dat = field {name}_struct "dat" @@ array {size} char
-let () = seal {name}_struct
-type {name}
-let {name}_view : {name} typ = view ~read:Obj.magic ~write:Obj.magic (typedef {name}_struct "xed_{name}_t")
-
-""")
-
 
 def ctype_for_prim(prim):
   if prim.kind == BUINT:
@@ -265,9 +261,7 @@ def ctype_for_prim(prim):
 cname_prim_types = {i.cname:i for i in prim_types}
 
 def fix_enum_element_name(s, enum_name=None):
-  if s == "LAST":
-    return None
-  elif s == "3DNOW":
+  if s == "3DNOW":
     return "AMD3DNOW"
   else:
     return s
@@ -297,7 +291,8 @@ class ProcessType(object):
     try:
       return self.cache[key]
     except KeyError:
-      return self.cache.setdefault(key, self.process(type))
+      pass
+    return self.cache.setdefault(key, self.process(type))
 
   def process(self, type):
     t = self.process_primitive(type)
@@ -349,7 +344,8 @@ class ProcessType(object):
       oname = oname[len("struct "):]
     if oname.startswith("xed_") and oname.endswith("_t"):
       oname = oname[4:-2]
-    return BOpaque(cname=name, oname=oname, size=decl.type.get_size())
+    return BOpaque(cname=name, oname=oname, size=decl.type.get_size(),
+                                            align=decl.type.get_align())
 
   def process_enum(self, decl):
     assert decl.kind == cindex.CursorKind.ENUM_DECL
@@ -373,21 +369,47 @@ class ProcessType(object):
         while not i.spelling.startswith(el_prefix):
           el_prefix = el_prefix[:-1]
 
-    vals = []
+    by_cval = OrderedDict()
     for i in decl.get_children():
+      if not (-(1<<30) <= i.enum_value < (1<<30)):
+        stderr(f"Excluding enum {enum_cname} {i.spelling}, can't fit in 31-bit int")
+        continue
       oname = fix_enum_element_name(i.spelling[len(el_prefix):], enum_cname)
-      if oname is not None:
-        if not oname[0].isupper():
-          oname = oname[0].upper() + oname[1:]
-          if not oname[0].isupper():
-            new_oname = "A" + oname
-            stderr(f"Enum {enum_cname} has bad constructor name {oname}, using {new_oname}")
-            oname = new_oname
-        if use_polymorphic_variants_for_enums:
-          oname = "`" + oname
-        vals.append(BEnumVal(oname, i.spelling, i.enum_value))
+      by_cval.setdefault(i.enum_value, []).append(BEnumVal(oname, i.spelling, i.enum_value))
 
-    return BEnum(enum_oname, enum_cname, self(decl.enum_type), tuple(vals))
+    has_last = False
+    t = by_cval.get(len(by_cval)-1, None)
+    if t and t[0].oname == 'LAST':
+      by_cval.pop(len(by_cval)-1)
+      has_last = True
+
+    elements = []
+    aliases = []
+    for cval, elts in by_cval.items():
+      canon = elts[0]
+
+      oname = canon.oname
+      if not oname[0].isupper():
+        oname = oname[0].upper() + oname[1:]
+        if not oname[0].isupper():
+          new_oname = "A" + oname
+          stderr(f"using {new_oname} for {oname} in enum {enum_cname}")
+          oname = new_oname
+      if use_polymorphic_variants_for_enums:
+        oname = "`" + oname
+      elements.append(canon._replace(oname=oname))
+      canon_oname = oname
+
+      for i in elts:
+        if i is canon:
+          continue
+        oname = i.oname
+        if oname.isupper():
+          oname = oname.lower()
+        oname = enum_oname + '_' + oname
+        aliases.append(i._replace(oname=oname, value=canon_oname))
+
+    return BEnum(enum_oname, enum_cname, self(decl.enum_type), tuple(elements), tuple(aliases), has_last)
 
   def process_typedef(self, decl):
     assert decl.kind == cindex.CursorKind.TYPEDEF_DECL
@@ -465,6 +487,7 @@ unwanted_functions = {
   "xed_decoded_inst_get_attributes",
   "xed_encode",
   "xed_encoder_request_init_from_decode",
+  # "xed_format_set_options",
   # "xed_inst",
   # "xed_inst0",
   # "xed_inst1",
@@ -531,19 +554,24 @@ for decl in tu.cursor.get_children():
         # This happens with functions that take function pointer callbacks.
         stderr(f"unable to handle {x.cname}")
   if decl.kind == cindex.CursorKind.MACRO_DEFINITION and decl == decl.canonical:
-    if decl.spelling.startswith('XED_') and decl.spelling[4:5].isalpha() and decl.extent.start.file.name == decl.extent.end.file.name:
-      with open(decl.extent.start.file.name) as f:
-        start = decl.extent.start.offset + len(decl.spelling)
-        f.seek(start)
-        s = f.read(decl.extent.end.offset-start).strip()
-      if s:
-        try:
-          value = int(s, 0)
-        except ValueError:
-          pass
-        else:
-          name = decl.spelling[4:].lower()
-          constants.append((name, value))
+    if decl.spelling.endswith('_DEFINED'): continue
+    if not decl.spelling.startswith('XED_'): continue
+    if not decl.spelling[4:5].isalpha(): continue
+    if not decl.extent.start.file.name == decl.extent.end.file.name: continue
+    with open(decl.extent.start.file.name) as f:
+      start = decl.extent.start.offset + len(decl.spelling)
+      f.seek(start)
+      s = f.read(decl.extent.end.offset-start).strip()
+    if s:
+      try:
+        value = int(s, 0)
+      except ValueError:
+        continue
+      if not (-(1<<30) <= value < (1<<30)):
+        stderr(f"Excluding constant {name}, can't fit in 31-bit int")
+        continue
+      name = decl.spelling[4:].lower()
+      constants.append((name, value))
 
 constants.sort()
 
@@ -581,31 +609,21 @@ functions.sort(key=lambda k: k.oname)
 types = sorted({i for func in functions for i in func.types}, key=lambda k: k.oname)
 enum_types = sorted({i for i in types if isinstance(i, BEnum)}, key=lambda k: k.oname)
 opaque_types = sorted({i.type for i in types if isinstance(i, BPtr) and isinstance(i.type, BOpaque)}, key=lambda k: k.oname)
-
+opaque_types += [i for i in types if isinstance(i, BOpaque) and i.cname in opaque_immediates]
+struct_types = sorted({i.type for i in types if isinstance(i, BPtr) and isinstance(i.type, BOpaque)}, key=lambda k: k.oname)
 
 def outfile(name):
-  return os.path.join(os.path.dirname(__file__), "generated", name)
+  return os.path.join('.', name)
 
-with open(outfile("XedBindingsConstants.ml"), 'w') as f:
+with open(outfile("XBConstants.ml"), 'w') as f:
   for name, value in constants:
-    f.write(f"let {name} = {name}\n")
+    f.write(f"let {name} = {value}\n")
 
-enum_ctypes_views = []
-with open(outfile("XedBindingsEnums.ml"), 'w') as f:
+with open(outfile("XBEnums.ml"), 'w') as f:
   for enum in enum_types:
-    already_vals = {}
-    constructors = []
-    aliases = []
-    for i in enum.elements:
-      if i.cval not in already_vals:
-        already_vals[i.cval] = i
-        constructors.append(i)
-      else:
-        aliases.append(i)
-
-    # Sort by value instead of by name so the Obj.magic (below) might work.
-    constructors.sort(key=lambda x: x.cval)
-    aliases.sort(key=lambda k: (k.cval, k.oname))
+    # Sort by value so the Obj.magic (below) might work.
+    constructors = list(enum.elements)
+    constructors.sort(key=lambda x: x.value)
 
     if use_polymorphic_variants_for_enums:
       f.write(f"type {enum.oname} = [\n")
@@ -618,80 +636,124 @@ with open(outfile("XedBindingsEnums.ml"), 'w') as f:
     if use_polymorphic_variants_for_enums:
       f.write("]\n")
 
-    for i in aliases:
-      f.write(f"let {i.oname.lower().lstrip('`')} = {already_vals[i.cval].oname}\n")
+    if enum.has_last:
+      f.write(f"let {enum.oname}_len = {len(enum.elements)}\n")
 
-    if not use_polymorphic_variants_for_enums and [i.cval for i in constructors] == list(range(len(constructors))):
+    for i in enum.aliases:
+      f.write(f"let {i.oname} = {i.value}\n")
+
+    if not use_polymorphic_variants_for_enums and [i.value for i in constructors] == list(range(len(constructors))):
       # OCaml represents argumentless constructors in a type as sequential integers.
       f.write(f"let {enum.oname}_to_int : {enum.oname} -> int = Obj.magic\n")
-      f.write(f"let {enum.oname}_of_int : int -> {enum.oname} = Obj.magic\n")
+      f.write(f"let {enum.oname}_of_int (x : int) : {enum.oname} = \n"
+            + f"  if 0 <= x && x < {len(constructors)} then Obj.magic x\n"
+            + f"  else failwith \"{enum.oname}_of_int: no enum for given int\"\n")
     else:
       f.write(f"let {enum.oname}_to_int : {enum.oname} -> int = function\n")
-      for line in group_into_lines(" ", (" | %s -> %d" % (i.oname, i.cval) for i in constructors)):
+      for line in group_into_lines(" ", (" | %s -> %d" % (i.oname, i.value) for i in constructors)):
         f.write(line+"\n")
       f.write(f"let {enum.oname}_of_int : int -> {enum.oname} = function\n")
-      for line in group_into_lines(" ", (" | %d -> %s" % (i.cval, i.oname) for i in constructors)):
+      for line in group_into_lines(" ", (" | %d -> %s" % (i.value, i.oname) for i in constructors)):
         f.write(line+"\n")
       f.write(f"  | _ -> failwith \"{enum.oname}_of_int: no enum for given int\"\n")
 
-    enum_ctypes_views.append(
-      f"let {enum.oname}_enum = XedBindingsEnums.(view ~read:{enum.oname}_of_int ~write:{enum.oname}_to_int int)\n"
-    )
-
     f.write("\n")
 
-struct_ctypes_views = []
-with open(outfile("XedBindingsStructs.ml"), 'w') as f:
-  f.write("""\
-(* We use a phantom permission type, where [`Read] indicates readability,
- * [`Write of [`Yes]] indicates writeability, and [`Write of [`No]] indicates
- * immutability. It's our own version of Core_kernel.Perms, so see that.
- * Note that basically everything requires & is granted `Read because we don't
- * have a reasonable way to infer that from the C api. *)
-type (+'a, -'perms) myptr
-let const : ('a, [>`Read]) myptr -> ('a, [`Read]) myptr = Obj.magic
-let _allocate n : ('a, [<`Read|`Write of [`Yes]]) myptr = Ctypes.allocate_n Ctypes.char n |> Obj.magic
+with open(outfile("type_desc.ml"), 'w') as f:
+  f.write(f"""\
+module Types (F : Ctypes.TYPE) = struct
+  open F
+  open struct
+    type 'a abstract = 'a Ctypes.abstract
+    type 'a structure = 'a Ctypes.structure
+    let (%) f g = fun x -> f (g x)
+""")
+  of_int_to_int = {
+    BBOOL   : ("function 0 -> false | _ -> true", "function true -> 1 | false -> 0"),
+    BINT    : ("Signed.Int.of_int",               "Signed.Int.to_int"),
+    BUINT   : ("Unsigned.UInt.of_int",            "Unsigned.UInt.to_int"),
+    BBYTE   : ("Stdlib.char_of_int",              "Stdlib.int_of_char"),
+    BSINT32 : ("Signed.Int32.of_int",             "Signed.Int32.to_int"),
+    BSINT64 : ("Signed.Int64.of_int",             "Signed.Int64.to_int"),
+    BUINT16 : ("Unsigned.UInt16.of_int",          "Unsigned.UInt16.to_int"),
+    BUINT32 : ("Unsigned.UInt32.of_int",          "Unsigned.UInt32.to_int"),
+    BUINT64 : ("Unsigned.UInt64.of_int",          "Unsigned.UInt64.to_int"),
+  }
+  for kind in {i.ctype.kind for i in enum_types}:
+    f.write(f"""\
+    let {kind}_of_int = {of_int_to_int[kind][0]}
+    let {kind}_to_int = {of_int_to_int[kind][1]}
+""")
+  f.write(f"""\
+  end
 
+  (* Ctypes doesn't support const ptrs, so we do it ourselves.
+   * Note that *)
+  module Ptr : sig
+    type ('a, -'perm) t
+    val ro : 'a Ctypes.ptr -> ('a, [`Read]) t
+    val rw : 'a Ctypes.ptr -> ('a, [`Read|`Write]) t
+    val get : ('a, [`Read|`Write]) t -> 'a Ctypes.ptr
+    val unsafe_get : ('a, 'perm) t -> 'a Ctypes.ptr
+    val raw_address : ('a, 'perm) t -> nativeint
+    val const : ('a, [>`Read]) t -> ('a, [`Read]) t
+  end = struct
+    type ('a, -'perm) t = 'a Ctypes.ptr
+    let ro x = x
+    let rw x = x
+    let get x = x
+    let unsafe_get x = x
+    let raw_address x = Ctypes.raw_address_of_ptr @@ Ctypes.to_voidp x
+    let const x = x
+  end
+
+  type encoder_operand
+  let encoder_operand : encoder_operand structure typ = structure "xed_encoder_operand_t"
+  type enc_displacement
+  let enc_displacement : enc_displacement structure typ = structure "xed_enc_displacement_t"
 """)
   for i in opaque_types:
-    module_name = lu2ucc(i.oname)
     f.write(f"""\
-module {module_name} = struct
-  type _t
-  type -'a t = (_t, 'a) myptr
-  let allocate () : [<`Read|`Write of [`Yes]] t = _allocate {i.size} |> Obj.magic
-  let pointer : [>`Read|`Write of [`Yes]] t -> unit Ctypes.ptr = Obj.magic
-  let const_pointer : [>`Read] t -> unit Ctypes.ptr = Obj.magic
+  type {i.oname}
+  let {i.oname} : {i.oname} abstract typ = abstract ~name:\"{i.cname}\" ~size:{i.size} ~alignment:{i.align}
+  let const_{i.oname}_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr {i.oname}
+  let {i.oname}_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr {i.oname}
+  type 'a {i.oname}_ptr = ({i.oname} abstract, 'a) Ptr.t
+""")
+  for i in enum_types:
+    f.write(f"""\
+  let {i.oname}_enum = view
+      ~read:(XBEnums.{i.oname}_of_int % {i.ctype.kind}_to_int)
+      ~write:({i.ctype.kind}_of_int % XBEnums.{i.oname}_to_int)
+      @@ typedef {i.ctype.kind} "{i.cname}"
+""")
+#   for i in enum_types:
+#     f.write(f"""\
+#   let {i.oname}_enum : XBEnums.{i.oname} F.typ = F.enum "{i.cname}" ~typedef:true ([
+# """)
+#     for j in i.elements:
+#       f.write(f"""\
+#       XBEnums.{j.oname}, F.constant "{j.cname}" F.int64_t;
+# """)
+#     f.write(f"""\
+#     ] : (XBEnums.{i.oname} * 'a) list)
+# """)
+  f.write("""\
 end
 """)
-    t = f"XedBindingsStructs.{module_name}.t typ = view ~read:Obj.magic ~write:Obj.magic @@ ptr"
-    struct_ctypes_views.append(f"""\
-let {i.oname}_arg : [`Read]                  {t} (typedef void \"const {i.cname}\")
-let {i.oname}_ret : [`Read|`Write of [`No]]  {t} (typedef void \"const {i.cname}\")
-let {i.oname}_mut : [`Read|`Write of [`Yes]] {t} (typedef void \"{i.cname}\")
-""")
 
-with open(outfile("XedBindingsStubs.ml"), 'w') as f:
+with open(outfile("function_desc.ml"), 'w') as f:
   f.write("""\
 (* "Low level" binding functions, not to be exposed. *)
 open Ctypes
-
-""")
-  for s in enum_ctypes_views: f.write(s)
-  for s in prim_ctypes_views: f.write(s)
-  for s in struct_ctypes_views: f.write(s)
-  f.write("""\
-
-module Bindings (F : Cstubs.FOREIGN) = struct
+open Types_generated
+module Functions (F : Cstubs.FOREIGN) = struct
 open F
 
 """)
   def map_type(type, arg, context = ""):
     if isinstance(type, BPtr) and isinstance(type.type, BOpaque):
-      if type.const:
-        return type.type.oname + ("_arg" if arg else "_ret")
-      else:
-        return type.type.oname + "_mut"
+      return '(ptr ' + type.type.oname + ')'
     elif isinstance(type, BBufArg):
       if type.ptr.type.kind == BBYTE:
         return 'ocaml_string' if type.ptr.const else 'ocaml_bytes'
@@ -756,7 +818,7 @@ for func in functions:
       assert methods.setdefault(method_name, t) == t, "repeat decl %r %r %r" % (classname, method_name, cname)
       continue
 
-  if cname.startswith("xed3_operand_") and bmatches(func.types[0], BPtr(type=BOpaque(cname="xed_decoded_inst_t", oname=None, size=None), const=None)):
+  if cname.startswith("xed3_operand_") and bmatches(func.types[0], BPtr(type=BOpaque(cname="xed_decoded_inst_t", oname=None, size=None, align=None), const=None)):
     methods = func_classes.setdefault("Operand3", (None, {}))[1]
     method_name = cname[len("xed3_operand_"):]
     t = func._replace(oname=method_name, cname=func.oname)
@@ -790,11 +852,15 @@ enuminfo_funcs.sort(key=lambda k: k.oname)
 encoder_funcs.sort(key=lambda k: k.oname)
 other_funcs.sort(key=lambda k: k.oname)
 
-with open(outfile("XedBindingsInternal.ml"), 'w') as f:
-  f.write("module Bindings = XedBindingsStubs.Bindings(XedBindingsGenerated)\n")
-  f.write("\n")
+with open(outfile("XBInternal.ml"), 'w') as f:
+  f.write("""\
+module Funcs = C.Function
+module Types = Types_generated
+module Ptr = Types.Ptr
 
-#   """module Bindings = XedBindingsStubs.Bindings(struct
+""")
+
+#   """module Bindings = XBStubs.Bindings(struct
 #   type 'a fn = 'a Ctypes.fn
 #   type 'a return = 'a
 #   let (@->) = Ctypes.(@->)
@@ -817,23 +883,15 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
       if isinstance(arg, BBufArg):
         bufsize_idxs.setdefault(arg.idx, []).append(i)
 
-    def name_opaque_ptr(x, const, mutable):
-      mod = lu2ucc(x.type.oname)
-      t = " XedBindingsStructs." + mod + ".t" if mod != method else " t"
-      if x.const:
-        return const + t
-      else:
-        return mutable + t
-
     for i, arg in enumerate(func.types[:-1]):
       name = "a%d" % i
       if i == 0 and method and func.oname.startswith("init"):
         assert func.types[-1].kind == BVOID
-        pre.append(f"let {name} = allocate () in")
-        yargs.append(f"(Obj.magic {name})")
+        pre.append(f"let {name} = uninit () in")
+        yargs.append(f"(Ptr.get {name})")
         assert not retval
         retval = name
-        rettype = "[<`Read|`Write of [`Yes]] t"
+        rettype = "[<`Read|`Write] t"
       elif i in bufsize_idxs:
         lengths = []
         for x in bufsize_idxs[i]:
@@ -851,10 +909,10 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         t = "ocaml_string_start" if arg.ptr.const else "ocaml_bytes_start"
         yargs.append(f"(Ctypes.{t} {name})")
       elif isinstance(arg, BPtr) and isinstance(arg.type, BOpaque):
-        xargs.append(f"({name} : {name_opaque_ptr(arg, '[>`Read]', '[>`Read|`Write of [`Yes]]')})")
-        yargs.append(f"(Obj.magic {name})")
+        xargs.append(f"({name} : {'[>`Read]' if arg.const else '[>`Read|`Write]'} Types.{arg.type.oname}_ptr)")
+        yargs.append(f"(Ptr.unsafe_get {name})")
       elif isinstance(arg, BEnum):
-        xargs.append(f"({name} : XedBindingsEnums.{arg.oname})")
+        xargs.append(f"({name} : XBEnums.{arg.oname})")
         yargs.append(name)
       else:
         xargs.append(f"({name} : {arg.oname})")
@@ -864,12 +922,14 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
         asserts.append(name + " >= 0")
 
     ret = func.types[-1]
+    cast = ""
     if retval:
       assert rettype
     elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
-      rettype = name_opaque_ptr(ret, "[<`Read|`Write of [`No]]", "[<`Read|`Write of [`Yes]]")
+      rettype = f"{'[<`Read]' if ret.const else '[<`Read|`Write]'} Types.{ret.type.oname}_ptr"
+      cast = "|> Ptr.ro" if ret.const else "|> Ptr.rw"
     elif isinstance(ret, BEnum):
-      rettype = f"XedBindingsEnums.{ret.oname}"
+      rettype = f"XBEnums.{ret.oname}"
     else:
       rettype = ret.oname
 
@@ -877,7 +937,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
       f"{indent}let {func.oname} {' '.join(xargs or ('()',))} : {rettype} =\n" +
       "".join(f"{indent} {i}\n" for i in pre) +
       (f"{indent}  assert ({' && '.join(asserts)});\n" if asserts else "") +
-      f"{indent}  Bindings.{func.cname} " + " ".join(yargs or ("()",)) +
+      f"{indent}  Funcs.{func.cname} " + " ".join(yargs or ("()",)) + cast +
       (f";\n{indent}  {retval}\n" if retval else "\n")
     )
 
@@ -885,7 +945,8 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
     typ, methods = func_classes[module_name]
     f.write(f"module {module_name} = struct\n")
     if typ is not None:
-      f.write(f"  include XedBindingsStructs.{module_name}\n")
+      f.write(f"  type -'perm t = (Types.{typ.oname} Ctypes.abstract, 'perm) Ptr.t\n")
+      f.write(f"  let uninit () = Ptr.rw @@ Ctypes.allocate_n ~count:1 Types.{typ.oname}\n")
     for func in sorted(methods.values()):
       f.write(trans(func, indent="  ", method=module_name))
     f.write("end\n\n")
@@ -893,7 +954,7 @@ with open(outfile("XedBindingsInternal.ml"), 'w') as f:
   f.write("\n")
 
   f.write("module Enum = struct\n")
-  f.write("  include XedBindingsEnums\n")
+  f.write("  include XBEnums\n")
   for func in enum2str_funcs:
     f.write(trans(func, indent="  "))
   for func in enuminfo_funcs:

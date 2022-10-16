@@ -1,0 +1,26 @@
+(data_only_dirs xedkit)
+
+(rule
+ ;(mode promote)
+ (deps ./generate_bindings.py (source_tree xedkit/include/xed))
+ (targets type_desc.ml function_desc.ml XBConstants.ml XBEnums.ml XBInternal.ml)
+ (action (no-infer (run ./generate_bindings.py xedkit/include/xed))))
+
+(env (_ (flags (:standard -warn-error -a))))
+
+(library
+ (name bind)
+ (foreign_stubs (language c) (include_dirs xedkit/include/xed) (names stubs))
+ (foreign_archives xedkit/lib/xed)
+ (ctypes
+  (build_flags_resolver (vendored (c_flags ()) (c_library_flags ())))
+  (external_library_name libxed)
+  (headers (preamble "#include \"xedkit/include/xed/xed-interface.h\""))
+  (type_description
+   (instance Type)
+   (functor Type_desc))
+  (function_description
+   (instance Function)
+   (functor Function_desc))
+  (generated_entry_point C))
+)

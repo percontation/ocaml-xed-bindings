@@ -1,0 +1,7 @@
+;(library
+; (name mylib)
+; (libraries bind))
+
+(executable
+ (name test)
+ (libraries bind))
