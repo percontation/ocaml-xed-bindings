@@ -1,7 +1,3 @@
-;(library
-; (name mylib)
-; (libraries bind))
-
-(executable
- (name test)
+(library
+ (name xed)
  (libraries bind))

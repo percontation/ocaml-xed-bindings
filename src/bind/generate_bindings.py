@@ -615,10 +615,6 @@ struct_types = sorted({i.type for i in types if isinstance(i, BPtr) and isinstan
 def outfile(name):
   return os.path.join('.', name)
 
-with open(outfile("XBConstants.ml"), 'w') as f:
-  for name, value in constants:
-    f.write(f"let {name} = {value}\n")
-
 with open(outfile("XBEnums.ml"), 'w') as f:
   for enum in enum_types:
     # Sort by value so the Obj.magic (below) might work.
@@ -852,23 +848,13 @@ enuminfo_funcs.sort(key=lambda k: k.oname)
 encoder_funcs.sort(key=lambda k: k.oname)
 other_funcs.sort(key=lambda k: k.oname)
 
-with open(outfile("XBInternal.ml"), 'w') as f:
+with open(outfile("bind.ml"), 'w') as f:
   f.write("""\
 module Funcs = C.Function
 module Types = Types_generated
 module Ptr = Types.Ptr
 
 """)
-
-#   """module Bindings = XBStubs.Bindings(struct
-#   type 'a fn = 'a Ctypes.fn
-#   type 'a return = 'a
-#   let (@->) = Ctypes.(@->)
-#   let returning = Ctypes.returning
-#   type 'a result = 'a
-#   let foreign x y z = Foreign.foreign x y z
-#   let foreign_value x y = Foreign.foreign_value x y
-# end)"""
 
   def trans(func, indent="", method=None):
     xargs = []
@@ -950,6 +936,13 @@ module Ptr = Types.Ptr
     for func in sorted(methods.values()):
       f.write(trans(func, indent="  ", method=module_name))
     f.write("end\n\n")
+
+  f.write("\n")
+
+  f.write("module Constants = struct\n")
+  for name, value in constants:
+    f.write(f"  let {name} = {value}\n")
+  f.write("end\n")
 
   f.write("\n")
 
