@@ -1,7 +1,7 @@
 (data_only_dirs xedkit)
 
 (rule
- ;(mode promote)
+ (mode promote)
  (deps ./generate_bindings.py (source_tree xedkit/include/xed))
  (targets type_desc.ml function_desc.ml XBEnums.ml bind.ml)
  (action (no-infer (run ./generate_bindings.py xedkit/include/xed))))

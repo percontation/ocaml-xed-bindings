@@ -912,7 +912,7 @@ module Ptr = Types.Ptr
       assert rettype
     elif isinstance(ret, BPtr) and isinstance(ret.type, BOpaque):
       rettype = f"{'[<`Read]' if ret.const else '[<`Read|`Write]'} Types.{ret.type.oname}_ptr"
-      cast = "|> Ptr.ro" if ret.const else "|> Ptr.rw"
+      cast = " |> Ptr.ro" if ret.const else " |> Ptr.rw"
     elif isinstance(ret, BEnum):
       rettype = f"XBEnums.{ret.oname}"
     else:
