@@ -1,6 +1,10 @@
-# What
+# Xed Bindings
 
 Bindings to XED from OCaml.
+
+## Build
+
+Run `xed-build.sh`, and then `dune`.
 
 # Install
 

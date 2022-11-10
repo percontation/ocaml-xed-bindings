@@ -683,8 +683,7 @@ module Types (F : Ctypes.TYPE) = struct
   f.write(f"""\
   end
 
-  (* Ctypes doesn't support const ptrs, so we do it ourselves.
-   * Note that *)
+  (* Since ctypes doesn't have const ptrs. *)
   module Ptr : sig
     type ('a, -'perm) t
     val ro : 'a Ctypes.ptr -> ('a, [`Read]) t

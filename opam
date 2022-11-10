@@ -1,23 +1,19 @@
-opam-version: "1.2"
+opam-version: "2.0"
 name:         "xed-bindings"
-version:      "0.3"
-maintainer:   "ryan@forallsecure.com"
-author:       "Ryan Goulden"
+version:      "0.5"
+synopsis:     "Bindings to Intel XED"
+maintainer:   "Ryan Goulden <ryan@forallsecure.com>"
+author:       "Ryan Goulden <ryan@forallsecure.com>"
+license:      "Apache-2.0"
 
-build:   [make "NO_GENERATE=1"]
-install: [make "NO_GENERATE=1" "install"]
-remove:  ["ocamlfind" "remove" "xed-bindings"]
+build:   [
+  [sh xed-build.sh]
+  [dune build]
+]
+install: [dune install]
 depends: [
   "ctypes" {>= "0.12.0"}
-  "ocamlbuild" {build}
-  "ocamlfind" {build}
+  "dune" {build, >= "3.0"}
+  "conf-python-3" {build}
 ]
-available: [ocaml-version >= "4.03"]
-# For building
-# depexts: [
-#   [["debian"] ["python-clang-3.8" "libclang1-3.8"]]
-#   [["ubuntu"] ["python-clang-3.8" "libclang1-3.8"]]
-# ]
-# post-messages: [
-#   "Building this package requires clang's python cindex library (and libclang) on your system" {failure}
-# ]
+available: [ocaml-version >= "4.08"]

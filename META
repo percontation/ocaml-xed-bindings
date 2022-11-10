@@ -1,7 +1,0 @@
-version = "0.3"
-description = "Bindings to Intel XED"
-requires = "ctypes,ctypes.stubs"
-archive(byte)          = "Xed.cma"
-archive(byte,plugin)   = "Xed.cma"
-archive(native)        = "Xed.cmxa"
-archive(native,plugin) = "Xed.cmxs"
