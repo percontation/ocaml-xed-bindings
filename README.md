@@ -18,13 +18,13 @@ XED enums are exposed as OCaml constructors in `Xed.Enum`. XED functions that co
 
 Many XED functions that initialize a particular XED structure have been modified to both allocate and initialize; e.g. `xed_decode` is `Xed.decode : 'a XedStructs.State.t -> string -> ('b DecodedInst.t, Enum.error) result`.
 
-The binding is based on Ctypes, so you'll occasionally need modules like Unsigned.UInt32 to interact with it. It's common for xed-bindings to use types that make sense for C and not for OCaml, e.g. returning Unsigned.UInt8.t or int when logically it should be a bool, or using Unsigned.UInt32.t for small values that should just be OCaml ints. For popular functions, consider adding a wrapper (that replaces the original function) to src/Xed.ml.
+The binding is based on Ctypes, so you'll occasionally need modules like `Unsigned.UInt32` to interact with it. For functions where there's a type that makes more sense for OCaml---e.g. functions returning `Unsigned.UInt8.t` or `int` when logically it should be a `bool`, or using `Unsigned.UInt32.t` for small values that should just be an `int`---we intend to add replacement functions in `src/xed.ml` that override the original auto-generated bindings.
 
 ## Example
 
 ```
-#require "xed-bindings";;
-open Xed;;
+#require "xedbindings";;
+open Xedbindings.Xed;;
 (* state64 is convenience; you could make one yourself with State.init2 Enum.LONG_64 Enum.A64b *)
 let xedd = decode state64 "\x55";;
 let Ok xedd = xedd;; (* "\x55" is valid, ignore the possibility of an Error *)

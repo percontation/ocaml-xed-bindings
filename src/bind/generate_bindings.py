@@ -657,7 +657,7 @@ with open(outfile("XBEnums.ml"), 'w') as f:
 
 with open(outfile("type_desc.ml"), 'w') as f:
   f.write(f"""\
-module Types (F : Ctypes.TYPE) = struct
+module Types (F : Cstubs.Types.TYPE) = struct
   open F
   open struct
     type 'a abstract = 'a Ctypes.abstract

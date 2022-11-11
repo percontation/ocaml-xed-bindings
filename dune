@@ -1,1 +1,6 @@
 (dirs src test)
+(library
+ (name xedbindings)
+ (modules xedbindings)
+ (public_name xedbindings)
+ (libraries xedbindings_xed xedbindings_bind))

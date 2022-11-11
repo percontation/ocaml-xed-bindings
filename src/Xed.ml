@@ -1,3 +1,4 @@
+module Bind = Xedbindings_bind.Bind
 let () = Bind.xed_tables_init ()
 include Bind.Constants
 module Ptr = Bind.Ptr

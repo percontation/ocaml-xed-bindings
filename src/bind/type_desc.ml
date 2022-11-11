@@ -1,4 +1,4 @@
-module Types (F : Ctypes.TYPE) = struct
+module Types (F : Cstubs.Types.TYPE) = struct
   open F
   open struct
     type 'a abstract = 'a Ctypes.abstract

@@ -1,0 +1,22 @@
+opam-version: "2.0"
+name:         "xedbindings"
+version:      "0.7"
+synopsis:     "Bindings to Intel XED"
+maintainer:   "Ryan Goulden"
+author:       "Ryan Goulden"
+license:      "Apache-2.0"
+
+homepage:    "https://github.com/percontation/ocaml-xed-bindings"
+bug-reports: "https://github.com/percontation/ocaml-xed-bindings/issues"
+dev-repo:    "git+https://github.com/percontation/ocaml-xed-bindings.git"
+
+build: [
+  ["sh" "xed-build.sh"]
+  #["dune" "subst"] {dev}
+  ["dune" "build" "-p" name "-j" jobs "@install"]
+]
+depends: [
+  "ocaml" {>= "4.08"}
+  "dune" {>= "3.0"}
+  "ctypes" {>= "0.12"}
+]

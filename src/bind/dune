@@ -9,7 +9,8 @@
 (env (_ (flags (:standard -warn-error -a))))
 
 (library
- (name bind)
+ (name xedbindings_bind)
+ (public_name xedbindings.bind)
  (foreign_stubs (language c) (include_dirs xedkit/include/xed) (names stubs))
  (foreign_archives xedkit/lib/xed)
  (ctypes

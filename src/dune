@@ -1,3 +1,4 @@
 (library
- (name xed)
- (libraries bind))
+ (name xedbindings_xed)
+ (public_name xedbindings.xed)
+ (libraries xedbindings_bind))
