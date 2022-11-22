@@ -1,4 +1,4 @@
-open Xed
+open Xedbindings.Xed
 
 let main () =
   let eax = Enum.reg_of_string "EAX" |> Enum.reg_to_string in
