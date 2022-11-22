@@ -375,6 +375,10 @@ class ProcessType(object):
         stderr(f"Excluding enum {enum_cname} {i.spelling}, can't fit in 31-bit int")
         continue
       oname = fix_enum_element_name(i.spelling[len(el_prefix):], enum_cname)
+      if enum_oname == 'address_width' and oname == 'LAST':
+        # Usually, LAST only exists for sequential enums, which we detect and remove below.
+        # address_width is not sequential, and LAST makes no sense for it.
+        continue
       by_cval.setdefault(i.enum_value, []).append(BEnumVal(oname, i.spelling, i.enum_value))
 
     has_last = False

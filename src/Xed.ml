@@ -13,6 +13,8 @@ module Enum = struct
   let operand_action_read_and_written x = operand_action_read_and_written x <> 0
   let operand_action_conditional_read x = operand_action_conditional_read x <> 0
   let operand_action_conditional_write x = operand_action_conditional_write x <> 0
+  let operand_is_register x = operand_is_register x <> 0
+  let operand_is_memory_addressing_register x = operand_is_memory_addressing_register x <> 0
 
   let register_width_bits x = register_width_bits x |> Unsigned.UInt32.to_int
   let register_width_bits64 x = register_width_bits64 x |> Unsigned.UInt32.to_int
@@ -58,6 +60,13 @@ module DecodedInst = struct
 
   let to_string_intel x =
     disassemble x Enum.INTEL 0L
+
+  let get_attribute x y = get_attribute x y <> Unsigned.UInt32.zero
+  let get_immediate_is_signed x = get_immediate_is_signed x <> 0
+  let has_mpx_prefix x = has_mpx_prefix x <> Unsigned.UInt32.zero
+  let is_xacquire x = is_xacquire x <> Unsigned.UInt32.zero
+  let is_xrelease x = is_xrelease x <> Unsigned.UInt32.zero
+  let get_operand_width x = get_operand_width x |> Unsigned.UInt32.to_int
 end
 
 module EncoderInstruction = struct
@@ -133,6 +142,8 @@ module Inst = struct
   external _inst_get_attributes : nativeint -> Enum.attribute list = "xb_inst_get_attributes"
   let get_attributes x : Enum.attribute list =
     _inst_get_attributes (Ptr.raw_address x)
+  let get_attribute x y = get_attribute x y <> Unsigned.UInt32.zero
+  let flag_info_index x = flag_info_index x |> Unsigned.UInt32.to_int
 end
 
 module Operand = struct
@@ -148,10 +159,20 @@ module Operand = struct
   let conditional_read x = conditional_read x <> 0
   let conditional_write x = conditional_write x <> 0
   let template_is_register x = template_is_register x <> 0
+  let width_bits x eosz =
+    let eosz = match eosz with
+      | `B16 -> 1
+      | `B32 -> 2
+      | `B64 -> 3
+    in width_bits x (Unsigned.UInt32.of_int eosz) |> Unsigned.UInt32.to_int
 end
 
 module Operand3 = struct
   include Bind.Operand3
+  let get_has_modrm x = get_has_modrm x <> 0
+  let set_has_modrm x b = set_has_modrm x (if b then 1 else 0)
+  let get_has_sib x = get_has_sib x <> 0
+  let set_has_sib x b = set_has_sib x (if b then 1 else 0)
 end
 
 module OperandValues = struct
@@ -162,6 +183,16 @@ module OperandValues = struct
   let to_string_short x =
     let bytes = Bytes.create 128
     in print_short x bytes; string_of_c bytes
+
+  let get_immediate_is_signed x = get_immediate_is_signed x <> 0
+  let get_branch_displacement_length x = get_branch_displacement_length x |> Unsigned.UInt32.to_int
+  let get_branch_displacement_length_bits x = get_branch_displacement_length_bits x |> Unsigned.UInt32.to_int
+  let get_effective_address_width x = get_effective_address_width x |> Unsigned.UInt32.to_int
+  let get_effective_operand_width x = get_effective_operand_width x |> Unsigned.UInt32.to_int
+  let get_memory_displacement_length x = get_memory_displacement_length x |> Unsigned.UInt32.to_int
+  let get_memory_displacement_length_bits x = get_memory_displacement_length_bits x |> Unsigned.UInt32.to_int
+  let get_memory_displacement_length_bits_raw x = get_memory_displacement_length_bits_raw x |> Unsigned.UInt32.to_int
+  let get_stack_address_width x = get_stack_address_width x |> Unsigned.UInt32.to_int
 end
 
 module SimpleFlag = struct

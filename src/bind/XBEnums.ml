@@ -1,9 +1,9 @@
 type address_width =
-  | INVALID | A16b | A32b | A64b | LAST
+  | INVALID | A16b | A32b | A64b
 let address_width_to_int : address_width -> int = function
-  | INVALID -> 0 | A16b -> 2 | A32b -> 4 | A64b -> 8 | LAST -> 9
+  | INVALID -> 0 | A16b -> 2 | A32b -> 4 | A64b -> 8
 let address_width_of_int : int -> address_width = function
-  | 0 -> INVALID | 2 -> A16b | 4 -> A32b | 8 -> A64b | 9 -> LAST
+  | 0 -> INVALID | 2 -> A16b | 4 -> A32b | 8 -> A64b
   | _ -> failwith "address_width_of_int: no enum for given int"
 
 type attribute =

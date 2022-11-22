@@ -10,7 +10,7 @@ Run `xed-build.sh` before building with dune.
 
 ## About
 
-This binding is a pretty direct mapping to XED, exposing most functions and enums but with slightly more idiomatic OCaml names.
+This binding is mostly a direct mapping to underlying XED functions, but names have been reorganized to be more idiomatic to OCaml.
 
 XED structures are handled as opaque types, e.g. `xed_decoded_inst_t` is `Xed.DecodedInst.t`. XED functions that resemble methods on a struct have been sorted into modules, e.g. `xed_decoded_inst_get_length` is `Xed.DecodedInst.get_length`. As with their XED counterparts, these structures are generally mutable. You'll see `` [<`Read|`Write] `` as parameters to the OCaml opaque types; these are to prevent attempted modification of const struct pointers and should't get in your way unless you're breaking const-correctness in the XED api.
 
@@ -18,7 +18,7 @@ XED enums are exposed as OCaml constructors in `Xed.Enum`. XED functions that co
 
 Many XED functions that initialize a particular XED structure have been modified to both allocate and initialize; e.g. `xed_decode` is `Xed.decode : 'a XedStructs.State.t -> string -> ('b DecodedInst.t, Enum.error) result`.
 
-The binding is based on Ctypes, so you'll occasionally need modules like `Unsigned.UInt32` to interact with it. For functions where there's a type that makes more sense for OCaml---e.g. functions returning `Unsigned.UInt8.t` or `int` when logically it should be a `bool`, or using `Unsigned.UInt32.t` for small values that should just be an `int`---we intend to add replacement functions in `src/xed.ml` that override the original auto-generated bindings.
+The binding is based on Ctypes, so you'll occasionally need modules like `Unsigned.UInt32` to interact with it. For functions where there's a type that makes more sense for OCaml---e.g. functions returning `Unsigned.UInt8.t` or `int` when logically it should be a `bool`, or using `Unsigned.UInt32.t` for small values that should just be an `int`---we have replacement functions in `src/xed.ml` that shadow the auto-generated bindings. Be warned that more such replacements may be added in the future, with little regard for backwards compatibility.
 
 ## Example
 
