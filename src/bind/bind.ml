@@ -28,10 +28,6 @@ module DecodedInst = struct
     Funcs.xed_classify_sse (Ptr.unsafe_get a0)
   let conditionally_writes_registers (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
     Funcs.xed_decoded_inst_conditionally_writes_registers (Ptr.unsafe_get a0)
-  let decode (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) : XBEnums.error =
-    Funcs.xed_decode (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1)
-  let decode_with_features (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) (a3 : [>`Read|`Write] Types.chip_features_ptr) : XBEnums.error =
-    Funcs.xed_decode_with_features (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1) (Ptr.unsafe_get a3)
   let dump (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : bytes) : unit =
     Funcs.xed_decoded_inst_dump (Ptr.unsafe_get a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
   let dump_xed_format (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : bytes) (a3 : Unsigned.UInt64.t) : bool =
@@ -120,8 +116,6 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_get_user_data (Ptr.unsafe_get a0)
   let has_mpx_prefix (a0 : [>`Read] Types.decoded_inst_ptr) : Unsigned.UInt32.t =
     Funcs.xed_decoded_inst_has_mpx_prefix (Ptr.unsafe_get a0)
-  let ild_decode (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) : XBEnums.error =
-    Funcs.xed_ild_decode (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1)
   let inst (a0 : [>`Read] Types.decoded_inst_ptr) : [<`Read] Types.inst_ptr =
     Funcs.xed_decoded_inst_inst (Ptr.unsafe_get a0) |> Ptr.ro
   let is_broadcast (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
@@ -230,18 +224,6 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_zeroing (Ptr.unsafe_get a0)
 end
 
-module EncoderInstruction = struct
-  type -'perm t = (Types.encoder_instruction Ctypes.abstract, 'perm) Ptr.t
-  let uninit () = Ptr.rw @@ Ctypes.allocate_n ~count:1 Types.encoder_instruction
-  let addr (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) (a1 : int) : unit =
-    assert (a1 >= 0);
-    Funcs.xed_addr (Ptr.unsafe_get a0) a1
-  let rep (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
-    Funcs.xed_rep (Ptr.unsafe_get a0)
-  let repne (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
-    Funcs.xed_repne (Ptr.unsafe_get a0)
-end
-
 module EncoderRequest = struct
   type -'perm t = (Types.encoder_request Ctypes.abstract, 'perm) Ptr.t
   let uninit () = Ptr.rw @@ Ctypes.allocate_n ~count:1 Types.encoder_request
@@ -258,8 +240,6 @@ module EncoderRequest = struct
     Funcs.xed_encoder_request_operands (Ptr.unsafe_get a0) |> Ptr.rw
   let operands_const (a0 : [>`Read] Types.encoder_request_ptr) : [<`Read] Types.operand_values_ptr =
     Funcs.xed_encoder_request_operands_const (Ptr.unsafe_get a0) |> Ptr.ro
-  let print (a0 : [>`Read] Types.encoder_request_ptr) (a1 : bytes) : unit =
-    Funcs.xed_encode_request_print (Ptr.unsafe_get a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
   let set_agen (a0 : [>`Read|`Write] Types.encoder_request_ptr) : unit =
     Funcs.xed_encoder_request_set_agen (Ptr.unsafe_get a0)
   let set_base0 (a0 : [>`Read|`Write] Types.encoder_request_ptr) (a1 : XBEnums.reg) : unit =
@@ -1506,17 +1486,32 @@ module Enc = struct
 end
 
 (* other *)
+let xed_addr (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) (a1 : int) : unit =
+  assert (a1 >= 0);
+  Funcs.xed_addr (Ptr.unsafe_get a0) a1
 let xed_attribute (a0 : int) : XBEnums.attribute =
   assert (a0 >= 0);
   Funcs.xed_attribute a0
 let xed_attribute_max () : int =
   Funcs.xed_attribute_max ()
+let xed_decode (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) : XBEnums.error =
+  Funcs.xed_decode (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1)
+let xed_decode_with_features (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) (a3 : [>`Read|`Write] Types.chip_features_ptr) : XBEnums.error =
+  Funcs.xed_decode_with_features (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1) (Ptr.unsafe_get a3)
 let xed_encode_nop (a0 : bytes) : XBEnums.error =
   Funcs.xed_encode_nop (Ctypes.ocaml_bytes_start a0) (Bytes.length a0)
+let xed_encode_request_print (a0 : [>`Read] Types.encoder_request_ptr) (a1 : bytes) : unit =
+  Funcs.xed_encode_request_print (Ptr.unsafe_get a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
 let xed_get_copyright () : string =
   Funcs.xed_get_copyright ()
 let xed_get_version () : string =
   Funcs.xed_get_version ()
+let xed_ild_decode (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) : XBEnums.error =
+  Funcs.xed_ild_decode (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1)
+let xed_rep (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
+  Funcs.xed_rep (Ptr.unsafe_get a0)
+let xed_repne (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
+  Funcs.xed_repne (Ptr.unsafe_get a0)
 let xed_set_verbosity (a0 : int) : unit =
   Funcs.xed_set_verbosity a0
 let xed_tables_init () : unit =

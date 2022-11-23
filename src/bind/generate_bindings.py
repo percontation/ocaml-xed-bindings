@@ -491,7 +491,6 @@ unwanted_functions = {
   "xed_decoded_inst_get_attributes",
   "xed_encode",
   "xed_encoder_request_init_from_decode",
-  # "xed_format_set_options",
   # "xed_inst",
   # "xed_inst0",
   # "xed_inst1",
@@ -598,6 +597,7 @@ skip_funcs = {
   "xed3_set_generic_operand",
   "xed_init_print_info",
   "xed_format_generic",
+  "xed_format_set_options",
   "xed_get_cpuid_rec",
 }
 
@@ -782,8 +782,6 @@ def func_class_name_fixes(cname, default=None):
     return "op_type"
   if cname == "xed_operand_operand_visibility":
     return "visibility"
-  if cname == "xed_encode_request_print":
-    return "print"
   return default or cname
 
 # Produced cnames are actually the oname used in functions.ml
@@ -807,9 +805,12 @@ for func in functions:
   if cname.startswith("xed_") and len(func.types) >= 2 and isinstance(func.types[0], BPtr) and isinstance(func.types[0].type, BOpaque):
     classname = func.types[0].type.oname
     t = "xed_" + classname + "_"
+    method_name = None
     if cname.startswith(t):
       method_name = func_class_name_fixes(cname, cname[len(t):])
-    else:
+    elif cname.startswith("xed_classify"):
+      method_name = func_class_name_fixes(cname, cname[4:])
+    elif cname.startswith("xed_") and cname.endswith("_"+classname):
       method_name = func_class_name_fixes(cname, cname[4:])
     if method_name:
       methods = func_classes.setdefault(lu2ucc(classname), (func.types[0].type, {}))[1]

@@ -2,10 +2,18 @@ module Bind = Xedbindings_bind.Bind
 let () = Bind.xed_tables_init ()
 include Bind.Constants
 module Ptr = Bind.Ptr
-let string_of_c x = Bytes.sub_string x 0 (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
+
+let string_of_c x =
+  let eos = (try Bytes.index x '\x00' with Not_found -> Bytes.length x)
+  in Bytes.sub_string x 0 eos
 
 module Enum = struct
   include Bind.Enum
+
+  open struct
+    external _get_cpuid_rec: int -> int * int * int * int = "xb_get_cpuid_rec"
+  end
+
   let operand_action_read x = operand_action_read x <> 0
   let operand_action_read_only x = operand_action_read_only x <> 0
   let operand_action_written x = operand_action_written x <> 0
@@ -24,28 +32,57 @@ module Enum = struct
 
   let attributes =
     Array.init (Bind.xed_attribute_max ()) Bind.xed_attribute
+
+  type cpuid_bit_rec = {
+    leaf: int;
+    subleaf: int;
+    reg: reg;
+    bit: int;
+  }
+  let cpuid_bit_rec x =
+    let leaf, subleaf, reg, bit = _get_cpuid_rec @@ cpuid_bit_to_int x
+    in {leaf; subleaf; reg=reg_of_int reg; bit}
+
+  let cpuid_bit_of_isa_set = cpuid_bit_for_isa_set
 end
 
 
 module ChipFeatures = struct
   include Bind.ChipFeatures
+  let of_chip chip =
+    let x = uninit ()
+    in get_chip_features x chip; x
+  let add x isa =
+    modify_chip_features x isa true
+  let remove x isa =
+    modify_chip_features x isa false
 end
 
 module DecodedInst = struct
   include Bind.DecodedInst
-  external _decoded_inst_get_attributes : nativeint -> Enum.attribute list = "xb_decoded_inst_get_attributes"
-  let get_attributes x : Enum.attribute list =
+
+  open struct
+    external _decoded_inst_get_attributes
+      : nativeint -> Enum.attribute list = "xb_decoded_inst_get_attributes"
+    type symbolizer = (int64 -> (string * int64) option) option
+    external _format
+      : int -> nativeint -> int64 -> int -> symbolizer -> string = "xb_format"
+  end
+
+  let get_attributes (x: [>`Read] t) : Enum.attribute list =
     _decoded_inst_get_attributes @@ Ptr.raw_address x
 
   let init mode =
     let x = uninit ()
     in zero_set_mode x mode; x
-  let to_string x =
-    let bytes = Bytes.create 1024
+  let dump x =
+    let bytes = Bytes.create 4000
     in dump x bytes; string_of_c bytes
-  let to_string_xedfmt x addr =
-    let bytes = Bytes.create 1024
-    in dump_xed_format x bytes addr, string_of_c bytes
+  let dump_xed_format x addr =
+    let bytes = Bytes.create 1000 in
+    match dump_xed_format x bytes addr with
+    | true -> string_of_c bytes
+    | false -> failwith "xed_decoded_inst_dump_xed_format"
 
   (* Disable get_byte because it's a use-after-free and you get random heap bytes.
    * (A xed_decoded_inst_t only keeps the pointer passed to xed_decode, not the
@@ -54,49 +91,58 @@ module DecodedInst = struct
   (* let get_bytes x =
     String.init (get_length x) (get_byte x) *)
 
-  external _disassemble : int -> nativeint -> int64 -> string = "xb_disassemble"
-  let disassemble x syntax addr =
-    _disassemble (Enum.syntax_to_int syntax) (Ptr.raw_address x) addr
-
-  let to_string_intel x =
-    disassemble x Enum.INTEL 0L
-
   let get_attribute x y = get_attribute x y <> Unsigned.UInt32.zero
   let get_immediate_is_signed x = get_immediate_is_signed x <> 0
   let has_mpx_prefix x = has_mpx_prefix x <> Unsigned.UInt32.zero
   let is_xacquire x = is_xacquire x <> Unsigned.UInt32.zero
   let is_xrelease x = is_xrelease x <> Unsigned.UInt32.zero
   let get_operand_width x = get_operand_width x |> Unsigned.UInt32.to_int
-end
 
-module EncoderInstruction = struct
-  include Bind.EncoderInstruction
-  (* external _xed_inst : nativeint -> nativeint -> int -> int -> int -> nativeint -> unit = "xb_xed_inst"
-  let init state iclass effective_operand_width operands =
-    assert (effective_operand_width >= 0);
-
-    let f (operand : XedBindingsStubs.encoder_operand) : nativeint =
-      let dat = Ctypes.getf (Obj.magic operand) XedBindingsStubs.enc_displacement_struct_dat in
-      Ctypes.CArray.start dat |> Ctypes.raw_address_of_ptr
+  (**
+    @param symbolizer callback function to turn an address into a name & offset.
+  *)
+  let format
+    ?(address_with_names=true)
+    ?(xml_a=false)
+    ?(xml_f=false)
+    ?(omit_unit_scale=false)
+    ?(no_ext_signed_imm=false)
+    ?(curly_mask_omit_k0=true)
+    ?(lowercase_hex=true)
+    ?(positive_mem_disp=false)
+    ?(syntax=Enum.INTEL)
+    ?(symbolizer: symbolizer)
+    (x: [>`Read] t) addr =
+    let options = 0
+      lor (if address_with_names then 1 lsl 0 else 0)
+      lor (if xml_a              then 1 lsl 1 else 0)
+      lor (if xml_f              then 1 lsl 2 else 0)
+      lor (if omit_unit_scale    then 1 lsl 3 else 0)
+      lor (if no_ext_signed_imm  then 1 lsl 4 else 0)
+      lor (if curly_mask_omit_k0 then 1 lsl 5 else 0)
+      lor (if lowercase_hex      then 1 lsl 6 else 0)
+      lor (if positive_mem_disp  then 1 lsl 7 else 0)
     in
-    let carr = Ctypes.CArray.of_list @@ List.map f operands in
-    let length = Ctypes.CArray.length carr in
-    assert (length <= XedBindingsConstants.encoder_operands_max);
-    let x = uninit () in
-    _xed_inst
-      (Ptr.raw_address x)
-      (Ptr.raw_address state)
-      (Enum.iclass_to_int iclass)
-      effective_operand_width
-      length
-      (Ctypes.CArray.start carr |> Ctypes.raw_address_of_ptr)
-    ; x *)
+    _format (Enum.syntax_to_int syntax) (Ptr.raw_address x) addr options symbolizer
+
+  (**
+    It's undefined exactly what format you get from to_string.
+    Currently, it assumes address 0 and formats in intel syntax.
+  *)
+  let to_string x =
+    format x 0L
+
 end
 
 module EncoderRequest = struct
   include Bind.EncoderRequest
-  external _encode : nativeint -> (int * string) = "xb_encode"
-  let encode x =
+
+  open struct
+    external _encode : nativeint -> (int * string) = "xb_encode"
+    external _init_from_decode : nativeint -> nativeint -> unit = "xb_encoder_request_init_from_decode"
+  end
+
+  let encode (x: [>`Read] t) =
     let err, dat = _encode @@ Ptr.raw_address x in
     match Enum.error_of_int err with
     | Enum.NONE -> Ok dat
@@ -106,18 +152,13 @@ module EncoderRequest = struct
     let x = uninit ()
     in zero_set_mode x mode; x
 
-  let of_encoder_instruction (y : [>`Read] Bind.EncoderInstruction.t) =
-    let x = uninit () in
-    if convert_to_encoder_request x y then Some x else None
-
-  external _init_from_decode : nativeint -> nativeint -> unit = "xb_encoder_request_init_from_decode"
   let of_decoded_inst (y : [>`Read] Bind.DecodedInst.t) =
     let x = uninit ()
     in _init_from_decode (Ptr.raw_address x) (Ptr.raw_address y); x
 
   let to_string x =
     let bytes = Bytes.create 5000 in
-    print x bytes;
+    Bind.xed_encode_request_print x bytes;
     match Bytes.index_opt bytes '\000' with
     | Some i -> Bytes.sub_string bytes 0 i
     | None -> Bytes.unsafe_to_string bytes
@@ -126,21 +167,25 @@ end
 module FlagAction = struct
   include Bind.FlagAction
   let to_string x =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 100
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
 module FlagSet = struct
   include Bind.FlagSet
   let to_string x =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 100
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
 module Inst = struct
   include Bind.Inst
-  external _inst_get_attributes : nativeint -> Enum.attribute list = "xb_inst_get_attributes"
-  let get_attributes x : Enum.attribute list =
+
+  open struct
+    external _inst_get_attributes : nativeint -> Enum.attribute list = "xb_inst_get_attributes"
+  end
+
+  let get_attributes (x: [>`Read] t) : Enum.attribute list =
     _inst_get_attributes (Ptr.raw_address x)
   let get_attribute x y = get_attribute x y <> Unsigned.UInt32.zero
   let flag_info_index x = flag_info_index x |> Unsigned.UInt32.to_int
@@ -149,7 +194,7 @@ end
 module Operand = struct
   include Bind.Operand
   let to_string x =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 100
     in print x bytes; string_of_c bytes
   let read x = read x <> 0
   let read_only x = read_only x <> 0
@@ -177,11 +222,11 @@ end
 
 module OperandValues = struct
   include Bind.OperandValues
-  let to_string x =
-    let bytes = Bytes.create 128
+  let dump x =
+    let bytes = Bytes.create 100
     in dump x bytes; string_of_c bytes
-  let to_string_short x =
-    let bytes = Bytes.create 128
+  let to_string x =
+    let bytes = Bytes.create 100
     in print_short x bytes; string_of_c bytes
 
   let get_immediate_is_signed x = get_immediate_is_signed x <> 0
@@ -198,14 +243,14 @@ end
 module SimpleFlag = struct
   include Bind.SimpleFlag
   let to_string x =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 100
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
 module State = struct
   include Bind.State
   let to_string x =
-    let bytes = Bytes.create 128
+    let bytes = Bytes.create 100
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
@@ -218,19 +263,19 @@ let state64 = State.init2 Enum.LONG_64 Enum.A64b |> Ptr.const
 
 let decode state s =
   let x = DecodedInst.init state in
-  match Bind.DecodedInst.decode x s with
+  match Bind.xed_decode x s with
   | Enum.NONE -> Ok x
   | err -> Error err
 
 let decode_with_features state s chipfeat =
   let x = DecodedInst.init state in
-  match Bind.DecodedInst.decode_with_features x s chipfeat with
+  match Bind.xed_decode_with_features x s chipfeat with
   | Enum.NONE -> Ok x
   | err -> Error err
 
 let ild_decode state s =
   let x = DecodedInst.init state in
-  match Bind.DecodedInst.ild_decode x s with
+  match Bind.xed_ild_decode x s with
   | Enum.NONE -> Ok x
   | err -> Error err
 
@@ -244,4 +289,4 @@ let get_copyright = Bind.xed_get_copyright
 let get_version = Bind.xed_get_version
 let set_verbosity = Bind.xed_set_verbosity
 
-let ok_err = function Ok x -> x | Error e -> failwith (Enum.error_to_string e)
+let ok_exn = function Ok x -> x | Error e -> failwith (Enum.error_to_string e)
