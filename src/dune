@@ -1,4 +1,11 @@
 (library
+ (name xedbindings)
+ (public_name xedbindings)
+ (modules xedbindings)
+ (libraries xedbindings_xed xedbindings_bind))
+
+(library
  (name xedbindings_xed)
  (public_name xedbindings.xed)
+ (modules xed)
  (libraries xedbindings_bind))
