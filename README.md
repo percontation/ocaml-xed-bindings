@@ -18,7 +18,7 @@ XED enums are exposed as OCaml constructors in `Xed.Enum`. XED functions that co
 
 Many XED functions that initialize a particular XED structure have been modified to both allocate and initialize; e.g. `xed_decode` is `Xed.decode : 'a XedStructs.State.t -> string -> ('b DecodedInst.t, Enum.error) result`.
 
-The binding is based on Ctypes, so you'll occasionally need modules like `Unsigned.UInt32` to interact with it. For functions where there's a type that makes more sense for OCaml---e.g. functions returning `Unsigned.UInt8.t` or `int` when logically it should be a `bool`, or using `Unsigned.UInt32.t` for small values that should just be an `int`---we have replacement functions in `src/xed.ml` that shadow the auto-generated bindings. Be warned that more such replacements may be added in the future, with little regard for backwards compatibility.
+The binding is based on Ctypes, so you'll occasionally need modules like `Unsigned.UInt32` to interact with it. For high-level functions where there's a type that's more ergonomic for OCaml---e.g. XED functions returning some integer type that could just be a `bool`, or using `Unsigned.UInt32.t` for small values that could just be an `int`---we have replacement functions in `src/xed.ml` that shadow the auto-generated bindings.
 
 ## Example
 
@@ -34,3 +34,16 @@ let () = DecodedInst.format ~syntax:Enum.ATT xedd 0xdeadbeefL |> print_endline;;
 ```
 
 Also see `src/test.ml`
+
+## Updates
+
+This library may slightly break backwards-compatibility of its API on any minor version update. For example, these incompatibilities may include:
+
+* Minor type changes or function renames for better OCaml ergonomics
+* Upstream XED updates (that don't broadly break stuff)
+
+## Future work
+
+* Optional bindings for the "enc2" encoder.
+* Custom high-level OCaml to mirror XED's high-level encoding API (which is not currently exposed by this binding).
+* Determine what further parts of XED are excluded from the binding, and possibly complete the binding.
