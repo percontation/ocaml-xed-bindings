@@ -84,6 +84,24 @@ module DecodedInst = struct
     | true -> string_of_c bytes
     | false -> failwith "xed_decoded_inst_dump_xed_format"
 
+  (** As with the XED C library, running this more than once without using one
+      of the `zero_` functions first will result in an error.
+      Note that for basic usage, you can (and should) use Xed.decode to both
+      `init` & `decode` at the same time.
+    *)
+  let decode x ?features s =
+    begin match features with
+    | None -> Bind.xed_decode x s
+    | Some f -> Bind.xed_decode_with_features x s f
+    end |> function
+    | Enum.NONE -> Ok x
+    | err -> Error err
+
+  let ild_decode x s =
+    match Bind.xed_ild_decode x s with
+    | Enum.NONE -> Ok x
+    | err -> Error err
+
   (* Disable get_byte because it's a use-after-free and you get random heap bytes.
    * (A xed_decoded_inst_t only keeps the pointer passed to xed_decode, not the
    * actual input bytes. Luckily, no other decoded-inst-api methods use it.) *)
@@ -261,23 +279,14 @@ end
 let state32 = State.init2 Enum.LEGACY_32 Enum.A32b |> Ptr.const
 let state64 = State.init2 Enum.LONG_64 Enum.A64b |> Ptr.const
 
-let decode state s =
-  let x = DecodedInst.init state in
-  match Bind.xed_decode x s with
-  | Enum.NONE -> Ok x
-  | err -> Error err
-
-let decode_with_features state s chipfeat =
-  let x = DecodedInst.init state in
-  match Bind.xed_decode_with_features x s chipfeat with
-  | Enum.NONE -> Ok x
-  | err -> Error err
+let decode state ?features s =
+  DecodedInst.decode (DecodedInst.init state) ?features s
 
 let ild_decode state s =
-  let x = DecodedInst.init state in
-  match Bind.xed_ild_decode x s with
-  | Enum.NONE -> Ok x
-  | err -> Error err
+  DecodedInst.ild_decode (DecodedInst.init state) s
+
+let decode_length state s =
+  Result.map DecodedInst.get_length @@ ild_decode state s
 
 let encode_nop len =
   let bytes = Bytes.create len in
