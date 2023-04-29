@@ -207,6 +207,20 @@ module Inst = struct
     _inst_get_attributes (Ptr.raw_address x)
   let get_attribute x y = get_attribute x y <> Unsigned.UInt32.zero
   let flag_info_index x = flag_info_index x |> Unsigned.UInt32.to_int
+
+  let fold_left_operands inst ~init ~f =
+    let acc = ref init in
+    for i = 0 to noperands inst - 1 do
+      acc := f i !acc @@ operand inst i
+    done;
+    !acc
+
+  let fold_right_operands inst ~f ~init =
+    let acc = ref init in
+    for i = noperands inst - 1 downto 0 do
+      acc := f i (operand inst i) !acc
+    done;
+    !acc
 end
 
 module Operand = struct
