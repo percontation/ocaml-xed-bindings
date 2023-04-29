@@ -597,8 +597,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_rexb (Ptr.unsafe_get a0)
   let get_rexr (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_rexr (Ptr.unsafe_get a0)
-  let get_rexrr (a0 : [>`Read] Types.decoded_inst_ptr) : int =
-    Funcs.xed3_operand_get_rexrr (Ptr.unsafe_get a0)
+  let get_rexr4 (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_rexr4 (Ptr.unsafe_get a0)
   let get_rexw (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_rexw (Ptr.unsafe_get a0)
   let get_rexx (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -623,6 +623,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_sibindex (Ptr.unsafe_get a0)
   let get_sibscale (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_sibscale (Ptr.unsafe_get a0)
+  let get_skip_osz (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_skip_osz (Ptr.unsafe_get a0)
   let get_smode (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_smode (Ptr.unsafe_get a0)
   let get_srm (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -653,6 +655,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_vexvalid (Ptr.unsafe_get a0)
   let get_vl (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_vl (Ptr.unsafe_get a0)
+  let get_vl_ign (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_vl_ign (Ptr.unsafe_get a0)
   let get_wbnoinvd (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_wbnoinvd (Ptr.unsafe_get a0)
   let get_zeroing (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -926,9 +930,9 @@ module Operand3 = struct
   let set_rexr (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_rexr (Ptr.unsafe_get a0) a1
-  let set_rexrr (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+  let set_rexr4 (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
-    Funcs.xed3_operand_set_rexrr (Ptr.unsafe_get a0) a1
+    Funcs.xed3_operand_set_rexr4 (Ptr.unsafe_get a0) a1
   let set_rexw (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_rexw (Ptr.unsafe_get a0) a1
@@ -963,6 +967,9 @@ module Operand3 = struct
   let set_sibscale (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_sibscale (Ptr.unsafe_get a0) a1
+  let set_skip_osz (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_skip_osz (Ptr.unsafe_get a0) a1
   let set_smode (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_smode (Ptr.unsafe_get a0) a1
@@ -1006,6 +1013,9 @@ module Operand3 = struct
   let set_vl (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_vl (Ptr.unsafe_get a0) a1
+  let set_vl_ign (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_vl_ign (Ptr.unsafe_get a0) a1
   let set_wbnoinvd (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_wbnoinvd (Ptr.unsafe_get a0) a1
@@ -1140,6 +1150,8 @@ module OperandValues = struct
     Funcs.xed_operand_values_is_nop (Ptr.unsafe_get a0)
   let lockable (a0 : [>`Read] Types.operand_values_ptr) : bool =
     Funcs.xed_operand_values_lockable (Ptr.unsafe_get a0)
+  let mandatory_66_prefix (a0 : [>`Read] Types.operand_values_ptr) : bool =
+    Funcs.xed_operand_values_mandatory_66_prefix (Ptr.unsafe_get a0)
   let memop_without_modrm (a0 : [>`Read] Types.operand_values_ptr) : bool =
     Funcs.xed_operand_values_memop_without_modrm (Ptr.unsafe_get a0)
   let number_of_memory_operands (a0 : [>`Read] Types.operand_values_ptr) : int =
@@ -1280,29 +1292,29 @@ end
 
 module Constants = struct
   let enc_groups = 537
-  let encode_fb_values_table_size = 4285
-  let encode_max_emit_patterns = 200
-  let encode_max_fb_patterns = 126
-  let encode_max_iforms = 7733
+  let encode_fb_values_table_size = 4912
+  let encode_max_emit_patterns = 207
+  let encode_max_fb_patterns = 129
+  let encode_max_iforms = 7735
   let encode_order_max_entries = 32
   let encode_order_max_operands = 5
   let encoder_operands_max = 8
   let feature_vector_max = 6
   let iclass_name_str_max = 142
-  let max_attribute_count = 99
+  let max_attribute_count = 100
   let max_convert_patterns = 5
   let max_decorations_per_operand = 3
   let max_displacement_bytes = 8
   let max_global_flag_actions = 472
   let max_iforms_per_iclass = 26
   let max_immediate_bytes = 8
-  let max_inst_table_nodes = 7706
+  let max_inst_table_nodes = 7708
   let max_instruction_bytes = 15
   let max_map_evex = 6
   let max_map_vex = 3
-  let max_operand_sequences = 9059
-  let max_operand_table_nodes = 1538
-  let max_required_attributes = 211
+  let max_operand_sequences = 9068
+  let max_operand_table_nodes = 1540
+  let max_required_attributes = 218
   let max_required_complex_flags_entries = 37
   let max_required_simple_flags_entries = 99
 end
