@@ -6,6 +6,16 @@
 #include <caml/fail.h>
 #include <caml/callback.h>
 
+#ifndef Val_none
+#define Val_none Val_int(0)
+#endif
+#ifndef Some_val
+#define Some_val(v) Field(v, 0)
+#endif
+#ifndef Is_none
+#define Is_none(v) ((v) == Val_none)
+#endif
+
 xed_format_options_t xb_format_options_from_ocaml(value flags) {
   int x = Int_val(flags);
   xed_format_options_t options = {
