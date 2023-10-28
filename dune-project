@@ -1,4 +1,4 @@
-(lang dune 3.0)
-(using ctypes 0.1)
+(lang dune 3.7)
+(using ctypes 0.3)
 (name xedbindings)
 (version 0.7)
