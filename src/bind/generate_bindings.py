@@ -566,6 +566,8 @@ for decl in tu.cursor.get_children():
       f.seek(start)
       s = f.read(decl.extent.end.offset-start).strip()
     if s:
+      if s[0] == '(' and s[-1] == ')':
+        s = s[1:-1] # we don't bother checking for paren balance since we only take ints.
       try:
         value = int(s, 0)
       except ValueError:
@@ -645,7 +647,7 @@ with open(outfile("XBEnums.ml"), 'w') as f:
     if not use_polymorphic_variants_for_enums and [i.value for i in constructors] == list(range(len(constructors))):
       # OCaml represents argumentless constructors in a type as sequential integers.
       f.write(f"let {enum.oname}_to_int : {enum.oname} -> int = Obj.magic\n")
-      f.write(f"let {enum.oname}_of_int (x : int) : {enum.oname} = \n"
+      f.write(f"let {enum.oname}_of_int (x : int) : {enum.oname} =\n"
             + f"  if 0 <= x && x < {len(constructors)} then Obj.magic x\n"
             + f"  else failwith \"{enum.oname}_of_int: no enum for given int\"\n")
     else:

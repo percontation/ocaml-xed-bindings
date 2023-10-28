@@ -37,7 +37,7 @@ module Types (F : Cstubs.Types.TYPE) = struct
   let chip_features_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr chip_features
   type 'a chip_features_ptr = (chip_features abstract, 'a) Ptr.t
   type decoded_inst
-  let decoded_inst : decoded_inst abstract typ = abstract ~name:"xed_decoded_inst_t" ~size:200 ~alignment:8
+  let decoded_inst : decoded_inst abstract typ = abstract ~name:"xed_decoded_inst_t" ~size:208 ~alignment:8
   let const_decoded_inst_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr decoded_inst
   let decoded_inst_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr decoded_inst
   type 'a decoded_inst_ptr = (decoded_inst abstract, 'a) Ptr.t
@@ -47,7 +47,7 @@ module Types (F : Cstubs.Types.TYPE) = struct
   let encoder_instruction_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr encoder_instruction
   type 'a encoder_instruction_ptr = (encoder_instruction abstract, 'a) Ptr.t
   type encoder_request
-  let encoder_request : encoder_request abstract typ = abstract ~name:"xed_encoder_request_t" ~size:200 ~alignment:8
+  let encoder_request : encoder_request abstract typ = abstract ~name:"xed_encoder_request_t" ~size:208 ~alignment:8
   let const_encoder_request_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr encoder_request
   let encoder_request_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr encoder_request
   type 'a encoder_request_ptr = (encoder_request abstract, 'a) Ptr.t
@@ -72,7 +72,7 @@ module Types (F : Cstubs.Types.TYPE) = struct
   let operand_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr operand
   type 'a operand_ptr = (operand abstract, 'a) Ptr.t
   type operand_values
-  let operand_values : operand_values abstract typ = abstract ~name:"xed_operand_values_t" ~size:200 ~alignment:8
+  let operand_values : operand_values abstract typ = abstract ~name:"xed_operand_values_t" ~size:208 ~alignment:8
   let const_operand_values_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr operand_values
   let operand_values_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr operand_values
   type 'a operand_values_ptr = (operand_values abstract, 'a) Ptr.t
@@ -102,10 +102,14 @@ module Types (F : Cstubs.Types.TYPE) = struct
       ~read:(XBEnums.chip_of_int % uint_to_int)
       ~write:(uint_of_int % XBEnums.chip_to_int)
       @@ typedef uint "xed_chip_enum_t"
-  let cpuid_bit_enum = view
-      ~read:(XBEnums.cpuid_bit_of_int % uint_to_int)
-      ~write:(uint_of_int % XBEnums.cpuid_bit_to_int)
-      @@ typedef uint "xed_cpuid_bit_enum_t"
+  let cpuid_group_enum = view
+      ~read:(XBEnums.cpuid_group_of_int % uint_to_int)
+      ~write:(uint_of_int % XBEnums.cpuid_group_to_int)
+      @@ typedef uint "xed_cpuid_group_enum_t"
+  let cpuid_rec_enum = view
+      ~read:(XBEnums.cpuid_rec_of_int % uint_to_int)
+      ~write:(uint_of_int % XBEnums.cpuid_rec_to_int)
+      @@ typedef uint "xed_cpuid_rec_enum_t"
   let error_enum = view
       ~read:(XBEnums.error_of_int % uint_to_int)
       ~write:(uint_of_int % XBEnums.error_to_int)

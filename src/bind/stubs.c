@@ -180,13 +180,15 @@ value xb_decoded_inst_get_attributes(value decoded_inst) {
 value xb_get_cpuid_rec(value cpuid_bit_int) {
   CAMLparam1(cpuid_bit_int);
   CAMLlocal1(ret);
-  xed_cpuid_bit_enum_t cpuid_bit = Int_val(cpuid_bit_int);
+  xed_cpuid_rec_enum_t cpuid_bit = Int_val(cpuid_bit_int);
   xed_cpuid_rec_t p;
   xed_get_cpuid_rec(cpuid_bit, &p);
-  ret = caml_alloc_tuple(4);
+  ret = caml_alloc_tuple(6);
   Store_field(ret, 0, Val_int(p.leaf));
   Store_field(ret, 1, Val_int(p.subleaf));
   Store_field(ret, 2, Val_int(p.reg));
-  Store_field(ret, 3, Val_int(p.bit));
+  Store_field(ret, 3, Val_int(p.bit_start));
+  Store_field(ret, 4, Val_int(p.bit_end));
+  Store_field(ret, 5, Val_int(p.value));
   CAMLreturn(ret);
 }

@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name:         "xedbindings"
-version:      "0.7"
+version:      "0.8"
 synopsis:     "Bindings to Intel XED"
 maintainer:   "Ryan Goulden"
 author:       "Ryan Goulden"

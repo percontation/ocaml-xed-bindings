@@ -11,7 +11,7 @@ module Enum = struct
   include Bind.Enum
 
   open struct
-    external _get_cpuid_rec: int -> int * int * int * int = "xb_get_cpuid_rec"
+    external _get_cpuid_rec: int -> int * int * int * int * int * int = "xb_get_cpuid_rec"
   end
 
   let operand_action_read x = operand_action_read x <> 0
@@ -37,15 +37,35 @@ module Enum = struct
     leaf: int;
     subleaf: int;
     reg: reg;
-    bit: int;
+    bit_start: int;
+    bit_end: int;
+    value: int;
   }
   let cpuid_bit_rec x =
-    let leaf, subleaf, reg, bit = _get_cpuid_rec @@ cpuid_bit_to_int x
-    in {leaf; subleaf; reg=reg_of_int reg; bit}
+    let leaf, subleaf, reg, bit_start, bit_end, value = _get_cpuid_rec @@ cpuid_rec_to_int x
+    in {leaf; subleaf; reg=reg_of_int reg; bit_start; bit_end; value}
 
-  let cpuid_bit_of_isa_set = cpuid_bit_for_isa_set
+  let cpuid_groups_of_isa_set isa_set : cpuid_group list =
+    let rec f isa_set l i =
+      if i < 0 then l else
+      match cpuid_group_enum_for_isa_set isa_set i with
+      | INVALID -> f isa_set l (i-1)
+      | x -> f isa_set (x::l) (i-1)
+    in f isa_set [] (max_cpuid_groups_per_isa_set - 1)
+
+  let cpuid_recs_of_cpuid_group cpuid_group : cpuid_rec list =
+    let rec f cpuid_group l i =
+      if i < 0 then l else
+      match cpuid_group_cpuid_rec_enum_for_group cpuid_group i with
+      | INVALID -> f cpuid_group l (i-1)
+      | x -> f cpuid_group (x::l) (i-1)
+    in f cpuid_group [] (max_cpuid_recs_per_group - 1)
+
+  let cpuid_recs_of_isa_set isa_set : cpuid_rec list =
+    cpuid_groups_of_isa_set isa_set
+    |> List.map cpuid_recs_of_cpuid_group
+    |> List.flatten
 end
-
 
 module ChipFeatures = struct
   include Bind.ChipFeatures
