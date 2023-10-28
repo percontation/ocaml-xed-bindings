@@ -61,10 +61,40 @@ module Enum = struct
       | x -> f cpuid_group (x::l) (i-1)
     in f cpuid_group [] (max_cpuid_recs_per_group - 1)
 
+  (** Like `cpuid_groups_of_isa_set x |> List.map cpuid_recs_of_cpuid_group`
+      except there will be no duplicates. *)
   let cpuid_recs_of_isa_set isa_set : cpuid_rec list =
-    cpuid_groups_of_isa_set isa_set
-    |> List.map cpuid_recs_of_cpuid_group
-    |> List.flatten
+    (* Fill a bitset with the cpuid_recs *)
+    let words = (cpuid_rec_len + Sys.int_size - 1) / Sys.int_size in
+    let arr = Array.make words 0 in
+    for i = 0 to max_cpuid_groups_per_isa_set - 1 do
+      match cpuid_group_enum_for_isa_set isa_set i with
+      | INVALID -> ()
+      | group ->
+      for j = 0 to max_cpuid_recs_per_group - 1 do
+        match cpuid_group_cpuid_rec_enum_for_group group j with
+        | INVALID -> ()
+        | cpuid_rec ->
+        let idx = cpuid_rec_to_int cpuid_rec in
+        let word = Array.get arr (idx / Sys.int_size) in
+        let word = word lor (1 lsl (idx mod Sys.int_size)) in
+        Array.set arr (idx / Sys.int_size) word
+      done
+    done;
+    (* Reverse iterate through each word of the bitset to build output list;
+       this means the output list happens to be in sorted order. *)
+    let rec f arr i j l =
+      if i < 0 then l else
+      let rec g word i j l =
+        if j < 0 then l else
+        g word i (j-1) (
+          if (word lsr j) land 1 <> 0
+          then cpuid_rec_of_int (i * Sys.int_size + j) :: l
+          else l
+        )
+      in
+      f arr (i-1) (Sys.int_size - 1) @@ g (Array.get arr i) i j l
+    in f arr (words-1) (Sys.int_size - (words * Sys.int_size - cpuid_rec_len) - 1) []
 end
 
 module ChipFeatures = struct
