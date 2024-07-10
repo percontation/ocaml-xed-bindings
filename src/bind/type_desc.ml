@@ -56,6 +56,11 @@ module Types (F : Cstubs.Types.TYPE) = struct
   let const_flag_action_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr flag_action
   let flag_action_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr flag_action
   type 'a flag_action_ptr = (flag_action abstract, 'a) Ptr.t
+  type flag_dfv
+  let flag_dfv : flag_dfv abstract typ = abstract ~name:"xed_flag_dfv_t" ~size:4 ~alignment:4
+  let const_flag_dfv_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr flag_dfv
+  let flag_dfv_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr flag_dfv
+  type 'a flag_dfv_ptr = (flag_dfv abstract, 'a) Ptr.t
   type flag_set
   let flag_set : flag_set abstract typ = abstract ~name:"xed_flag_set_t" ~size:4 ~alignment:4
   let const_flag_set_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr flag_set

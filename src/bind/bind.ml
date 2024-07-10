@@ -50,6 +50,8 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_get_byte (Ptr.unsafe_get a0) a1
   let get_category (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.category =
     Funcs.xed_decoded_inst_get_category (Ptr.unsafe_get a0)
+  let get_dfv_reg (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.reg =
+    Funcs.xed_decoded_inst_get_dfv_reg (Ptr.unsafe_get a0)
   let get_extension (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.extension =
     Funcs.xed_decoded_inst_get_extension (Ptr.unsafe_get a0)
   let get_iclass (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.iclass =
@@ -551,6 +553,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_nominal_opcode (Ptr.unsafe_get a0)
   let get_norex (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_norex (Ptr.unsafe_get a0)
+  let get_norex2 (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_norex2 (Ptr.unsafe_get a0)
   let get_nprefixes (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_nprefixes (Ptr.unsafe_get a0)
   let get_nrexes (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -889,6 +893,9 @@ module Operand3 = struct
   let set_norex (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_norex (Ptr.unsafe_get a0) a1
+  let set_norex2 (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_norex2 (Ptr.unsafe_get a0) a1
   let set_nprefixes (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_nprefixes (Ptr.unsafe_get a0) a1
@@ -1350,20 +1357,20 @@ end
 
 module Constants = struct
   let emit_messages = 0
-  let enc_groups = 555
-  let encode_fb_values_table_size = 9163
-  let encode_max_emit_patterns = 224
-  let encode_max_fb_patterns = 163
-  let encode_max_iforms = 10205
+  let enc_groups = 567
+  let encode_fb_values_table_size = 9834
+  let encode_max_emit_patterns = 226
+  let encode_max_fb_patterns = 164
+  let encode_max_iforms = 10263
   let encode_order_max_entries = 37
   let encode_order_max_operands = 5
   let encoder_operands_max = 8
   let feature_vector_max = 6
-  let iclass_name_str_max = 142
+  let iclass_name_str_max = 176
   let info2_verbose = 0
   let info_verbose = 0
-  let max_attribute_count = 103
-  let max_convert_patterns = 5
+  let max_attribute_count = 104
+  let max_convert_patterns = 7
   let max_cpuid_groups_per_isa_set = 2
   let max_cpuid_recs_per_group = 4
   let max_decorations_per_operand = 3
@@ -1371,13 +1378,13 @@ module Constants = struct
   let max_global_flag_actions = 492
   let max_iforms_per_iclass = 48
   let max_immediate_bytes = 8
-  let max_inst_table_nodes = 10178
+  let max_inst_table_nodes = 10235
   let max_instruction_bytes = 15
-  let max_map_evex = 6
+  let max_map_evex = 7
   let max_map_vex = 7
-  let max_operand_sequences = 10090
-  let max_operand_table_nodes = 1652
-  let max_required_attributes = 260
+  let max_operand_sequences = 10112
+  let max_operand_table_nodes = 1679
+  let max_required_attributes = 262
   let max_required_complex_flags_entries = 149
   let max_required_simple_flags_entries = 101
   let more_verbose = 0
@@ -1587,6 +1594,8 @@ let xed_encode_nop (a0 : bytes) : XBEnums.error =
   Funcs.xed_encode_nop (Ctypes.ocaml_bytes_start a0) (Bytes.length a0)
 let xed_encode_request_print (a0 : [>`Read] Types.encoder_request_ptr) (a1 : bytes) : unit =
   Funcs.xed_encode_request_print (Ptr.unsafe_get a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
+let xed_flag_dfv_get_default_flags_values (a0 : XBEnums.reg) (a1 : [>`Read|`Write] Types.flag_dfv_ptr) : bool =
+  Funcs.xed_flag_dfv_get_default_flags_values a0 (Ptr.unsafe_get a1)
 let xed_get_copyright () : string =
   Funcs.xed_get_copyright ()
 let xed_get_version () : string =

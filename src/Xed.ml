@@ -246,6 +246,26 @@ module FlagSet = struct
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
+module FlagDFV = struct
+  type t = {dfv_of:bool; dfv_sf:bool; dfv_zf:bool; dfv_cf:bool}
+  let flat x = (if x.dfv_of then 1 else 0)
+             + (if x.dfv_sf then 2 else 0)
+             + (if x.dfv_zf then 4 else 0)
+             + (if x.dfv_cf then 8 else 0)
+  let get_default_flags_values x =
+    let module Types = Bind.Types in
+    let y = Types.Ptr.rw @@ Ctypes.allocate_n ~count:1 Types.flag_dfv in
+    if not @@ Bind.xed_flag_dfv_get_default_flags_values x y then None else
+    let z = Ctypes.(!@) (Ctypes.coerce Types.flag_dfv_ptr Ctypes.(ptr uint8_t) y)
+            |> Unsigned.UInt8.to_int in
+    Some {
+      dfv_of = z land 1 <> 0;
+      dfv_sf = z land 2 <> 0;
+      dfv_zf = z land 4 <> 0;
+      dfv_cf = z land 8 <> 0;
+    }
+end
+
 module Inst = struct
   include Bind.Inst
 
