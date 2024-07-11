@@ -1,9 +1,9 @@
 opam-version: "2.0"
 name:         "xedbindings"
-version:      "0.8"
+version:      "0.9"
 synopsis:     "Bindings to Intel XED"
 maintainer:   "Ryan Goulden"
-author:       "Ryan Goulden"
+authors:      "Ryan Goulden"
 license:      "Apache-2.0"
 
 homepage:    "https://github.com/percontation/ocaml-xed-bindings"
@@ -19,4 +19,8 @@ depends: [
   "ocaml" {>= "4.08"}
   "dune" {>= "3.7"}
   "ctypes" {>= "0.12"}
+  "conf-python-3" {build}
 ]
+
+# dune ctypes stub generation is broken when compiling with bytecode-only?
+conflicts: ["ocaml-option-bytecode-only"]

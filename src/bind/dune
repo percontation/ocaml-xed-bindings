@@ -14,7 +14,7 @@
  (foreign_stubs (language c) (include_dirs xedkit/include/xed) (names stubs))
  (foreign_archives xedkit/lib/xed)
  (ctypes
-  (build_flags_resolver (vendored (c_flags ()) (c_library_flags ())))
+  (build_flags_resolver (vendored (c_flags (:standard -fPIC)) (c_library_flags ())))
   (external_library_name libxed)
   (headers (preamble "#include \"xedkit/include/xed/xed-interface.h\""))
   (type_description
