@@ -38,6 +38,15 @@ let main () =
   let s = EncoderRequest.encode req |> ok_exn in
   decode state64 s |> ok_exn |> DecodedInst.to_string |> print_endline;
 
+  let movmem = ok_exn @@ decode state64 "\x8B\x45\x10" in
+  assert (DecodedInst.get_memory_displacement movmem 0 = 16L);
+  assert (DecodedInst.get_memory_displacement movmem 1 = 0L);
+  begin try
+    assert (DecodedInst.get_memory_displacement movmem 2 = 0L);
+    print_endline "XED_ASSERTS off"
+  with XedAbort _ -> print_endline "XED_ASSERTS on"
+  end;
+
   testinstrs (fun xedd ->
     let init = "" in
     let f _ s op = s

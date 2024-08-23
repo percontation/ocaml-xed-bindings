@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdio.h>
 #include <xed-interface.h>
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
@@ -16,7 +17,28 @@
 #define Is_none(v) ((v) == Val_none)
 #endif
 
-xed_format_options_t xb_format_options_from_ocaml(value flags) {
+// I'm a little nervous about throwing an OCaml exception instead of letting
+// XED abort(), but it seems safe since XED does zero memory allocation. It's
+// also likely that XED is written with exception throwing in mind here anyways.
+static void user_abort(const char *msg, const char *file, int line, void *ctxt) {
+  CAMLparam0();
+  CAMLlocalN(args, 3);
+  args[0] = caml_copy_string(msg);
+  args[1] = caml_copy_string(file);
+  args[2] = Val_int(line);
+  caml_raise_with_args(*caml_named_value("XedAbort exception"), 3, args);
+  CAMLreturn0;
+}
+
+CAMLprim value xb_init(value unit) {
+  CAMLparam1(unit);
+  xed_tables_init();
+  xed_set_log_file(stderr);
+  xed_register_abort_function(user_abort, 0);
+  CAMLreturn(Val_unit);
+}
+
+static xed_format_options_t format_options_from_ocaml(value flags) {
   int x = Int_val(flags);
   xed_format_options_t options = {
     .hex_address_before_symbolic_name = x & (1<<0),
@@ -31,7 +53,7 @@ xed_format_options_t xb_format_options_from_ocaml(value flags) {
   return options;
 }
 
-int xb_format_callback(xed_uint64_t address, char *symbol_buffer, xed_uint32_t buffer_length, xed_uint64_t *offset, void *context) {
+static int format_callback(xed_uint64_t address, char *symbol_buffer, xed_uint32_t buffer_length, xed_uint64_t *offset, void *context) {
   CAMLparam0();
   CAMLlocal1(v);
 
@@ -65,7 +87,7 @@ int xb_format_callback(xed_uint64_t address, char *symbol_buffer, xed_uint32_t b
   CAMLreturnT(int, 1);
 }
 
-value xb_format(value syntax_int, value decoded_inst, value addr, value format, value symbolizer) {
+CAMLprim value xb_format(value syntax_int, value decoded_inst, value addr, value format, value symbolizer) {
   char buf[1000]; // big buffer because fully-explicit XED syntax can be verbose.
   CAMLparam5(syntax_int, decoded_inst, addr, format, symbolizer);
 
@@ -82,15 +104,15 @@ value xb_format(value syntax_int, value decoded_inst, value addr, value format, 
     info.disassembly_callback = NULL;
     info.context = NULL;
   } else {
-    info.disassembly_callback = xb_format_callback;
+    info.disassembly_callback = format_callback;
     info.context = (void*)symbolizer;
   }
   info.format_options_valid = 1;
-  info.format_options = xb_format_options_from_ocaml(format);
+  info.format_options = format_options_from_ocaml(format);
 
   buf[0] = 0; // Unclear if XED requires this; can't hurt though.
 
-  // NB: xb_format_callback may raise an exception, so the rest of this
+  // NB: format_callback may raise an exception, so the rest of this
   // function doesn't necessarily execute.
   if(!xed_format_generic(&info)) {
     // AFAICT this is never supposed to happen for properly constructed
@@ -101,7 +123,7 @@ value xb_format(value syntax_int, value decoded_inst, value addr, value format, 
   CAMLreturn(caml_copy_string(buf));
 }
 
-value xb_encode(value encoder_request) {
+CAMLprim value xb_encode(value encoder_request) {
   CAMLparam1(encoder_request);
   CAMLlocal2(outtup, outstr);
 
@@ -118,7 +140,7 @@ value xb_encode(value encoder_request) {
   CAMLreturn(outtup);
 }
 
-value xb_encoder_request_init_from_decode(value encoder_request, value decoded_inst) {
+CAMLprim value xb_encoder_request_init_from_decode(value encoder_request, value decoded_inst) {
   CAMLparam2(encoder_request, decoded_inst);
   xed_encoder_request_t *req = (void *)Nativeint_val(encoder_request);
   const xed_decoded_inst_t *xedd = (void *)Nativeint_val(decoded_inst);
@@ -127,7 +149,7 @@ value xb_encoder_request_init_from_decode(value encoder_request, value decoded_i
   CAMLreturn(Val_unit);
 }
 
-value xb_attrs_to_list(xed_attributes_t attrs) {
+CAMLprim value xb_attrs_to_list(xed_attributes_t attrs) {
   int i;
   CAMLparam0();
   CAMLlocal2(t, list);
@@ -155,13 +177,13 @@ value xb_attrs_to_list(xed_attributes_t attrs) {
   CAMLreturn(list);
 }
 
-value xb_inst_get_attributes(value inst) {
+CAMLprim value xb_inst_get_attributes(value inst) {
   CAMLparam1(inst);
   const xed_inst_t *xedi = (void *)Nativeint_val(inst);
   CAMLreturn(xb_attrs_to_list(xed_inst_get_attributes(xedi)));
 }
 
-value xb_decoded_inst_get_attributes(value decoded_inst) {
+CAMLprim value xb_decoded_inst_get_attributes(value decoded_inst) {
   CAMLparam1(decoded_inst);
   const xed_decoded_inst_t *xedd = (void *)Nativeint_val(decoded_inst);
   CAMLreturn(xb_attrs_to_list(xed_decoded_inst_get_attributes(xedd)));
@@ -177,7 +199,7 @@ value xb_decoded_inst_get_attributes(value decoded_inst) {
 //   xed_inst(inst)
 // }
 
-value xb_get_cpuid_rec(value cpuid_bit_int) {
+CAMLprim value xb_get_cpuid_rec(value cpuid_bit_int) {
   CAMLparam1(cpuid_bit_int);
   CAMLlocal1(ret);
   xed_cpuid_rec_enum_t cpuid_bit = Int_val(cpuid_bit_int);
@@ -190,5 +212,18 @@ value xb_get_cpuid_rec(value cpuid_bit_int) {
   Store_field(ret, 3, Val_int(p.bit_start));
   Store_field(ret, 4, Val_int(p.bit_end));
   Store_field(ret, 5, Val_int(p.value));
+  CAMLreturn(ret);
+}
+
+CAMLprim value xb_iform_map(value iform) {
+  CAMLparam1(iform);
+  CAMLlocal1(ret);
+  const xed_iform_info_t *info = xed_iform_map((xed_iform_enum_t)Int_val(iform));
+  ret = caml_alloc_tuple(5);
+  Store_field(ret, 0, Val_int(info->category));
+  Store_field(ret, 1, Val_int(info->extension));
+  Store_field(ret, 2, Val_int(info->iclass));
+  Store_field(ret, 3, Val_int(info->isa_set));
+  Store_field(ret, 4, Val_int(info->string_table_idx));
   CAMLreturn(ret);
 }

@@ -32,7 +32,7 @@ module Types (F : Cstubs.Types.TYPE) = struct
   type enc_displacement
   let enc_displacement : enc_displacement structure typ = structure "xed_enc_displacement_t"
   type chip_features
-  let chip_features : chip_features abstract typ = abstract ~name:"xed_chip_features_t" ~size:48 ~alignment:8
+  let chip_features : chip_features abstract typ = abstract ~name:"xed_chip_features_t" ~size:56 ~alignment:8
   let const_chip_features_ptr = view ~read:Ptr.ro ~write:Ptr.unsafe_get @@ ptr chip_features
   let chip_features_ptr = view ~read:Ptr.rw ~write:Ptr.get @@ ptr chip_features
   type 'a chip_features_ptr = (chip_features abstract, 'a) Ptr.t

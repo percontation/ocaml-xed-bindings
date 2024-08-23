@@ -454,6 +454,7 @@ unwanted_functions = {
   "xed_strncpy",
   "xed_strncat",
   "xed_itoa",
+  "xed_itoa_bin",
   "xed_itoa_hex_zeros",
   "xed_itoa_hex",
   "xed_itoa_hex_ul",
@@ -478,9 +479,11 @@ unwanted_functions = {
   "xed_shortest_width_signed",
 
   # XED stuff.
+  "xed_tables_init",
   "xed_inst_table_base",
   "xed_internal_assert",
   "xed_register_abort_function",
+  "xed_set_log_file",
 
   # Exist in headerfile, but no implementation.
   "xed_operand_values_has_disp",
@@ -491,6 +494,12 @@ unwanted_functions = {
   "xed_decoded_inst_get_attributes",
   "xed_encode",
   "xed_encoder_request_init_from_decode",
+  "xed_init_print_info",
+  "xed_format_generic",
+  "xed_format_context",
+  "xed_format_set_options",
+  "xed_get_cpuid_rec",
+  "xed_iform_map",
   # "xed_inst",
   # "xed_inst0",
   # "xed_inst1",
@@ -595,12 +604,7 @@ def filter_funcs(func):
   return True
 
 skip_funcs = {
-  "xed_iform_map",
   "xed3_set_generic_operand",
-  "xed_init_print_info",
-  "xed_format_generic",
-  "xed_format_set_options",
-  "xed_get_cpuid_rec",
 }
 
 for func in functions:
@@ -962,6 +966,7 @@ module Ptr = Types.Ptr
 
   f.write("\n")
 
+  # This is currently empty. Probably just remove it?
   f.write("module Enc = struct\n")
   for func in encoder_funcs:
     f.write(trans(func, indent="  "))

@@ -48,6 +48,7 @@ mbuild.env.env_t._normalize_cpu_name = _normalize_cpu_name
 import mfile
 sys.exit(mfile.work())
 ' -- $COMPILER $X --cc="$CC" --cxx="$CC" --linker="$CC" --ar=ar --no-werror --extra-flags=-fPIC --install-dir=kits/xed-install install
+# TODO: enable --asserts? Seems to work well with our XedAbort exception but I haven't tested much.
 # --cxx="$CC" is "correct" and necessary. XED has no c++, but mbuild uses CXX as the linker anyways.
 done
 cd ..

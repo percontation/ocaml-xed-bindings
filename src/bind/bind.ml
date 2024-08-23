@@ -1357,15 +1357,15 @@ end
 
 module Constants = struct
   let emit_messages = 0
-  let enc_groups = 567
-  let encode_fb_values_table_size = 9834
-  let encode_max_emit_patterns = 226
-  let encode_max_fb_patterns = 164
-  let encode_max_iforms = 10263
+  let enc_groups = 588
+  let encode_fb_values_table_size = 10752
+  let encode_max_emit_patterns = 237
+  let encode_max_fb_patterns = 167
+  let encode_max_iforms = 11154
   let encode_order_max_entries = 37
   let encode_order_max_operands = 5
   let encoder_operands_max = 8
-  let feature_vector_max = 6
+  let feature_vector_max = 7
   let iclass_name_str_max = 176
   let info2_verbose = 0
   let info_verbose = 0
@@ -1378,13 +1378,13 @@ module Constants = struct
   let max_global_flag_actions = 492
   let max_iforms_per_iclass = 48
   let max_immediate_bytes = 8
-  let max_inst_table_nodes = 10235
+  let max_inst_table_nodes = 11134
   let max_instruction_bytes = 15
   let max_map_evex = 7
   let max_map_vex = 7
-  let max_operand_sequences = 10112
-  let max_operand_table_nodes = 1679
-  let max_required_attributes = 262
+  let max_operand_sequences = 11115
+  let max_operand_table_nodes = 1768
+  let max_required_attributes = 284
   let max_required_complex_flags_entries = 149
   let max_required_simple_flags_entries = 101
   let more_verbose = 0
@@ -1608,5 +1608,3 @@ let xed_repne (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
   Funcs.xed_repne (Ptr.unsafe_get a0)
 let xed_set_verbosity (a0 : int) : unit =
   Funcs.xed_set_verbosity a0
-let xed_tables_init () : unit =
-  Funcs.xed_tables_init ()

@@ -661,5 +661,4 @@ open F
   let xed_state_set_stack_address_width = foreign "xed_state_set_stack_address_width" ((ptr state) @-> address_width_enum @-> returning void)
   let xed_state_zero = foreign "xed_state_zero" ((ptr state) @-> returning void)
   let xed_syntax_enum_t2str = foreign "xed_syntax_enum_t2str" (syntax_enum @-> returning string)
-  let xed_tables_init = foreign "xed_tables_init" (void @-> returning void)
 end

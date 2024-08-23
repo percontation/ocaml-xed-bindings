@@ -1,5 +1,10 @@
 module Bind = Xedbindings_bind.Bind
-let () = Bind.xed_tables_init ()
+
+(** (expr, file, lineno) for xed_assert failures *)
+exception XedAbort of string * string * int
+let () = Callback.register_exception "XedAbort exception" (XedAbort ("XedAbort exception", "none", 0))
+let () = let open struct external _init: unit -> unit = "xb_init" end in _init ()
+
 include Bind.Constants
 module Ptr = Bind.Ptr
 
@@ -29,6 +34,14 @@ module Enum = struct
 
   let iform_max_per_iclass x = iform_max_per_iclass x |> Unsigned.UInt32.to_int
   let iform_first_per_iclass x = iform_first_per_iclass x |> Unsigned.UInt32.to_int
+  type iform_map = {
+    category: category;
+    extension: extension;
+    iclass: iclass;
+    isa_set: isa_set;
+    string_table_idx: int;
+  }
+  external iform_map: iform -> iform_map = "xb_iform_map"
 
   let attributes =
     Array.init (Bind.xed_attribute_max ()) Bind.xed_attribute
@@ -354,10 +367,6 @@ module State = struct
   let to_string x =
     let bytes = Bytes.create 100
     in print x bytes |> Bytes.sub_string bytes 0
-end
-
-module Enc = struct
-  include Bind.Enc
 end
 
 let state32 = State.init2 Enum.LEGACY_32 Enum.A32b |> Ptr.const
