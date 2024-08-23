@@ -19,6 +19,15 @@ let testinstrs f =
   in
   List.iter (testone f) instrs
 
+let contains_substr haystack needle =
+  let last = String.length haystack - String.length needle in
+  if String.length needle < 1 then true else
+  let rec f i =
+    if i > last then false else
+    if haystack.[i] = needle.[0] && String.sub haystack i (String.length needle) = needle then true
+    else f (i+1)
+  in f 0
+
 let main () =
   let eax = Enum.reg_of_string "EAX" |> Enum.reg_to_string in
   assert (eax = "EAX");
@@ -38,6 +47,7 @@ let main () =
   let s = EncoderRequest.encode req |> ok_exn in
   decode state64 s |> ok_exn |> DecodedInst.to_string |> print_endline;
 
+  (* test xed_asserts *)
   let movmem = ok_exn @@ decode state64 "\x8B\x45\x10" in
   assert (DecodedInst.get_memory_displacement movmem 0 = 16L);
   assert (DecodedInst.get_memory_displacement movmem 1 = 0L);
@@ -46,6 +56,11 @@ let main () =
     print_endline "XED_ASSERTS off"
   with XedAbort _ -> print_endline "XED_ASSERTS on"
   end;
+
+  (* test symbolizer *)
+  let jmprel = ok_exn @@ decode state64 "\xFF\x25\xE9\xBE\x00\x00" in
+  let s = DecodedInst.format ~symbolizer:(fun addr -> Some ("base", addr)) jmprel 0xdead0000L in
+  print_endline s; assert (contains_substr s "deadbeef");
 
   testinstrs (fun xedd ->
     let init = "" in
