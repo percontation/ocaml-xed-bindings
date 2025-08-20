@@ -45,6 +45,21 @@ def _normalize_cpu_name(self, name):
     return name
 mbuild.env.env_t._normalize_cpu_name = _normalize_cpu_name
 
+# someone pasted in a bunch of random linker flags that break macOS
+import xed_build_common
+orig_gnu_secured_build = xed_build_common.gnu_secured_build
+def gnu_secured_build(env):
+  flags = orig_gnu_secured_build(env)
+  if env.on_mac():
+    for i in ("-Wl,-z,relro,-z,now", "-z noexecstack"):
+      if isinstance(env.env["LINKFLAGS"], list):
+        try: env.env["LINKFLAGS"].remove(i)
+        except ValueError: pass
+      else:
+        env.env["LINKFLAGS"] = env.env["LINKFLAGS"].replace(i, "")
+  return flags
+xed_build_common.gnu_secured_build = gnu_secured_build
+
 import mfile
 sys.exit(mfile.work())
 ' -- $COMPILER $X --cc="$CC" --cxx="$CC" --linker="$CC" --ar=ar --no-werror --extra-flags=-fPIC --install-dir=kits/xed-install install

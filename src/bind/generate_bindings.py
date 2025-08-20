@@ -70,9 +70,24 @@ def group_into_lines(prefix, line_gen):
 
 tu = Index.parse(
   os.path.join(XED_HEADERS, "xed-interface.h"),
-  args=["-I"+XED_HEADERS],
+  args=["-std=c23", "-I"+XED_HEADERS],
   options=cindex.TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD,
+  unsaved_files=[(XED_HEADERS + "/stdint.h", """\
+// This isn't correct from a C standpoint. But, clang cindex behavior we used
+// to rely on broke and this seems to fix it, so whatever.
+typedef unsigned _BitInt(8) uint8_t;
+typedef unsigned _BitInt(16) uint16_t;
+typedef unsigned _BitInt(32) uint32_t;
+typedef unsigned _BitInt(64) uint64_t;
+typedef signed _BitInt(8) int8_t;
+typedef signed _BitInt(16) int16_t;
+typedef signed _BitInt(32) int32_t;
+typedef signed _BitInt(64) int64_t;
+""")]
 )
+errs = [i for i in tu.diagnostics if i.severity >= d.Error]
+if errs:
+    raise Exception("\n".join(str(d) for d in errs))
 
 #
 # cindex helper functions.
@@ -518,7 +533,7 @@ def fix_function_name(s):
     return s
 
 func_buf_args = {
-  "xed_operand_print(const xed_operand_t, char *, int)" : ((1,2,True),),
+  "xed_operand_print(const struct xed_decoded_inst_s *, unsigned int, char *, int)" : ((2,3,True),),
   "xed_flag_set_print(const xed_flag_set_t *, char *, int)": ((1,2,True),),
   "xed_flag_action_print(const xed_flag_action_t *, char *, int)": ((1,2,True),),
   "xed_simple_flag_print(const xed_simple_flag_t *, char *, int)": ((1,2,True),),
@@ -527,12 +542,11 @@ func_buf_args = {
   "xed_operand_values_print_short(const xed_operand_values_t *, char *, int)": ((1,2,True),),
   "xed_encode_request_print(const xed_encoder_request_t *, char *, xed_uint_t)": ((1,2,True),),
   "xed_decoded_inst_dump(const xed_decoded_inst_t *, char *, int)": ((1,2,True),),
-  "xed_decoded_inst_dump_xed_format(const xed_decoded_inst_t *, char *, int, uint64_t)": ((1,2,True),),
-  "xed_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2,False),),
-  "xed_ild_decode(xed_decoded_inst_t *, const uint8_t *, const unsigned int)": ((1,2,False),),
-  "xed_operand_print(const xed_operand_t *, char *, int)": ((1,2,True),),
-  "xed_decode_with_features(xed_decoded_inst_t *, const uint8_t *, const unsigned int, xed_chip_features_t *)": ((1,2,False),),
-  "xed_encode_nop(uint8_t *, const unsigned int)": ((0,1,True),),
+  "xed_decoded_inst_dump_xed_format(const xed_decoded_inst_t *, char *, int, xed_uint64_t)": ((1,2,True),),
+  "xed_decode(xed_decoded_inst_t *, const xed_uint8_t *, const unsigned int)": ((1,2,False),),
+  "xed_ild_decode(xed_decoded_inst_t *, const xed_uint8_t *, const unsigned int)": ((1,2,False),),
+  "xed_decode_with_features(xed_decoded_inst_t *, const xed_uint8_t *, const unsigned int, xed_chip_features_t *)": ((1,2,False),),
+  "xed_encode_nop(xed_uint8_t *, const unsigned int)": ((0,1,True),),
 }
 
 def find_buffer_args(decl):
@@ -551,6 +565,10 @@ def process_function(decl):
 
   for bufi, leni, outi in find_buffer_args(decl):
     args[bufi] = BBufArg(ptr=args[bufi], idx=leni, out=outi)
+
+  if decl.displayname == "xed_operand_print(const struct xed_decoded_inst_s *, unsigned int, char *, int)":
+    # XED used to be extremely consistent. Hopefully this doesn't get worse.
+    args[0] = args[0]._replace(type=args[0].type._replace(cname='xed_decoded_inst_t', oname='decoded_inst'))
 
   return BFunc(oname=oname, cname=decl.spelling, types=tuple(args))
 

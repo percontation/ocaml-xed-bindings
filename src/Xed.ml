@@ -121,6 +121,19 @@ module ChipFeatures = struct
     modify_chip_features x isa false
 end
 
+module FlagDFV = struct
+  type t = {dfv_of:bool; dfv_sf:bool; dfv_zf:bool; dfv_cf:bool}
+  let to_int x = (if x.dfv_of then 1 else 0)
+               + (if x.dfv_sf then 2 else 0)
+               + (if x.dfv_zf then 4 else 0)
+               + (if x.dfv_cf then 8 else 0)
+  let of_int z =
+    { dfv_of = z land 1 <> 0;
+      dfv_sf = z land 2 <> 0;
+      dfv_zf = z land 4 <> 0;
+      dfv_cf = z land 8 <> 0 }
+end
+
 module DecodedInst = struct
   include Bind.DecodedInst
 
@@ -213,6 +226,12 @@ module DecodedInst = struct
   let to_string x =
     format x 0L
 
+  let get_default_flags_values x =
+    let module Types = Bind.Types in
+    let y = Types.Ptr.rw @@ Ctypes.allocate_n ~count:1 Types.flag_dfv in
+    if not @@ Bind.DecodedInst.get_default_flags_values x y then None else
+    Ctypes.(!@) (Ctypes.coerce Types.flag_dfv_ptr Ctypes.(ptr uint8_t) y)
+    |> Unsigned.UInt8.to_int |> FlagDFV.of_int |> Option.some
 end
 
 module EncoderRequest = struct
@@ -259,26 +278,6 @@ module FlagSet = struct
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
-module FlagDFV = struct
-  type t = {dfv_of:bool; dfv_sf:bool; dfv_zf:bool; dfv_cf:bool}
-  let flat x = (if x.dfv_of then 1 else 0)
-             + (if x.dfv_sf then 2 else 0)
-             + (if x.dfv_zf then 4 else 0)
-             + (if x.dfv_cf then 8 else 0)
-  let get_default_flags_values x =
-    let module Types = Bind.Types in
-    let y = Types.Ptr.rw @@ Ctypes.allocate_n ~count:1 Types.flag_dfv in
-    if not @@ Bind.xed_flag_dfv_get_default_flags_values x y then None else
-    let z = Ctypes.(!@) (Ctypes.coerce Types.flag_dfv_ptr Ctypes.(ptr uint8_t) y)
-            |> Unsigned.UInt8.to_int in
-    Some {
-      dfv_of = z land 1 <> 0;
-      dfv_sf = z land 2 <> 0;
-      dfv_zf = z land 4 <> 0;
-      dfv_cf = z land 8 <> 0;
-    }
-end
-
 module Inst = struct
   include Bind.Inst
 
@@ -308,9 +307,6 @@ end
 
 module Operand = struct
   include Bind.Operand
-  let to_string x =
-    let bytes = Bytes.create 100
-    in print x bytes; string_of_c bytes
   let read x = read x <> 0
   let read_only x = read_only x <> 0
   let written x = written x <> 0
@@ -392,3 +388,7 @@ let get_version = Bind.xed_get_version
 let set_verbosity = Bind.xed_set_verbosity
 
 let ok_exn = function Ok x -> x | Error e -> failwith (Enum.error_to_string e)
+
+let operand_to_string (di : [>`Read] DecodedInst.t) (op: int) =
+  let bytes = Bytes.create 100
+  in Bind.xed_operand_print di op bytes; string_of_c bytes

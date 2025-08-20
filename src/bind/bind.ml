@@ -50,8 +50,8 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_get_byte (Ptr.unsafe_get a0) a1
   let get_category (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.category =
     Funcs.xed_decoded_inst_get_category (Ptr.unsafe_get a0)
-  let get_dfv_reg (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.reg =
-    Funcs.xed_decoded_inst_get_dfv_reg (Ptr.unsafe_get a0)
+  let get_default_flags_values (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : [>`Read|`Write] Types.flag_dfv_ptr) : bool =
+    Funcs.xed_decoded_inst_get_default_flags_values (Ptr.unsafe_get a0) (Ptr.unsafe_get a1)
   let get_extension (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.extension =
     Funcs.xed_decoded_inst_get_extension (Ptr.unsafe_get a0)
   let get_iclass (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.iclass =
@@ -118,6 +118,8 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_get_unsigned_immediate (Ptr.unsafe_get a0)
   let get_user_data (a0 : [>`Read|`Write] Types.decoded_inst_ptr) : Unsigned.UInt64.t =
     Funcs.xed_decoded_inst_get_user_data (Ptr.unsafe_get a0)
+  let has_default_flags_values (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
+    Funcs.xed_decoded_inst_has_default_flags_values (Ptr.unsafe_get a0)
   let has_mpx_prefix (a0 : [>`Read] Types.decoded_inst_ptr) : Unsigned.UInt32.t =
     Funcs.xed_decoded_inst_has_mpx_prefix (Ptr.unsafe_get a0)
   let inst (a0 : [>`Read] Types.decoded_inst_ptr) : [<`Read] Types.inst_ptr =
@@ -216,6 +218,8 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_valid (Ptr.unsafe_get a0)
   let valid_for_chip (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : XBEnums.chip) : bool =
     Funcs.xed_decoded_inst_valid_for_chip (Ptr.unsafe_get a0) a1
+  let valid_for_features (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : [>`Read] Types.chip_features_ptr) : bool =
+    Funcs.xed_decoded_inst_valid_for_features (Ptr.unsafe_get a0) (Ptr.unsafe_get a1)
   let vector_length_bits (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed_decoded_inst_vector_length_bits (Ptr.unsafe_get a0)
   let zero (a0 : [>`Read|`Write] Types.decoded_inst_ptr) : unit =
@@ -382,8 +386,6 @@ module Operand = struct
     Funcs.xed_operand_nonterminal_name (Ptr.unsafe_get a0)
   let op_type (a0 : [>`Read] Types.operand_ptr) : XBEnums.operand_type =
     Funcs.xed_operand_type (Ptr.unsafe_get a0)
-  let print (a0 : [>`Read] Types.operand_ptr) (a1 : bytes) : unit =
-    Funcs.xed_operand_print (Ptr.unsafe_get a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
   let read (a0 : [>`Read] Types.operand_ptr) : int =
     Funcs.xed_operand_read (Ptr.unsafe_get a0)
   let read_and_written (a0 : [>`Read] Types.operand_ptr) : int =
@@ -441,6 +443,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_df32 (Ptr.unsafe_get a0)
   let get_df64 (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_df64 (Ptr.unsafe_get a0)
+  let get_dfv (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_dfv (Ptr.unsafe_get a0)
   let get_disp (a0 : [>`Read] Types.decoded_inst_ptr) : Signed.Int64.t =
     Funcs.xed3_operand_get_disp (Ptr.unsafe_get a0)
   let get_disp_width (a0 : [>`Read] Types.decoded_inst_ptr) : char =
@@ -451,6 +455,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_easz (Ptr.unsafe_get a0)
   let get_element_size (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_element_size (Ptr.unsafe_get a0)
+  let get_enc_delete (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_enc_delete (Ptr.unsafe_get a0)
   let get_encode_force (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_encode_force (Ptr.unsafe_get a0)
   let get_encoder_preferred (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -523,8 +529,6 @@ module Operand3 = struct
     Funcs.xed3_operand_get_mode_short_ud0 (Ptr.unsafe_get a0)
   let get_modep5 (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_modep5 (Ptr.unsafe_get a0)
-  let get_modep55c (a0 : [>`Read] Types.decoded_inst_ptr) : int =
-    Funcs.xed3_operand_get_modep55c (Ptr.unsafe_get a0)
   let get_modrm_byte (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_modrm_byte (Ptr.unsafe_get a0)
   let get_mpxmode (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -581,6 +585,10 @@ module Operand3 = struct
     Funcs.xed3_operand_get_pos_nominal_opcode (Ptr.unsafe_get a0)
   let get_pos_sib (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_pos_sib (Ptr.unsafe_get a0)
+  let get_prefetchit (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_prefetchit (Ptr.unsafe_get a0)
+  let get_prefetchrst (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_prefetchrst (Ptr.unsafe_get a0)
   let get_prefix66 (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_prefix66 (Ptr.unsafe_get a0)
   let get_ptr (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -732,6 +740,9 @@ module Operand3 = struct
   let set_df64 (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_df64 (Ptr.unsafe_get a0) a1
+  let set_dfv (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_dfv (Ptr.unsafe_get a0) a1
   let set_disp (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : Signed.Int64.t) : unit =
     Funcs.xed3_operand_set_disp (Ptr.unsafe_get a0) a1
   let set_disp_width (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : char) : unit =
@@ -745,6 +756,9 @@ module Operand3 = struct
   let set_element_size (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_element_size (Ptr.unsafe_get a0) a1
+  let set_enc_delete (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_enc_delete (Ptr.unsafe_get a0) a1
   let set_encode_force (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_encode_force (Ptr.unsafe_get a0) a1
@@ -848,9 +862,6 @@ module Operand3 = struct
   let set_modep5 (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_modep5 (Ptr.unsafe_get a0) a1
-  let set_modep55c (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
-    assert (a1 >= 0);
-    Funcs.xed3_operand_set_modep55c (Ptr.unsafe_get a0) a1
   let set_modrm_byte (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_modrm_byte (Ptr.unsafe_get a0) a1
@@ -934,6 +945,12 @@ module Operand3 = struct
   let set_pos_sib (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_pos_sib (Ptr.unsafe_get a0) a1
+  let set_prefetchit (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_prefetchit (Ptr.unsafe_get a0) a1
+  let set_prefetchrst (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_prefetchrst (Ptr.unsafe_get a0) a1
   let set_prefix66 (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_prefix66 (Ptr.unsafe_get a0) a1
@@ -1197,6 +1214,10 @@ module OperandValues = struct
     Funcs.xed_operand_values_has_segment_prefix (Ptr.unsafe_get a0)
   let has_sib_byte (a0 : [>`Read] Types.operand_values_ptr) : bool =
     Funcs.xed_operand_values_has_sib_byte (Ptr.unsafe_get a0)
+  let ignored_branch_not_taken_hint (a0 : [>`Read] Types.operand_values_ptr) : bool =
+    Funcs.xed_operand_values_ignored_branch_not_taken_hint (Ptr.unsafe_get a0)
+  let ignored_branch_taken_hint (a0 : [>`Read] Types.operand_values_ptr) : bool =
+    Funcs.xed_operand_values_ignored_branch_taken_hint (Ptr.unsafe_get a0)
   let init () : [<`Read|`Write] t =
    let a0 = uninit () in
     Funcs.xed_operand_values_init (Ptr.get a0);
@@ -1357,19 +1378,19 @@ end
 
 module Constants = struct
   let emit_messages = 0
-  let enc_groups = 588
-  let encode_fb_values_table_size = 10752
-  let encode_max_emit_patterns = 237
-  let encode_max_fb_patterns = 167
-  let encode_max_iforms = 11154
-  let encode_order_max_entries = 37
+  let enc_groups = 597
+  let encode_fb_values_table_size = 10606
+  let encode_max_emit_patterns = 206
+  let encode_max_fb_patterns = 169
+  let encode_max_iforms = 10912
+  let encode_order_max_entries = 35
   let encode_order_max_operands = 5
   let encoder_operands_max = 8
   let feature_vector_max = 7
-  let iclass_name_str_max = 176
+  let iclass_name_str_max = 178
   let info2_verbose = 0
   let info_verbose = 0
-  let max_attribute_count = 104
+  let max_attribute_count = 105
   let max_convert_patterns = 7
   let max_cpuid_groups_per_isa_set = 2
   let max_cpuid_recs_per_group = 4
@@ -1378,13 +1399,13 @@ module Constants = struct
   let max_global_flag_actions = 492
   let max_iforms_per_iclass = 48
   let max_immediate_bytes = 8
-  let max_inst_table_nodes = 11134
+  let max_inst_table_nodes = 10895
   let max_instruction_bytes = 15
   let max_map_evex = 7
   let max_map_vex = 7
-  let max_operand_sequences = 11115
-  let max_operand_table_nodes = 1768
-  let max_required_attributes = 284
+  let max_operand_sequences = 10878
+  let max_operand_table_nodes = 1756
+  let max_required_attributes = 293
   let max_required_complex_flags_entries = 149
   let max_required_simple_flags_entries = 101
   let more_verbose = 0
@@ -1594,17 +1615,20 @@ let xed_encode_nop (a0 : bytes) : XBEnums.error =
   Funcs.xed_encode_nop (Ctypes.ocaml_bytes_start a0) (Bytes.length a0)
 let xed_encode_request_print (a0 : [>`Read] Types.encoder_request_ptr) (a1 : bytes) : unit =
   Funcs.xed_encode_request_print (Ptr.unsafe_get a0) (Ctypes.ocaml_bytes_start a1) (Bytes.length a1)
-let xed_flag_dfv_get_default_flags_values (a0 : XBEnums.reg) (a1 : [>`Read|`Write] Types.flag_dfv_ptr) : bool =
-  Funcs.xed_flag_dfv_get_default_flags_values a0 (Ptr.unsafe_get a1)
 let xed_get_copyright () : string =
   Funcs.xed_get_copyright ()
 let xed_get_version () : string =
   Funcs.xed_get_version ()
 let xed_ild_decode (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : string) : XBEnums.error =
   Funcs.xed_ild_decode (Ptr.unsafe_get a0) (Ctypes.ocaml_string_start a1) (String.length a1)
+let xed_operand_print (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : int) (a2 : bytes) : unit =
+  assert (a1 >= 0);
+  Funcs.xed_operand_print (Ptr.unsafe_get a0) a1 (Ctypes.ocaml_bytes_start a2) (Bytes.length a2)
 let xed_rep (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
   Funcs.xed_rep (Ptr.unsafe_get a0)
 let xed_repne (a0 : [>`Read|`Write] Types.encoder_instruction_ptr) : unit =
   Funcs.xed_repne (Ptr.unsafe_get a0)
+let xed_set_decoder_modes (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : XBEnums.chip) (a2 : [>`Read] Types.chip_features_ptr) : unit =
+  Funcs.xed_set_decoder_modes (Ptr.unsafe_get a0) a1 (Ptr.unsafe_get a2)
 let xed_set_verbosity (a0 : int) : unit =
   Funcs.xed_set_verbosity a0
