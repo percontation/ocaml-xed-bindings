@@ -41,3 +41,20 @@ done
 git ls-files --recurse-submodules -z | mytar
 `command -v sha256 || command -v sha256sum || echo 'shasum -a 256'` "$TARBALL"
 git rev-parse HEAD
+
+if [ "${1-}" = test ]; then
+  FAILS=
+  for base in "--platform=linux/amd64 ocaml/opam:alpine-ocaml-4.08" "--platform=linux/arm64 ocaml/opam:debian-ocaml-5.4"; do
+    docker run --rm -i $base /bin/sh -c 'set -ue
+      command -v python3 2>/dev/null || sudo apt -y install python3
+      tar -xzm
+      opam pin ocaml-xed-bindings/
+      opam install ocamlfind
+      echo "$1" | ocaml' sh '
+      #use "topfind";;
+      #require "xedbindings";;
+      #use "./ocaml-xed-bindings/test/test.ml";;
+      ' < "$TARBALL" || FAILS="$FAILS $base"
+  done
+  test -z "$FAILS" || { echo "Release failed to install on:$FAILS" >&2; exit 1; }
+fi
