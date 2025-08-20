@@ -45,23 +45,30 @@ def _normalize_cpu_name(self, name):
     return name
 mbuild.env.env_t._normalize_cpu_name = _normalize_cpu_name
 
-# someone pasted in a bunch of random linker flags that break macOS
 import xed_build_common
-orig_gnu_secured_build = xed_build_common.gnu_secured_build
-def gnu_secured_build(env):
-  flags = orig_gnu_secured_build(env)
+orig_set_env_gnu = xed_build_common.set_env_gnu
+def set_env_gnu(env):
+  orig_set_env_gnu(env)
   if env.on_mac():
+    # someone pasted in a bunch of feel-good linker flags that break macOS :/
     for i in ("-Wl,-z,relro,-z,now", "-z noexecstack"):
-      if isinstance(env.env["LINKFLAGS"], list):
-        try: env.env["LINKFLAGS"].remove(i)
-        except ValueError: pass
-      else:
-        env.env["LINKFLAGS"] = env.env["LINKFLAGS"].replace(i, "")
-  return flags
-xed_build_common.gnu_secured_build = gnu_secured_build
+      env["LINKFLAGS"] = env["LINKFLAGS"].replace(i, "")
+xed_build_common.set_env_gnu = set_env_gnu
+
+# I should really just vendor xed at this point T_T
+path = "include/public/xed/xed-operand-values-interface.h"
+with open(path, "r") as f:
+  orig_data = data = f.read()
+data = data.replace("\nxed_bool_t\nxed_operand_values_ignored_branch_not_taken_hint", "\nXED_DLL_EXPORT xed_bool_t\nxed_operand_values_ignored_branch_not_taken_hint")
+data = data.replace("\nxed_bool_t\nxed_operand_values_ignored_branch_taken_hint", "\nXED_DLL_EXPORT xed_bool_t\nxed_operand_values_ignored_branch_taken_hint")
+with open(path, "w") as f:
+  f.write(data)
 
 import mfile
-sys.exit(mfile.work())
+ret = mfile.work()
+with open(path, "w") as f:
+  f.write(orig_data)
+sys.exit(ret)
 ' -- $COMPILER $X --cc="$CC" --cxx="$CC" --linker="$CC" --ar=ar --no-werror --extra-flags=-fPIC --install-dir=kits/xed-install install
 # TODO: enable --asserts? Seems to work well with our XedAbort exception but I haven't tested much.
 # --cxx="$CC" is "correct" and necessary. XED has no c++, but mbuild uses CXX as the linker anyways.
