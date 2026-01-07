@@ -20,6 +20,8 @@ module DecodedInst = struct
     Funcs.xed_classify_amx (Ptr.unsafe_get a0)
   let classify_apx (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
     Funcs.xed_classify_apx (Ptr.unsafe_get a0)
+  let classify_apx_foundation (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
+    Funcs.xed_classify_apx_foundation (Ptr.unsafe_get a0)
   let classify_avx (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
     Funcs.xed_classify_avx (Ptr.unsafe_get a0)
   let classify_avx512 (a0 : [>`Read] Types.decoded_inst_ptr) : bool =
@@ -45,9 +47,6 @@ module DecodedInst = struct
     Funcs.xed_decoded_inst_get_branch_displacement_width (Ptr.unsafe_get a0)
   let get_branch_displacement_width_bits (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed_decoded_inst_get_branch_displacement_width_bits (Ptr.unsafe_get a0)
-  let get_byte (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : int) : char =
-    assert (a1 >= 0);
-    Funcs.xed_decoded_inst_get_byte (Ptr.unsafe_get a0) a1
   let get_category (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.category =
     Funcs.xed_decoded_inst_get_category (Ptr.unsafe_get a0)
   let get_default_flags_values (a0 : [>`Read] Types.decoded_inst_ptr) (a1 : [>`Read|`Write] Types.flag_dfv_ptr) : bool =
@@ -1378,11 +1377,11 @@ end
 
 module Constants = struct
   let emit_messages = 0
-  let enc_groups = 597
-  let encode_fb_values_table_size = 10606
-  let encode_max_emit_patterns = 206
+  let enc_groups = 596
+  let encode_fb_values_table_size = 10508
+  let encode_max_emit_patterns = 210
   let encode_max_fb_patterns = 169
-  let encode_max_iforms = 10912
+  let encode_max_iforms = 10889
   let encode_order_max_entries = 35
   let encode_order_max_operands = 5
   let encoder_operands_max = 8
@@ -1397,17 +1396,17 @@ module Constants = struct
   let max_decorations_per_operand = 3
   let max_displacement_bytes = 8
   let max_global_flag_actions = 492
-  let max_iforms_per_iclass = 48
+  let max_iforms_per_iclass = 60
   let max_immediate_bytes = 8
-  let max_inst_table_nodes = 10895
+  let max_inst_table_nodes = 10872
   let max_instruction_bytes = 15
   let max_map_evex = 7
   let max_map_vex = 7
-  let max_operand_sequences = 10878
-  let max_operand_table_nodes = 1756
-  let max_required_attributes = 293
+  let max_operand_sequences = 10864
+  let max_operand_table_nodes = 1747
+  let max_required_attributes = 296
   let max_required_complex_flags_entries = 149
-  let max_required_simple_flags_entries = 101
+  let max_required_simple_flags_entries = 100
   let more_verbose = 0
   let verbose = 0
   let very_verbose = 0
