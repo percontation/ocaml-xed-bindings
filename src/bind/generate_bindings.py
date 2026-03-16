@@ -72,7 +72,8 @@ tu = Index.parse(
   os.path.join(XED_HEADERS, "xed-interface.h"),
   args=["-std=c23", "-I"+XED_HEADERS],
   options=cindex.TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD,
-  unsaved_files=[(XED_HEADERS + "/stdint.h", """\
+  unsaved_files=[
+    (XED_HEADERS + "/stdint.h", """\
 // This isn't correct from a C standpoint. But, clang cindex behavior we used
 // to rely on broke and this seems to fix it, so whatever.
 typedef unsigned _BitInt(8) uint8_t;
@@ -83,9 +84,19 @@ typedef signed _BitInt(8) int8_t;
 typedef signed _BitInt(16) int16_t;
 typedef signed _BitInt(32) int32_t;
 typedef signed _BitInt(64) int64_t;
-""")]
+"""),
+    (XED_HEADERS + "/stdlib.h", """\
+#define NULL ((void*)0)
+void abort(void) __attribute__((noreturn));
+"""),
+    (XED_HEADERS + "/stdio.h", """\
+#define fprintf(...) 0
+#define fflush(...) 0
+#define stderr 0
+"""),
+  ]
 )
-errs = [i for i in tu.diagnostics if i.severity >= d.Error]
+errs = [i for i in tu.diagnostics if i.severity >= cindex.Diagnostic.Error]
 if errs:
     raise Exception("\n".join(str(d) for d in errs))
 

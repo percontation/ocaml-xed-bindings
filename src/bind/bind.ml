@@ -478,6 +478,8 @@ module Operand3 = struct
     Funcs.xed3_operand_get_has_sib (Ptr.unsafe_get a0)
   let get_hint (a0 : [>`Read] Types.decoded_inst_ptr) : int =
     Funcs.xed3_operand_get_hint (Ptr.unsafe_get a0)
+  let get_ibhf (a0 : [>`Read] Types.decoded_inst_ptr) : int =
+    Funcs.xed3_operand_get_ibhf (Ptr.unsafe_get a0)
   let get_iclass (a0 : [>`Read] Types.decoded_inst_ptr) : XBEnums.iclass =
     Funcs.xed3_operand_get_iclass (Ptr.unsafe_get a0)
   let get_ild_f2 (a0 : [>`Read] Types.decoded_inst_ptr) : int =
@@ -790,6 +792,9 @@ module Operand3 = struct
   let set_hint (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
     assert (a1 >= 0);
     Funcs.xed3_operand_set_hint (Ptr.unsafe_get a0) a1
+  let set_ibhf (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
+    assert (a1 >= 0);
+    Funcs.xed3_operand_set_ibhf (Ptr.unsafe_get a0) a1
   let set_iclass (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : XBEnums.iclass) : unit =
     Funcs.xed3_operand_set_iclass (Ptr.unsafe_get a0) a1
   let set_ild_f2 (a0 : [>`Read|`Write] Types.decoded_inst_ptr) (a1 : int) : unit =
@@ -1378,10 +1383,10 @@ end
 module Constants = struct
   let emit_messages = 0
   let enc_groups = 596
-  let encode_fb_values_table_size = 10508
+  let encode_fb_values_table_size = 10528
   let encode_max_emit_patterns = 210
-  let encode_max_fb_patterns = 169
-  let encode_max_iforms = 10889
+  let encode_max_fb_patterns = 171
+  let encode_max_iforms = 10892
   let encode_order_max_entries = 35
   let encode_order_max_operands = 5
   let encoder_operands_max = 8
@@ -1398,7 +1403,7 @@ module Constants = struct
   let max_global_flag_actions = 492
   let max_iforms_per_iclass = 60
   let max_immediate_bytes = 8
-  let max_inst_table_nodes = 10872
+  let max_inst_table_nodes = 10874
   let max_instruction_bytes = 15
   let max_map_evex = 7
   let max_map_vex = 7
