@@ -227,3 +227,11 @@ CAMLprim value xb_iform_map(value iform) {
   Store_field(ret, 4, Val_int(info->string_table_idx));
   CAMLreturn(ret);
 }
+
+CAMLprim value xb_inst_table(value idx) {
+  CAMLparam1(idx);
+  int i = Int_val(idx);
+  if(i < 0 || i >= XED_MAX_INST_TABLE_NODES)
+    caml_invalid_argument("index out of bounds");
+  CAMLreturn(caml_copy_nativeint((intptr_t)(xed_inst_table_base() + i)));
+}

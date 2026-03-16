@@ -278,11 +278,40 @@ module FlagSet = struct
     in print x bytes |> Bytes.sub_string bytes 0
 end
 
+module Operand = struct
+  include Bind.Operand
+  let read x = read x <> 0
+  let read_only x = read_only x <> 0
+  let written x = written x <> 0
+  let written_only x = written_only x <> 0
+  let read_and_written x = read_and_written x <> 0
+  let conditional_read x = conditional_read x <> 0
+  let conditional_write x = conditional_write x <> 0
+  let template_is_register x = template_is_register x <> 0
+  let width_bits x eosz =
+    let eosz = match eosz with
+      | `B16 -> 1
+      | `B32 -> 2
+      | `B64 -> 3
+    in width_bits x (Unsigned.UInt32.of_int eosz) |> Unsigned.UInt32.to_int
+
+  (** A string showing the Operand. Quite arbitrary, subject to change. *)
+  let to_string x =
+    match op_type x with
+    | REG -> reg x |> Enum.reg_to_string
+    | IMM_CONST -> "0x" ^ Unsigned.UInt32.to_hexstring @@ imm x
+    | NT_LOOKUP_FN
+    | NT_LOOKUP_FN2
+    | NT_LOOKUP_FN4 -> nonterminal_name x |> Enum.nonterminal_to_string
+    | t -> Enum.operand_to_string (name x) ^ ":" ^ Enum.operand_type_to_string t
+end
+
 module Inst = struct
   include Bind.Inst
 
   open struct
     external _inst_get_attributes : nativeint -> Enum.attribute list = "xb_inst_get_attributes"
+    external _table : int -> nativeint = "xb_inst_table"
   end
 
   let get_attributes (x: [>`Read] t) : Enum.attribute list =
@@ -303,25 +332,23 @@ module Inst = struct
       acc := f i (operand inst i) !acc
     done;
     !acc
+
+  (** A string showing the Inst. Quite arbitrary, subject to change. *)
+  let to_string inst =
+    let attrs = match List.map Enum.attribute_to_string @@ get_attributes inst with
+      | [] -> ""
+      | x -> "[" ^ String.concat " " x ^ "]"
+    in
+    let ops = match fold_right_operands ~init:[] ~f:(fun _ x acc -> Operand.to_string x :: acc) inst with
+      | [] -> ""
+      | x -> "(" ^ String.concat ", " x ^ ")"
+    in
+    (Enum.iform_to_string @@ iform_enum inst) ^ attrs ^ ops
+
+  let table_size = max_inst_table_nodes
+  let table i = Bind.Types.(Ptr.unsafe_ro_of_raw inst) @@ _table i
 end
 
-module Operand = struct
-  include Bind.Operand
-  let read x = read x <> 0
-  let read_only x = read_only x <> 0
-  let written x = written x <> 0
-  let written_only x = written_only x <> 0
-  let read_and_written x = read_and_written x <> 0
-  let conditional_read x = conditional_read x <> 0
-  let conditional_write x = conditional_write x <> 0
-  let template_is_register x = template_is_register x <> 0
-  let width_bits x eosz =
-    let eosz = match eosz with
-      | `B16 -> 1
-      | `B32 -> 2
-      | `B64 -> 3
-    in width_bits x (Unsigned.UInt32.of_int eosz) |> Unsigned.UInt32.to_int
-end
 
 module Operand3 = struct
   include Bind.Operand3

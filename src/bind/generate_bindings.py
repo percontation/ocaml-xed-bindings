@@ -504,18 +504,18 @@ unwanted_functions = {
   "xed_shortest_width_unsigned",
   "xed_shortest_width_signed",
 
-  # XED stuff.
+  # XED runtime stuff, used internally to XED or stubs.c
   "xed_tables_init",
-  "xed_inst_table_base",
   "xed_internal_assert",
   "xed_register_abort_function",
   "xed_set_log_file",
 
-  # Exist in headerfile, but no implementation.
-  "xed_operand_values_has_disp",
-  "xed_operand_values_is_prefetch",
+  # Unneeded polymorphic versions
+  "xed3_get_generic_operand",
+  "xed3_set_generic_operand",
 
   # Manual bindings for these.
+  "xed_inst_table_base",
   "xed_inst_get_attributes",
   "xed_decoded_inst_get_attributes",
   "xed_encode",
@@ -632,9 +632,7 @@ def filter_funcs(func):
       return False
   return True
 
-skip_funcs = {
-  "xed3_set_generic_operand",
-}
+skip_funcs = set()
 
 for func in functions:
   if not filter_funcs(func):
@@ -730,6 +728,8 @@ module Types (F : Cstubs.Types.TYPE) = struct
     val get : ('a, [`Read|`Write]) t -> 'a Ctypes.ptr
     val unsafe_get : ('a, 'perm) t -> 'a Ctypes.ptr
     val raw_address : ('a, 'perm) t -> nativeint
+    val unsafe_ro_of_raw : 'a Ctypes.typ -> nativeint -> ('a, [`Read]) t
+    val unsafe_rw_of_raw : 'a Ctypes.typ -> nativeint -> ('a, [`Read|`Write]) t
     val const : ('a, [>`Read]) t -> ('a, [`Read]) t
   end = struct
     type ('a, -'perm) t = 'a Ctypes.ptr
@@ -738,6 +738,8 @@ module Types (F : Cstubs.Types.TYPE) = struct
     let get x = x
     let unsafe_get x = x
     let raw_address x = Ctypes.raw_address_of_ptr @@ Ctypes.to_voidp x
+    let unsafe_ro_of_raw t x = ro @@ Ctypes.from_voidp t @@ Ctypes.ptr_of_raw_address x
+    let unsafe_rw_of_raw t x = rw @@ Ctypes.from_voidp t @@ Ctypes.ptr_of_raw_address x
     let const x = x
   end
 

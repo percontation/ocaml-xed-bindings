@@ -16,6 +16,8 @@ module Types (F : Cstubs.Types.TYPE) = struct
     val get : ('a, [`Read|`Write]) t -> 'a Ctypes.ptr
     val unsafe_get : ('a, 'perm) t -> 'a Ctypes.ptr
     val raw_address : ('a, 'perm) t -> nativeint
+    val unsafe_ro_of_raw : 'a Ctypes.typ -> nativeint -> ('a, [`Read]) t
+    val unsafe_rw_of_raw : 'a Ctypes.typ -> nativeint -> ('a, [`Read|`Write]) t
     val const : ('a, [>`Read]) t -> ('a, [`Read]) t
   end = struct
     type ('a, -'perm) t = 'a Ctypes.ptr
@@ -24,6 +26,8 @@ module Types (F : Cstubs.Types.TYPE) = struct
     let get x = x
     let unsafe_get x = x
     let raw_address x = Ctypes.raw_address_of_ptr @@ Ctypes.to_voidp x
+    let unsafe_ro_of_raw t x = ro @@ Ctypes.from_voidp t @@ Ctypes.ptr_of_raw_address x
+    let unsafe_rw_of_raw t x = rw @@ Ctypes.from_voidp t @@ Ctypes.ptr_of_raw_address x
     let const x = x
   end
 

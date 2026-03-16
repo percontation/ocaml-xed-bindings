@@ -41,6 +41,10 @@ let main () =
   let shortdecode = decode state32 "\x0f" in
   assert (shortdecode = Error Enum.BUFFER_TOO_SHORT);
 
+  print_endline @@ Inst.to_string Inst.(table 100);
+  print_endline @@ Inst.to_string Inst.(table 500);
+  print_endline @@ Inst.to_string Inst.(table (table_size-1));
+
   let req = EncoderRequest.of_decoded_inst pushrbp in
   let () = EncoderRequest.set_reg req Enum.REG0 Enum.R15 in
   print_endline @@ EncoderRequest.to_string req;
