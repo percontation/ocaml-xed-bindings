@@ -7,14 +7,15 @@ case ${0-} in
 esac
 test -f xed/LICENSE || { echo "You're in the wrong place" >&2; exit 1; }
 
-test -z "`git status --untracked-files=no --porcelain`" || { echo "git repo is unclean"; exit 1; }
-git submodule foreach --recursive --quiet 'test -z "`git status --untracked-files=no --porcelain`" || { echo "$sm_path is unclean"; exit 1; }'
+DIRTY=
+test -z "`git status --untracked-files=no --porcelain`" || { echo "git repo is dirty"; DIRTY=-dirty; }
+git submodule foreach --recursive --quiet 'test -z "`git status --untracked-files=no --porcelain`" || { echo "$sm_path is dirty"; exit 1; }' || DIRTY=-dirty
 
 NAME=`git remote get-url origin`
 NAME="${NAME##*/}"
 NAME="${NAME%.git}"
 
-TARBALL="$NAME-`git describe`.tgz"
+TARBALL="$NAME-`git describe`$DIRTY.tgz"
 rm -f "$TARBALL"
 
 mytar() {
@@ -43,9 +44,17 @@ git ls-files --recurse-submodules -z | mytar
 git rev-parse HEAD
 
 if [ "${1-}" = test ]; then
+  if [ -n "${DOCKER-}" ]; then
+    :
+  elif test "`uname -s`" = Darwin && container system status >/dev/null 2>&1; then
+    DOCKER=container
+  else
+    DOCKER=docker
+  fi
+
   FAILS=
   for base in "--platform=linux/amd64 ocaml/opam:alpine-ocaml-4.08" "--platform=linux/arm64 ocaml/opam:debian-ocaml-5.4"; do
-    docker run --rm -i $base /bin/sh -c 'set -ue
+    $DOCKER run --rm -m 4G -i $base /bin/sh -c 'set -ue
       command -v python3 2>/dev/null || sudo apt -y install python3
       tar -xzm
       opam pin ocaml-xed-bindings/
@@ -57,4 +66,5 @@ if [ "${1-}" = test ]; then
       ' < "$TARBALL" || FAILS="$FAILS $base"
   done
   test -z "$FAILS" || { echo "Release failed to install on:$FAILS" >&2; exit 1; }
+  echo "test passed" 2>&1
 fi
