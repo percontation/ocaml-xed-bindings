@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name:         "xedbindings"
-version:      "0.14"
+version:      "0.15~dev"
 synopsis:     "Bindings to Intel XED"
 maintainer:   "Ryan Goulden"
 authors:      "Ryan Goulden"
@@ -19,6 +19,7 @@ depends: [
   "ocaml" {>= "4.08"}
   "dune" {>= "3.7"}
   "ctypes" {>= "0.12"}
+  "integers" {>= "0.6.0"}
   "conf-python-3" {build}
 ]
 
