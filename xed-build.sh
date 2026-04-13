@@ -28,7 +28,8 @@ print(" ".join(shlex.quote(i) for i in sys.argv))
 
 import mbuild.env
 
-# mbuild screams and dies for absolutely no reason on non-x86 cpus.
+# mbuild screams and dies on OS and CPU types it does not
+# recognize, but xed builds just fine.
 orig_normalize_os_name = mbuild.env.env_t._normalize_os_name
 def _normalize_os_name(self, name):
   try:
@@ -45,6 +46,7 @@ def _normalize_cpu_name(self, name):
     return name
 mbuild.env.env_t._normalize_cpu_name = _normalize_cpu_name
 
+# Still necessary right now, but I reported the issue in https://github.com/intelxed/xed/issues/358
 import xed_build_common
 orig_set_env_gnu = xed_build_common.set_env_gnu
 def set_env_gnu(env):
@@ -55,19 +57,8 @@ def set_env_gnu(env):
       env["LINKFLAGS"] = env["LINKFLAGS"].replace(i, "")
 xed_build_common.set_env_gnu = set_env_gnu
 
-# I should really just vendor xed at this point T_T
-path = "include/public/xed/xed-operand-values-interface.h"
-with open(path, "r") as f:
-  orig_data = data = f.read()
-data = data.replace("\nxed_bool_t\nxed_operand_values_ignored_branch_not_taken_hint", "\nXED_DLL_EXPORT xed_bool_t\nxed_operand_values_ignored_branch_not_taken_hint")
-data = data.replace("\nxed_bool_t\nxed_operand_values_ignored_branch_taken_hint", "\nXED_DLL_EXPORT xed_bool_t\nxed_operand_values_ignored_branch_taken_hint")
-with open(path, "w") as f:
-  f.write(data)
-
 import mfile
 ret = mfile.work()
-with open(path, "w") as f:
-  f.write(orig_data)
 sys.exit(ret)
 ' -- $COMPILER $X --cc="$CC" --cxx="$CC" --linker="$CC" --ar=ar --no-werror --extra-flags=-fPIC --install-dir=kits/xed-install install
 # TODO: enable --asserts? Seems to work well with our XedAbort exception but I haven't tested much.
