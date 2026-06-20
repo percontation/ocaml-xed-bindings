@@ -53,9 +53,9 @@ if [ "${1-}" = test ]; then
   fi
 
   FAILS=
-  for base in "--platform=linux/amd64 ocaml/opam:alpine-ocaml-4.08" "--platform=linux/arm64 ocaml/opam:debian-ocaml-5.4"; do
+  for base in "--platform=linux/amd64 ocaml/opam:alpine-ocaml-4.08" "--platform=linux/arm64 ocaml/opam:debian-ocaml-5.5"; do
     $DOCKER run --rm -m 4G -i $base /bin/sh -c 'set -ue
-      command -v python3 2>/dev/null || sudo apt -y install python3
+      command -v python3 2>/dev/null || sudo apt -Uy install python3
       tar -xzm
       opam pin ocaml-xed-bindings/
       opam install ocamlfind
