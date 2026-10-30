@@ -16,6 +16,7 @@
  (ctypes
   (build_flags_resolver (vendored (c_flags (:standard -fPIC)) (c_library_flags ())))
   (external_library_name libxed)
+  (deps (source_tree xedkit/include/xed))
   (headers (preamble "#include \"xedkit/include/xed/xed-interface.h\""))
   (type_description
    (instance Type)
